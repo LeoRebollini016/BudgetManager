@@ -1,0 +1,38 @@
+﻿@model AccountCreateVM
+@{
+	ViewData["Title"] = "Editar cuenta";
+}
+
+<h1>Editar cuenta @Model.Name</h1>
+
+<form asp-action="EditAccount">
+	<input type="hidden" asp-for="Id" />
+	<div class="mb-3">
+		<label asp-for="Name" class="form-label"></label>
+		<input asp-for="Name" type="text" class="form-control" />
+		<span asp-validation-for="Name" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<label asp-for="Balance" class="form-label"></label>
+		<input type="text" asp-for="Balance" class="form-control" />
+		<span asp-validation-for="Balance" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<select id="selectAccTypes" asp-for="AccountTypeId" asp-items="Model.accountTypes" class="form-select" aria-label="Default select example">
+			<option selected>Seleccione un tipo de cuenta</option>
+		</select>
+	</div>
+	<div class="mb-3">
+		<label asp-for="Description" class="form-label"></label>
+		<textarea asp-for="Description" rows="3" class="form-control mb-3"></textarea>
+		<span asp-validation-for="Description" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<button type="submit" class="btn btn-primary">Crear</button>
+		<a asp-action="Index" class="btn btn-secundary">Cancelar</a>
+	</div>
+</form>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

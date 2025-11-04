@@ -1,0 +1,26 @@
+﻿@model CategoryVM
+@{
+	ViewData["Title"] = "Crear categoría";
+}
+
+<h1>Crear categoría</h1>
+<h5>La categoría indica en que gastamos y de donde provienen nuestros ingresos.</h5>
+<form asp-action="Create">
+	<div class="mb-3">
+		<label asp-for="Name" class="form-label"></label>
+		<input asp-for="Name" class="form-control" />
+		<span asp-validation-for="Name" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<input asp-for="OperationTypeId" class="form-control" />
+		<label asp-for="OperationTypeId" class="form-label"></label>
+		<span asp-validation-for="OperationTypeId" class="text-danger"></span>
+	</div>
+
+	<button class="btn btn-primary">Enviar</button>
+	<a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+</form>
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial" />
+}

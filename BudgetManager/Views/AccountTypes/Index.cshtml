@@ -1,0 +1,68 @@
+﻿@model IEnumerable<AccountTypesVM>
+@{
+	ViewData["Title"] = "Tipos Cuentas";
+}
+
+<h1>Tipos de cuenta</h1>
+<h5>El tipo de cuenta se refiere a cómo podemos agrupar cuentas.<a href="#"></a>
+	Ejemplos: Préstamos, tarjetas de crédito, etc.</h5>
+
+	<a asp-action="Create" class="btn btn-primary mb-3">Crear nuevo</a>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Acciones</th>
+				<th>Nombre</th>
+			</tr>
+		</thead>
+		<tbody id="reorderable">
+		@foreach (var accTypes in Model)
+		{
+			<tr>
+				<td>
+					<input type="hidden" value="@accTypes.Id" class="ids" />
+					<a class="btn btn-primary" asp-controller="AccountTypes" asp-action="Edit" asp-route-id="@accTypes.Id">Editar</a>
+					<a class="btn btn-danger" asp-action="Delete" asp-route-id="@accTypes.Id">Borrar</a>
+				</td>
+				<td>
+					@accTypes.Name
+				</td>
+			</tr>
+		}
+		</tbody>
+	</table>
+
+	@section Scripts {
+		<script>
+			const urlSort = '@Url.Action("SortAccTypes")';
+			$(function(){
+				$("#reorderable").sortable({
+					stop: async function(e, ui){
+						await updateOrders();
+					}
+				});
+				async function updateOrders(){
+					const ids = getIdsElements();
+					await sendIds(ids);
+				}
+				function getIdsElements(){
+					const ids = $(".ids").map(function(){
+						return $(this).val();
+					}).get();
+					return ids;
+				}
+				async function sendIds(ids){
+					var data = JSON.stringify(ids);
+
+					await fetch(urlSort, {
+						method: 'POST',
+						body: data,
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					});
+				}
+			})
+		</script>
+	}

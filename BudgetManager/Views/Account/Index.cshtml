@@ -1,0 +1,43 @@
+﻿@model IEnumerable<AccountVM>
+@{
+	ViewData["Title"] = "Cuentas";
+}
+
+<h1>Cuentas</h1>
+<h5>Cuentas pertenecientes al usuario.</h5>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Crear una cuenta</a>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Acciones</th>
+			<th>Nombre</th>
+		</tr>
+	</thead>
+	<tbody id="reorderable">
+		@if(Model != null)
+		{
+			@foreach (var account in Model)
+			{
+				<tr>
+					<td>
+						<input type="hidden" value="@account.Id" class="ids" />
+						<a class="btn btn-primary" asp-controller="Account" asp-action="Edit" asp-route-id="@account.Id">Editar</a>
+						<a class="btn btn-danger" asp-controller="Account" asp-action="Delete" asp-route-id="@account.Id">Borrar</a>
+					</td>
+					<td>
+						@account.Name
+					</td>
+				</tr>
+			}
+		}else
+		{
+			<tr>
+				<td>
+					<span class="btn-light">No hay cuentas disponibles.</span>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
