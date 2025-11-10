@@ -1,4 +1,5 @@
-﻿@model CategoryVM
+﻿@using BudgetManager.Domain.Constants.Enum
+@model CategoryVM
 @{
 	ViewData["Title"] = "Crear categoría";
 }
@@ -12,13 +13,18 @@
 		<span asp-validation-for="Name" class="text-danger"></span>
 	</div>
 	<div class="mb-3">
-		<input asp-for="OperationTypeId" class="form-control" />
-		<label asp-for="OperationTypeId" class="form-label"></label>
-		<span asp-validation-for="OperationTypeId" class="text-danger"></span>
+		<label asp-for="@Model.OperationTypeId" class="form-label"></label>
+		<select asp-for="@Model.OperationTypeId"
+				asp-items="Html.GetEnumSelectList<OperationTypeEnum>()"
+				class="form-select"
+				aria-label="Default select example">
+			<option selected>Seleccione una opción</option>
+		</select>
+		<span asp-validation-for="@Model.OperationTypeId" class="text-danger"></span>
 	</div>
 
 	<button class="btn btn-primary">Enviar</button>
-	<a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+	<a class="btn btn-danger" asp-action="Index">Cancelar</a>
 </form>
 
 @section Scripts{

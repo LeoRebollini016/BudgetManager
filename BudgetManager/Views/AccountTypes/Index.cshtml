@@ -12,23 +12,29 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Acciones</th>
+				<th>#</th>
 				<th>Nombre</th>
+				<th>Acciones</th>
 			</tr>
 		</thead>
 		<tbody id="reorderable">
+		@{
+			var index = 1;
+		}
 		@foreach (var accTypes in Model)
 		{
 			<tr>
+				<td>@index</td>
+				<td>
+					@accTypes.Name
+				</td>
 				<td>
 					<input type="hidden" value="@accTypes.Id" class="ids" />
 					<a class="btn btn-primary" asp-controller="AccountTypes" asp-action="Edit" asp-route-id="@accTypes.Id">Editar</a>
 					<a class="btn btn-danger" asp-action="Delete" asp-route-id="@accTypes.Id">Borrar</a>
 				</td>
-				<td>
-					@accTypes.Name
-				</td>
 			</tr>
+			index++;
 		}
 		</tbody>
 	</table>

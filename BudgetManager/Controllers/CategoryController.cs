@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetManager.Controllers;
 
-public class CategoryController(ICategoryService categoryService, IUserService userService, IMapper mapper) : Controller
+public class CategoryController(ICategoryService categoryService, IMapper mapper) : Controller
 {
     private readonly ICategoryService _categoryService = categoryService;
-    private readonly IUserService _userService = userService;
     private readonly IMapper _mapper = mapper;
 
     [HttpGet]
@@ -27,13 +26,31 @@ public class CategoryController(ICategoryService categoryService, IUserService u
         return View(categoryVM);
     }
     [HttpGet]
-    public async Task<IActionResult> Create() => View();
+    public IActionResult Create() => View();
 
     [HttpPost]
     public async Task<IActionResult> Create(CategoryVM categoryVM)
     {
         var categoryDto = _mapper.Map<CategoryDto>(categoryVM);
         await _categoryService.AddCategoryAsync(categoryDto);
+
+        return RedirectToAction("Index");
+    }
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id) 
+    {
+        var category = await _categoryService.GetCategoryByIdAsync(id);
+        var modelCategory = _mapper.Map<CategoryVM>(category);
+        modelCategory.Id = id;
+        return View(modelCategory);
+    } 
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateCategory(CategoryVM categoryVM)
+    {
+        var categoryDto = _mapper.Map<CategoryDto>(categoryVM);
+        categoryDto.Id = categoryVM.Id;
+        await _categoryService.UpdateCategoryAsync(categoryDto);
 
         return RedirectToAction("Index");
     }

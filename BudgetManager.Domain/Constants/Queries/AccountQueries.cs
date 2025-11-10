@@ -7,11 +7,11 @@ public static class AccountQueries
         VALUES (@Name, @AccountTypeId, @Balance, @Description);
         SELECT SCOPE_IDENTITY();";
 
-    public static string SelectListAccountsQuery = @"
+    public static string GetListAccountsQuery = @"
         SELECT * 
         FROM accounts;";
 
-    public static string SelectAccountByIdQuery = @"
+    public static string GetAccountByIdQuery = @"
         SELECT * 
         FROM accounts
         WHERE id = @id;";
@@ -26,4 +26,8 @@ public static class AccountQueries
         DELETE 
         FROM accounts
         WHERE id = @id;";
+    public static string GetAccountNamesQuery =
+        @"SELECT id, name
+        FROM accounts
+        WHERE id_user = @userId";
 }

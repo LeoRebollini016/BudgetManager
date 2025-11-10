@@ -1,7 +1,7 @@
 ﻿namespace BudgetManager.Domain.Dtos;
 
-public class ListNameAccountTypesDto
+public class KeyValueDto
 {
-    public int id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
 }

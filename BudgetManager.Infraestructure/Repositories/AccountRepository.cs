@@ -1,11 +1,12 @@
 ﻿using BudgetManager.Domain.Constants.Queries;
+using BudgetManager.Domain.Dtos;
 using BudgetManager.Domain.Entities;
 using BudgetManager.Domain.Interfaces.Repositories;
 using Dapper;
 
 namespace BudgetManager.Infraestructure.Repositories;
 
-public class AccountRepositories(IDbConnectionFactory connectionFactory) : IAccountRepositories
+public class AccountRepository(IDbConnectionFactory connectionFactory) : IAccountRepository
 {
     private readonly IDbConnectionFactory _connectionFactory = connectionFactory;
 
@@ -17,12 +18,12 @@ public class AccountRepositories(IDbConnectionFactory connectionFactory) : IAcco
     public async Task<IEnumerable<Account>> GetAccountsAsync()
     {
         using var conn = _connectionFactory.CreateConnection();
-        return await conn.QueryAsync<Account>(AccountQueries.SelectListAccountsQuery);
+        return await conn.QueryAsync<Account>(AccountQueries.GetListAccountsQuery);
     }
     public async Task<Account?> GetAccountByIdAsync(int id)
     {
         using var conn = _connectionFactory.CreateConnection();
-        return await conn.QueryFirstOrDefaultAsync<Account?>(AccountQueries.SelectAccountByIdQuery, new { id });
+        return await conn.QueryFirstOrDefaultAsync<Account?>(AccountQueries.GetAccountByIdQuery, new { id });
     }
     public async Task UpdateAccountAsync(Account account)
     {
@@ -33,5 +34,10 @@ public class AccountRepositories(IDbConnectionFactory connectionFactory) : IAcco
     {
         using var conn = _connectionFactory.CreateConnection();
         await conn.ExecuteAsync(AccountQueries.DeleteAccountQuery, new { id });
+    }
+    public async Task<IEnumerable<KeyValueDto>> GetAccountNamesAsync(int userId)
+    {
+        using var conn = _connectionFactory.CreateConnection();
+        return await conn.QueryAsync<KeyValueDto>(AccountQueries.GetAccountNamesQuery, new { userId });
     }
 }

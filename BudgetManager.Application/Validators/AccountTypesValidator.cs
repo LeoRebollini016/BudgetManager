@@ -6,9 +6,9 @@ namespace BudgetManager.Validations;
 
 public class AccountTypesValidator: AbstractValidator<AccountTypesDto>
 {
-    private readonly IAccountTypesRepositories _repository;
+    private readonly IAccountTypesRepository _repository;
 
-    public AccountTypesValidator(IAccountTypesRepositories repository)
+    public AccountTypesValidator(IAccountTypesRepository repository)
     {
         _repository = repository;
 

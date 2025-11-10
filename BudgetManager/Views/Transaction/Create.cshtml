@@ -1,0 +1,56 @@
+﻿@using BudgetManager.Domain.Constants.Enum
+@model TransactionCreateVM
+@{
+	ViewData["Title"] = "Crear transacción";
+}
+<h1>Crear transacción</h1>
+
+<form asp-action="Create">
+	<div class="mb-3">
+		<label asp-for="@Model.Account" class="form-label"></label>
+		<select id="selectAccountId" asp-for="@Model.AccountId" asp-items="Model.Account" class="form-select" aria-label="Default select example">
+			<option selected>Seleccione una opción</option>
+		</select>
+		<span asp-validation-for="@Model.AccountId" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.OperationTypes" class="form-label"></label>
+		<select asp-for="@Model.OperationTypeId"
+		  asp-items="Html.GetEnumSelectList<OperationTypeEnum>()"
+		  class="form-select"
+		  aria-label="Default select example">
+			<option selected>Seleccione una opción</option>
+		</select>
+		<span asp-validation-for="@Model.OperationTypeId" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.Category" class="form-label"></label>
+		<select id="selectCategoryId" asp-for="@Model.CategoryId" asp-items="Model.Category" class="form-select" aria-label="Default select example">
+			<option selected>Seleccione una opción</option>
+		</select>
+		<span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.Amount" class="form-label"></label>
+		<input asp-for="@Model.Amount" class="form-control" />
+		<span asp-validation-for="@Model.Amount" class="text-danger" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.TransactionDate" class="form-label"></label>
+		<input asp-for="@Model.TransactionDate" class="form-control" type="date" asp-format="{0:yyyy-MM-dd}" />
+		<span asp-validation-for="@Model.TransactionDate" class="text-danger" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.Note" class="form-label"></label>
+		<textarea asp-for="@Model.Note" class="form-control" rows="3"></textarea>
+		<span class="text-danger" />
+	</div>
+
+
+	<button type="submit" asp-action="Create" class="btn btn-primary me-2">Crear</button>
+	<a asp-action="Index" class="btn btn-danger">Cancelar</a>
+</form>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

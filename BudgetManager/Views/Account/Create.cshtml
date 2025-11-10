@@ -7,24 +7,26 @@
 
 <form asp-action="Create">
 	<div class="mb-3">
-		<label asp-for="Name" class="form-label"></label>
-		<input asp-for="Name" type="text" class="form-control"/>
-		<span asp-validation-for="Name" class="text-danger"></span>
+		<label asp-for="@Model.Name" class="form-label"></label>
+		<input asp-for="@Model.Name" type="text" class="form-control" />
+		<span asp-validation-for="@Model.Name" class="text-danger"></span>
 	</div>
 	<div class="mb-3">
-		<label asp-for="Balance" class="form-label"></label>
-		<input type="text" asp-for="Balance" class="form-control" />
-		<span asp-validation-for="Balance" class="text-danger"></span>
+		<label asp-for="@Model.Balance" class="form-label"></label>
+		<input type="text" asp-for="@Model.Balance" class="form-control" />
+		<span asp-validation-for="@Model.Balance" class="text-danger"></span>
 	</div>
 	<div class="mb-3">
-		<select id="selectAccTypes" asp-for="AccountTypeId" asp-items="Model.accountTypes" class="form-select" aria-label="Default select example">
+		<label asp-for="@Model.AccountTypes" class="form-label"></label>
+		<select id="selectAccTypes" asp-for="@Model.AccountTypeId" asp-items="Model.AccountTypes" class="form-select" aria-label="Default select example">
 			<option selected>Seleccione un tipo de cuenta</option>
 		</select>
+		<span asp-validation-for="AccountTypeId" class="text-danger"></span>
 	</div>
 	<div class="mb-3">
-		<label asp-for="Description" class="form-label"></label>
-		<textarea asp-for="Description" rows="3" class="form-control mb-3"></textarea>
-		<span asp-validation-for="Description" class="text-danger"></span>
+		<label asp-for="@Model.Description" class="form-label"></label>
+		<textarea asp-for="@Model.Description" rows="3" class="form-control mb-3"></textarea>
+		<span asp-validation-for="@Model.Description" class="text-danger"></span>
 	</div>
 	<div class="mb-3">
 		<button type="submit" class="btn btn-primary">Crear</button>

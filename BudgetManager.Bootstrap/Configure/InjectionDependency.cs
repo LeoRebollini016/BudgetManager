@@ -23,6 +23,7 @@ public static class InjectionDependency
         services.AddTransient<IAccountTypesService, AccountTypesService>();
         services.AddTransient<IAccountService, AccountService>();
         services.AddTransient<ICategoryService, CategoryService>();
+        services.AddTransient<ITransactionService, TransactionService>();
         services.AddAutoMapper(cfg => { }, typeof(ApplicationProfile).Assembly);
         services.AddValidatorsFromAssemblyContaining<AccountTypesValidator>();
         services.AddValidatorsFromAssemblyContaining<AccountValidator>();
@@ -31,9 +32,10 @@ public static class InjectionDependency
     public static IServiceCollection AddInfraestructureDependency(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
-        services.AddTransient<IAccountTypesRepositories, AccountTypesRepositories>();
-        services.AddTransient<IAccountRepositories, AccountRepositories>();
+        services.AddTransient<IAccountTypesRepository, AccountTypesRepository>();
+        services.AddTransient<IAccountRepository, AccountRepository>();
         services.AddTransient<ICategoryRepository, CategoryRepository>();
+        services.AddTransient<ITransactionRepository, TransactionRepository>();
 
         return services;
     }

@@ -16,5 +16,8 @@ public class PresentationProfile: Profile
         CreateMap<CategoryDto, CategoryVM>();
         CreateMap<CategoryVM, CategoryDto>()
             .ForMember(x => x.Id, x => x.Ignore());
+
+        CreateMap<TransactionDetailDto, TransactionDetailsVM>();
+        CreateMap<TransactionCreateVM, TransactionCreateDto>();
     }
 }

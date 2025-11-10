@@ -42,9 +42,9 @@ public class AccountController(IAccountService accountService, IUserService user
             var options = await _accountService.GetAccountTypesNamesAsync();
             var modelCreationAccount = new AccountCreateVM
             {
-                accountTypes = options.Select(a => new SelectListItem
+                AccountTypes = options.Select(a => new SelectListItem
                 {
-                    Value = a.id.ToString(),
+                    Value = a.Id.ToString(),
                     Text = a.Name
                 })
             };
@@ -67,6 +67,7 @@ public class AccountController(IAccountService accountService, IUserService user
     public async Task<IActionResult> EditAccount(AccountVM accountVM)
     {
         var accountDto = _mapper.Map<AccountDto>(accountVM);
+        accountDto.Id = accountVM.Id;
         await _accountService.UpdateAccountAsync(accountDto);
         return RedirectToAction("Index");
     }
@@ -95,9 +96,9 @@ public class AccountController(IAccountService accountService, IUserService user
         var options = await _accountService.GetAccountTypesNamesAsync();
         var modelCreationAccount = new AccountCreateVM
         {
-            accountTypes = options.Select(a => new SelectListItem
+            AccountTypes = options.Select(a => new SelectListItem
             {
-                Value = a.id.ToString(),
+                Value = a.Id.ToString(),
                 Text = a.Name
             })
         };

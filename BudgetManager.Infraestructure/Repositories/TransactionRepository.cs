@@ -1,0 +1,22 @@
+﻿using BudgetManager.Domain.Constants.Queries;
+using BudgetManager.Domain.Dtos;
+using BudgetManager.Domain.Interfaces.Repositories;
+using Dapper;
+
+namespace BudgetManager.Infraestructure.Repositories;
+
+public class TransactionRepository(IDbConnectionFactory dbConnection) : ITransactionRepository
+{
+    private readonly IDbConnectionFactory _dbConnection = dbConnection;
+
+    public async Task<IEnumerable<TransactionDetailDto>> GetTransactionsAsync(int userId)
+    {
+        using var conn = _dbConnection.CreateConnection();
+        return await conn.QueryAsync<TransactionDetailDto>(TransactionQueries.SelectTransactionListQuery, new { userId });
+    }
+    public async Task InsertTransactionAsync(TransactionCreateDto transaction)
+    {
+        using var conn = _dbConnection.CreateConnection();
+        transaction.Id = await conn.ExecuteAsync(TransactionQueries.InsertTransactionQuery, transaction);
+    }
+}

@@ -5,7 +5,7 @@ namespace BudgetManager.Domain.Interfaces.Services;
 public interface IAccountService
 {
     Task CreateAsync(AccountDto accountDto);
-    Task<List<ListNameAccountTypesDto>> GetAccountTypesNamesAsync();
+    Task<List<KeyValueDto>> GetAccountTypesNamesAsync();
     Task<List<AccountDto>> GetListAccountsAsync();
     Task DeleteAccountAsync(int accountId);
     Task<AccountDto?> GetAccountByIdAsync(int accountId);

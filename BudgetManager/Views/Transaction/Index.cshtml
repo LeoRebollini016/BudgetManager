@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TransactionDetailsVM>
+@{
+	ViewData["Title"] = "Transacciones";
+}
+
+<h1>Transacciones</h1>
+<h4>Las transacciones son la transferencias de activos a través de cuentas y/o usuarios.</h4>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Crear transacción</a>
+
+@if (Model.Any())
+{
+	var index = 1;
+	<table class="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Cuenta</th>
+				<th>Monto</th>
+				<th>Categoría</th>
+				<th>Fecha de transacción</th>
+				<th>Tipo de operación</th>
+				<th>Nota</th>
+			</tr>
+		</thead>
+		@foreach(var transaction in Model)
+		{
+			<tbody>
+				<tr>
+					<td>@index</td>
+					<td>@transaction.Account</td>
+					<td>@transaction.Amount</td>
+					<td>@transaction.Category</td>
+					<td>@transaction.TransactionDate.ToString("d")</td>
+					<td>@transaction.OperationType</td>
+					<td>@transaction.Note</td>
+				</tr>
+			</tbody>
+			index++;
+		}
+	</table>
+}
+else
+{
+	<h4>No Hay elementos.</h4>
+}

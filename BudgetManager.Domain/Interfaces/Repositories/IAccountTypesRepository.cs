@@ -3,7 +3,7 @@ using BudgetManager.Domain.Entities;
 
 namespace BudgetManager.Interfaces.Repositories;
 
-public interface IAccountTypesRepositories
+public interface IAccountTypesRepository
 {
     Task CreateAsync(AccountTypes accountTypes);
     Task<bool> ExistAccTypesAsync(string name, int userId);
@@ -12,5 +12,5 @@ public interface IAccountTypesRepositories
     Task<AccountTypes> UpdateAsync(AccountTypes accountTypes);
     Task DeleteAccTypeAsync(int id);
     Task OrderListAsync(IEnumerable<AccountTypes> accounts);
-    Task<IEnumerable<ListNameAccountTypesDto>> GetAccTypesNamesByUserAsync(int userId);
+    Task<IEnumerable<KeyValueDto>> GetAccountTypesNamesAsync(int userId);
 }

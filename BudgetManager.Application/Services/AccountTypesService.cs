@@ -6,9 +6,9 @@ using BudgetManager.Interfaces.Repositories;
 
 namespace BudgetManager.Application.Services;
 
-public class AccountTypesService(IAccountTypesRepositories accTypesService, IUserService userService, IMapper mapper) : IAccountTypesService
+public class AccountTypesService(IAccountTypesRepository accTypesService, IUserService userService, IMapper mapper) : IAccountTypesService
 {
-    private readonly IAccountTypesRepositories _accTypesService = accTypesService;
+    private readonly IAccountTypesRepository _accTypesService = accTypesService;
     private readonly IUserService _userService = userService;
     private readonly IMapper _mapper = mapper;
 

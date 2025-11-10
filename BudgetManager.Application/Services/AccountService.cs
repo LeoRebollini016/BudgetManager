@@ -7,11 +7,11 @@ using BudgetManager.Interfaces.Repositories;
 
 namespace BudgetManager.Application.Services;
 
-public class AccountService(IAccountRepositories accountRepository, IUserService userService, IAccountTypesRepositories accountTypesService, IMapper mapper) : IAccountService
+public class AccountService(IAccountRepository accountRepository, IUserService userService, IAccountTypesRepository accountTypesService, IMapper mapper) : IAccountService
 {
-    private readonly IAccountRepositories _accountRepository = accountRepository;
+    private readonly IAccountRepository _accountRepository = accountRepository;
     private readonly IUserService _userService = userService;
-    private readonly IAccountTypesRepositories _accountTypesService = accountTypesService;
+    private readonly IAccountTypesRepository _accountTypesService = accountTypesService;
     private readonly IMapper _mapper = mapper;
 
     public async Task CreateAsync(AccountDto accountDto)
@@ -19,10 +19,15 @@ public class AccountService(IAccountRepositories accountRepository, IUserService
         var account = _mapper.Map<Account>(accountDto);
         await _accountRepository.CreateAsync(account);
     }
-    public async Task<List<ListNameAccountTypesDto>> GetAccountTypesNamesAsync()
+    public async Task<List<KeyValueDto>?> GetAccountNamesAsync()
     {
         var userId = _userService.GetUserId();
-        return await _accountTypesService.GetAccTypesNamesByUserAsync(userId) as List<ListNameAccountTypesDto>;
+        return await _accountRepository.GetAccountNamesAsync(userId) as List<KeyValueDto>;
+    }
+    public async Task<List<KeyValueDto>?> GetAccountTypesNamesAsync()
+    {
+        var userId = _userService.GetUserId();
+        return await _accountTypesService.GetAccountTypesNamesAsync(userId) as List<KeyValueDto>;
     }
     public async Task<AccountDto?> GetAccountByIdAsync(int accountId)
         => _mapper.Map<AccountDto>(

@@ -8,6 +8,6 @@ public class AccountCreateVM
     public string Name { get; set; } = string.Empty;
     public double Balance { get; set; } = 0.0;
     public int AccountTypeId { get; set; }
-    public IEnumerable<SelectListItem> accountTypes { get; set; }
+    public IEnumerable<SelectListItem> AccountTypes { get; set; }
     public string? Description { get; set; }
 }

@@ -11,25 +11,29 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>Acciones</th>
+			<th>#</th>
 			<th>Nombre</th>
+			<th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody id="reorderable">
 		@if(Model != null)
 		{
+			var index = 1;
 			@foreach (var account in Model)
 			{
 				<tr>
+					<td>@index</td>
+					<td>
+						@account.Name
+					</td>
 					<td>
 						<input type="hidden" value="@account.Id" class="ids" />
 						<a class="btn btn-primary" asp-controller="Account" asp-action="Edit" asp-route-id="@account.Id">Editar</a>
 						<a class="btn btn-danger" asp-controller="Account" asp-action="Delete" asp-route-id="@account.Id">Borrar</a>
 					</td>
-					<td>
-						@account.Name
-					</td>
 				</tr>
+				index++;
 			}
 		}else
 		{

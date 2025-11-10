@@ -15,8 +15,7 @@ public class CategoryService(ICategoryRepository categoryRepository, IUserServic
     public async Task<List<CategoryDto>> GetCategoriesAsync()
     {
         var user = _userService.GetUserId();
-        var categories = await _categoryRepository.GetCategoriesAsync(user);
-        return _mapper.Map<List<CategoryDto>>(categories);
+        return (List<CategoryDto>)await _categoryRepository.GetCategoriesAsync(user);
     }
     public async Task<CategoryDto?> GetCategoryByIdAsync(int id)
     {
@@ -30,5 +29,16 @@ public class CategoryService(ICategoryRepository categoryRepository, IUserServic
         categoryDto.userId = user;
         await _categoryRepository.InsertCategoryAsync(
                                         _mapper.Map<Category>(categoryDto));
+    }
+    public async Task UpdateCategoryAsync(CategoryDto categoryDto)
+    {
+        var user = _userService.GetUserId();
+        categoryDto.userId = user;
+        await _categoryRepository.UpdateCategoryAsync(_mapper.Map<Category>(categoryDto));
+    }
+    public async Task<List<KeyValueDto>> GetCategoryNamesAsync()
+    {
+        var user = _userService.GetUserId();
+        return (List<KeyValueDto>)await _categoryRepository.GetCategoryNamesAsync(user);
     }
 }

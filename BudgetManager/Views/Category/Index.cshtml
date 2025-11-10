@@ -4,30 +4,43 @@
 }
 
 <h1>Categorias</h1>
+<h5>La categoría indica en que gastamos y de donde provienen nuestros ingresos.</h5>
+
 <div class="mb-3">
 	<a asp-action="Create" class="btn btn-primary">Crear categoría</a>
 </div>
 
 @if (Model.Any())
 {
-	@foreach(var category in Model)
-	{
+	<table class="table">
 		<thead>
 			<tr>
 				<th scope="col">#</th>
 				<th scope="col">Nombre</th>
 				<th scope="col">Tipo de operación</th>
+				<th scope="col">Acciones</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<th scope="row">@category.Id</th>
-				<th scope="row">@category.Name</th>
-				<th scope="row">@category.OperationTypeId</th>
-			</tr>
+			@{
+				var index = 1;
+			}
+			@foreach(var category in Model)
+			{
+				<tr>
+					<td>@index</td>
+					<td>@category.Name</td>
+					<td>@category.OperationType</td>
+					<td>
+						<input type="hidden" value="@category.Id" class="ids" />
+						<a asp-action="Edit" asp-route-Id="@category.Id" class="bi bi-pencil me-2 btn btn-primary"></a>
+						<a asp-action="Delete" asp-route-Id="@category.Id" class="bi bi-trash btn btn-danger"></a>
+					</td>
+				</tr>
+				index++;
+			}
 		</tbody>
-
-	}
+	</table>
 }else 
 {
 	<span class="text-info">No hay categorias para mostrar.</span>

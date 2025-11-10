@@ -7,7 +7,7 @@ using BudgetManager.Domain.Entities;
 
 namespace BudgetManager.Services.AccountTypesRepositories;
 
-public class AccountTypesRepositories(IDbConnectionFactory connectionFactory) : IAccountTypesRepositories
+public class AccountTypesRepository(IDbConnectionFactory connectionFactory) : IAccountTypesRepository
 {
     private readonly IDbConnectionFactory _connectionFactory = connectionFactory;
 
@@ -50,8 +50,8 @@ public class AccountTypesRepositories(IDbConnectionFactory connectionFactory) : 
         using var conn = _connectionFactory.CreateConnection();
         await conn.ExecuteAsync(AccountTypesQueries.SortAccTypesQuery, accounts);
     }
-    public async Task<IEnumerable<ListNameAccountTypesDto>> GetAccTypesNamesByUserAsync(int userId) {
+    public async Task<IEnumerable<KeyValueDto>> GetAccountTypesNamesAsync(int userId) {
         using var conn = _connectionFactory.CreateConnection();
-        return await conn.QueryAsync<ListNameAccountTypesDto>(AccountTypesQueries.GetAccountTypesNamesQuery, new { userId } );
+        return await conn.QueryAsync<KeyValueDto>(AccountTypesQueries.GetAccountTypesNamesQuery, new { userId } );
     }
 }
