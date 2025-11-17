@@ -19,4 +19,19 @@ public class TransactionRepository(IDbConnectionFactory dbConnection) : ITransac
         using var conn = _dbConnection.CreateConnection();
         transaction.Id = await conn.ExecuteAsync(TransactionQueries.InsertTransactionQuery, transaction);
     }
+    public async Task UpdateTransactionAsync(TransactionCreateDto transaction)
+    {
+        using var conn = _dbConnection.CreateConnection();
+        await conn.ExecuteAsync(TransactionQueries.UpdateTransactionQuery, transaction);
+    }
+    public async Task<TransactionDeleteDto> GetTransactionDeleteInfoByIdAsync(int transactionId, int userId)
+    {
+        using var conn = _dbConnection.CreateConnection();
+        return await conn.QueryFirstAsync<TransactionDeleteDto>(TransactionQueries.GetTransactionByIdQuery, new { Id = transactionId, userId });
+    }
+    public async Task DeleteTransactionByIdAsync(int transactionId, int userId)
+    {
+        using var conn = _dbConnection.CreateConnection();
+        await conn.ExecuteAsync(TransactionQueries.DeleteTransactionByIdQuery, new { Id = transactionId, userId });
+    }
 }

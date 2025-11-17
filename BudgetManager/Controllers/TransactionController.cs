@@ -5,6 +5,7 @@ using BudgetManager.Domain.Interfaces.Services;
 using BudgetManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BudgetManager.Controllers
 {
@@ -32,6 +33,33 @@ namespace BudgetManager.Controllers
         {
             var transactionDto = _mapper.Map<TransactionCreateDto>(transactionCreateVM);
             await _transactionService.InsertTransactionAsync(transactionDto);
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await GetTransactionVM();
+            model.Id = id;
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(TransactionCreateVM transactionVM)
+        {
+            var transactionDto = _mapper.Map<TransactionCreateDto>(transactionVM);
+            await _transactionService.UpdateTransactionAsync(transactionDto);
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var transactionDeleteInfoDto = await _transactionService.GetTransactionDeleteInfoByIdAsync(id);
+            var transactionDeleteInfoVM = _mapper.Map<TransactionDeleteVM>(transactionDeleteInfoDto);
+            return View(transactionDeleteInfoVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteTransaction(int id)
+        {
+            await _transactionService.DeleteTransactionByIdAsync(id);
             return RedirectToAction("Index");
         }
         private async Task<TransactionCreateVM> GetTransactionVM()

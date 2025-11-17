@@ -18,4 +18,19 @@ public static class TransactionQueries
             (@UserId, @TransactionDate, @Amount, @OperationTypeId, @Note, @AccountId, @CategoryId);
         SELECT CAST(SCOPE_IDENTITY() as int);
     ";
+    public static string UpdateTransactionQuery = @"
+        UPDATE transactions
+        SET transaction_date = @TransactionDate, amount = @Amount, id_operations_types = @OperationTypeId,
+            note = @Note, id_account = @AccountId, id_category = @CategoryId
+        WHERE id = @Id AND id_user = @UserId;";
+    public static string GetTransactionByIdQuery = @"
+        SELECT id, transaction_date as TransactionDate, amount, note
+        FROM transactions
+        WHERE id = @Id AND id_user = @userId;
+    ";
+    public static string DeleteTransactionByIdQuery = @"
+        DELETE
+        FROM transactions
+        WHERE id = @Id AND id_user = @userId;
+    ";
 }

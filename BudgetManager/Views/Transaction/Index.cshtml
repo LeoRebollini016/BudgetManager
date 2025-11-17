@@ -8,10 +8,10 @@
 
 <a asp-action="Create" class="btn btn-primary mb-3">Crear transacción</a>
 
-@if (Model.Any())
-{
-	var index = 1;
-	<table class="table">
+<table class="table">
+	@if (Model.Any())
+	{
+		var index = 1;
 		<thead>
 			<tr>
 				<th>#</th>
@@ -21,6 +21,7 @@
 				<th>Fecha de transacción</th>
 				<th>Tipo de operación</th>
 				<th>Nota</th>
+				<th>Acciones</th>
 			</tr>
 		</thead>
 		@foreach(var transaction in Model)
@@ -34,13 +35,22 @@
 					<td>@transaction.TransactionDate.ToString("d")</td>
 					<td>@transaction.OperationType</td>
 					<td>@transaction.Note</td>
+					<td>
+						<input type="hidden" value="@transaction.Id" class="ids" />
+						<a class="btn btn-primary bi bi-pencil" asp-controller="Transaction" asp-action="Edit" asp-route-id="@transaction.Id"></a>
+						<a class="btn btn-danger bi bi-trash" asp-controller="Transaction" asp-action="Delete" asp-route-id="@transaction.Id"></a>
+					</td>
 				</tr>
 			</tbody>
 			index++;
 		}
-	</table>
-}
-else
-{
-	<h4>No Hay elementos.</h4>
-}
+	}
+	else
+	{
+		<tr>
+			<td>
+				<span>No Hay elementos.</span>
+			</td>
+		</tr>
+	}
+</table>

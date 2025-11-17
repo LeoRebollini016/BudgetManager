@@ -9,4 +9,6 @@ public interface ICategoryService
     Task AddCategoryAsync(CategoryDto categoryDto);
     Task UpdateCategoryAsync(CategoryDto categoryDto);
     Task<List<KeyValueDto>> GetCategoryNamesAsync();
+    Task<CategoryDeleteDto?> GetCategoryDeleteInfoAsync(int categoryId);
+    Task DeleteCategoryByIdAsync(int categoryId);
 }

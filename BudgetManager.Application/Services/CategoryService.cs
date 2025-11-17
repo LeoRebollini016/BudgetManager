@@ -41,4 +41,14 @@ public class CategoryService(ICategoryRepository categoryRepository, IUserServic
         var user = _userService.GetUserId();
         return (List<KeyValueDto>)await _categoryRepository.GetCategoryNamesAsync(user);
     }
+    public async Task<CategoryDeleteDto?> GetCategoryDeleteInfoAsync(int categoryId)
+    {
+        var userId = _userService.GetUserId();
+        return await _categoryRepository.GetCategoryDeleteInfoByIdAsync(id: categoryId, userId);
+    }
+    public async Task DeleteCategoryByIdAsync(int categoryId)
+    {
+        var userId = _userService.GetUserId();
+        await _categoryRepository.DeleteCategoryByIdAsync(userId, categoryId);
+    }
 }

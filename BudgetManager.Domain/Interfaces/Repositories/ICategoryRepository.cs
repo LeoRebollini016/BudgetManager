@@ -10,4 +10,6 @@ public interface ICategoryRepository
     Task InsertCategoryAsync(Category category);
     Task UpdateCategoryAsync(Category category);
     Task<IEnumerable<KeyValueDto>> GetCategoryNamesAsync(int userId);
+    Task<CategoryDeleteDto?> GetCategoryDeleteInfoByIdAsync(int id, int userId);
+    Task DeleteCategoryByIdAsync(int userId, int categoryId);
 }

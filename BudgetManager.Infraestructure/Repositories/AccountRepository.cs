@@ -33,7 +33,7 @@ public class AccountRepository(IDbConnectionFactory connectionFactory) : IAccoun
     public async Task DeleteAccountAsync(int id)
     {
         using var conn = _connectionFactory.CreateConnection();
-        await conn.ExecuteAsync(AccountQueries.DeleteAccountQuery, new { id });
+        await conn.ExecuteAsync(AccountQueries.ClosedAccountQuery, new { id });
     }
     public async Task<IEnumerable<KeyValueDto>> GetAccountNamesAsync(int userId)
     {

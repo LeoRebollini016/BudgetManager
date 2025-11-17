@@ -54,5 +54,18 @@ public class CategoryController(ICategoryService categoryService, IMapper mapper
 
         return RedirectToAction("Index");
     }
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var categoryResumeDto = await _categoryService.GetCategoryDeleteInfoAsync(id);
+        var modelDeleteVM = _mapper.Map<CategoryDeleteVM>(categoryResumeDto);
+        return View(modelDeleteVM);
+    }
+    [HttpPost]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        await _categoryService.DeleteCategoryByIdAsync(id);
+        return RedirectToAction("Index");
+    }
 
 }

@@ -29,8 +29,8 @@
 					</td>
 					<td>
 						<input type="hidden" value="@account.Id" class="ids" />
-						<a class="btn btn-primary" asp-controller="Account" asp-action="Edit" asp-route-id="@account.Id">Editar</a>
-						<a class="btn btn-danger" asp-controller="Account" asp-action="Delete" asp-route-id="@account.Id">Borrar</a>
+						<a class="btn btn-primary bi bi-pencil" asp-controller="Account" asp-action="Edit" asp-route-id="@account.Id"></a>
+						<a class="btn btn-danger bi bi-trash" asp-controller="Account" asp-action="Delete" asp-route-id="@account.Id"></a>
 					</td>
 				</tr>
 				index++;

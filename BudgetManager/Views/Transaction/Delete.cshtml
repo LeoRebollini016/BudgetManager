@@ -1,0 +1,14 @@
+﻿@model TransactionDeleteVM
+@{
+	ViewData["Title"] = "Eliminar transacción";
+}
+
+<h1>Esta seguro de que quiere borrar la transacción <span class="text-danger">@Model.Id efectuada en @Model.TransactionDate por un monto de @Model.Amount </span>?</h1>
+@if(Model.Note.Any()){
+	<span class="text-info">La transacción tiene como nota: @Model.Note</span>
+}
+<form asp-action="DeleteTransaction">
+	<input type="hidden" asp-for="Id" />
+	<button type="submit" class="btn btn-danger">Borrar</button>
+	<a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+</form>
