@@ -1,4 +1,5 @@
 ﻿using BudgetManager.Domain.Dtos;
+using BudgetManager.Domain.Dtos.Account;
 
 namespace BudgetManager.Domain.Interfaces.Services;
 

@@ -1,6 +1,6 @@
 ﻿using BudgetManager.Domain.Constants.Enum;
 
-namespace BudgetManager.Domain.Dtos;
+namespace BudgetManager.Domain.Dtos.Category;
 
 public class CategoryDeleteDto
 {

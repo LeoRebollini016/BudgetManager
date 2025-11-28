@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BudgetManager.Domain.Dtos;
+using BudgetManager.Domain.Dtos.Category;
 using BudgetManager.Domain.Entities;
 using BudgetManager.Domain.Interfaces.Repositories;
 using BudgetManager.Domain.Interfaces.Services;

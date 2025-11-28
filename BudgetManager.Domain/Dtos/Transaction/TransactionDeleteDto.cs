@@ -1,4 +1,4 @@
-﻿namespace BudgetManager.Domain.Dtos;
+﻿namespace BudgetManager.Domain.Dtos.Transaction;
 
 public class TransactionDeleteDto
 {

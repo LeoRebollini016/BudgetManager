@@ -1,4 +1,4 @@
-﻿using BudgetManager.Domain.Dtos;
+﻿using BudgetManager.Domain.Dtos.AccountTypes;
 using BudgetManager.Interfaces.Repositories;
 using FluentValidation;
 

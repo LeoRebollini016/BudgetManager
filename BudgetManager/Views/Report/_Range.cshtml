@@ -1,0 +1,67 @@
+﻿@model ReportViewModel
+@{
+	ViewData["Title"] = "Reporte por rango";
+}
+
+<form asp-action="Range" method="post" class="mb-3 row g-3">
+	<div class="col-md-4">
+		<label asp-for="StartDate" class="form-label" value="@Model.StartDate"></label>
+		<input asp-for="StartDate" type="date" class="form-control" />
+	</div>
+	<div class="col-md-4">
+		<label asp-for="EndDate" class="form-label" value="@Model.EndDate"></label>
+		<input asp-for="EndDate" type="date" class="form-control" />
+	</div>
+	<div class="col-md-4">
+		<label asp-for="AccountId" class="form-label" value="@Model.AccountId"></label>
+		<select asp-for="AccountId"
+				asp-items="@Model.SelectOptions"
+				class="form-select"
+				aria-label="Default select example">
+			<option selected>Todas las cuentas.</option>
+		</select>
+		<span asp-validation-for="AccountId" class="text-danger" />
+	</div>
+	<div class="col-md-4 d-flex align-items-end">
+		<button type="submit" class="btn btn-success w-100">Generar</button>
+	</div>
+</form>
+
+<div class="results mt-4">
+	@if (Model.TimeSeries != null && Model.TimeSeries.Any() && Model.ReportType == "range")
+	{
+		<div class="card mt-4">
+			<div class="card-body">
+
+				<h3>Resumen</h3>
+				<p><strong>Ingreso Total:</strong> @Model.TotalIncome</p>
+				<p><strong>Gasto Total:</strong> @Model.TotalExpense</p>
+				<p><strong>Balance:</strong> @Model.Balance</p>
+
+				<hr />
+
+				<h5>Detalles</h5>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Fecha</th>
+							<th>Ingreso</th>
+							<th>Gasto</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model.TimeSeries)
+						{
+							<tr>
+								<td>@item.Date.ToShortDateString()</td>
+								<td>@item.Income</td>
+								<td>@item.Expense</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	}
+</div>

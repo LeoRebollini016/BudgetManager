@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BudgetManager.Domain.Constants.Enum;
-using BudgetManager.Domain.Dtos;
+using BudgetManager.Domain.Dtos.Transaction;
 using BudgetManager.Domain.Interfaces.Services;
 using BudgetManager.Models;
 using Microsoft.AspNetCore.Mvc;

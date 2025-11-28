@@ -1,0 +1,90 @@
+﻿@model ReportViewModel
+@{
+	ViewData["Title"] = "Reportes";
+}
+
+<h1 class="mb-3">Reportes</h1>
+
+
+<div class="report-container">
+	<div class="tabs mb-3">
+		<button type="button" class="tab-button" data-target="monthly" aria-pressed="false">Mensual</button>
+		<button type="button" class="tab-button" data-target="range" aria-pressed="false">Rango</button>
+		<button type="button" class="tab-button" data-target="category" aria-pressed="false">Categoría</button>
+	</div>
+
+	<div id="monthly" 
+		class="tab-panel"
+		style="display:@(Model.ReportType == "monthly" ? "block" : "none")">
+		<partial name="_Monthly" model="Model" />
+	</div>
+	<div id="range" 
+		class="tab-panel"
+			 style="display: @(Model.ReportType == "range" ? "block" : "none")">
+		<partial name="_Range" model="Model" />
+	</div>
+	<div id="category" 
+		class="tab-panel" 
+		style="display: @(Model.ReportType == "category" ? "block" : "none")">
+		<partial name="_Category" model="Model" />
+	</div>
+	
+	<!--
+
+	@if(Model.TimeSeries != null && Model.TimeSeries.Any())
+	{
+		<h4>Resultados</h4>
+		<p><strong>Total Ingresos:</strong>@Model.TotalIncome</p>
+		<p><strong>Total Egresos:</strong>@Model.TotalExpense</p>
+		<p><strong>Balance:</strong>@Model.Balance</p>
+
+		<h5 class="mt-3">Detalle por día</h5>
+		@foreach (var x in Model.TimeSeries)
+		{
+			<div>
+				<strong>@x.Date.ToShortTimeString()</strong>
+				Ingreso: @x.Income - Gasto: @x.Expense
+			</div>
+		}
+	}
+	-->
+</div>
+
+@section Scripts{
+	<script>
+			document.addEventListener('DOMContentLoaded', function () {
+			const buttons = document.querySelectorAll('.tab-button');
+			const panels = document.querySelectorAll('.tab-panel');
+			
+			function setActive(target) {
+				// Mostrar/ocultar panels
+				panels.forEach(p => p.style.display = (p.id === target ? 'block' : 'none'));
+
+				// Clase active + aria-pressed
+				buttons.forEach(b => {
+					const isActive = b.getAttribute('data-target') === target;
+					b.classList.toggle('active', isActive);
+					b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+				});
+
+				// Actualizar hidden inputs en los formularios (si existen)
+				document.querySelectorAll('form').forEach(form => {
+					const input = form.querySelector('input[name="ReportType"]');
+					if (input) input.value = target;
+				});
+			}
+
+			// Inicializar estado desde Model.ReportType (servidor)
+			const initial = '@(Model.ReportType ?? "monthly")';
+			setActive(initial);
+
+			// Click handlers
+			buttons.forEach(btn => {
+				btn.addEventListener('click', () => {
+					const target = btn.getAttribute('data-target');
+					setActive(target);
+				});
+			});
+		});
+	</script>
+}

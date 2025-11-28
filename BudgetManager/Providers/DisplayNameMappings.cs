@@ -15,6 +15,10 @@ public static class DisplayNameMappings
         { "TransactionCreateVM.Category", "Categoría" },
         { "TransactionCreateVM.Amount", "Monto" },
         { "TransactionCreateVM.DateTransaction", "Fecha de transacción" },
-        { "TransactionCreateVM.Note", "Nota" }
+        { "TransactionCreateVM.Note", "Nota" },
+        { "ReportViewModel.Month", "Mes" },
+        { "ReportViewModel.AccountId", "Cuenta" },
+        { "ReportViewModel.StartDate", "Fecha inicio" },
+        { "ReportViewModel.EndDate", "Fecha final" }
     };
 }

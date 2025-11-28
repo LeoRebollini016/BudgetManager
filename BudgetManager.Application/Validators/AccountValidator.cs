@@ -1,4 +1,4 @@
-﻿using BudgetManager.Domain.Dtos;
+﻿using BudgetManager.Domain.Dtos.Account;
 using FluentValidation;
 
 namespace BudgetManager.Application.Validators;

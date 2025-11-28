@@ -1,8 +1,7 @@
-﻿namespace BudgetManager.Domain.Dtos;
+﻿namespace BudgetManager.Domain.Dtos.Account;
 
-public class AccountDto
+public class AccountCreateDto
 {
-    public int Id { get; set; }
     public string Name { get; set; }
     public double Balance { get; set; }
     public int AccountTypeId { get; set; }

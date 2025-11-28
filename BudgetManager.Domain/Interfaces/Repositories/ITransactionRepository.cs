@@ -1,4 +1,4 @@
-﻿using BudgetManager.Domain.Dtos;
+﻿using BudgetManager.Domain.Dtos.Transaction;
 
 namespace BudgetManager.Domain.Interfaces.Repositories;
 

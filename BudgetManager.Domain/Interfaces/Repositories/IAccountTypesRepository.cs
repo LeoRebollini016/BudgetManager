@@ -1,4 +1,5 @@
 ﻿using BudgetManager.Domain.Dtos;
+using BudgetManager.Domain.Dtos.AccountTypes;
 using BudgetManager.Domain.Entities;
 
 namespace BudgetManager.Interfaces.Repositories;

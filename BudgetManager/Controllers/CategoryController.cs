@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BudgetManager.Domain.Dtos;
+using BudgetManager.Domain.Dtos.Category;
 using BudgetManager.Domain.Interfaces.Services;
 using BudgetManager.Models;
 using Microsoft.AspNetCore.Mvc;

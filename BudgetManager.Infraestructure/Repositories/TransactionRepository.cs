@@ -1,5 +1,5 @@
 ﻿using BudgetManager.Domain.Constants.Queries;
-using BudgetManager.Domain.Dtos;
+using BudgetManager.Domain.Dtos.Transaction;
 using BudgetManager.Domain.Interfaces.Repositories;
 using Dapper;
 

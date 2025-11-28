@@ -8,10 +8,9 @@
 
 <a asp-action="Create" class="btn btn-primary mb-3">Crear transacción</a>
 
-<table class="table">
-	@if (Model.Any())
-	{
-		var index = 1;
+@if (Model.Any())
+{
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>#</th>
@@ -24,33 +23,32 @@
 				<th>Acciones</th>
 			</tr>
 		</thead>
-		@foreach(var transaction in Model)
-		{
-			<tbody>
-				<tr>
-					<td>@index</td>
-					<td>@transaction.Account</td>
-					<td>@transaction.Amount</td>
-					<td>@transaction.Category</td>
-					<td>@transaction.TransactionDate.ToString("d")</td>
-					<td>@transaction.OperationType</td>
-					<td>@transaction.Note</td>
-					<td>
-						<input type="hidden" value="@transaction.Id" class="ids" />
-						<a class="btn btn-primary bi bi-pencil" asp-controller="Transaction" asp-action="Edit" asp-route-id="@transaction.Id"></a>
-						<a class="btn btn-danger bi bi-trash" asp-controller="Transaction" asp-action="Delete" asp-route-id="@transaction.Id"></a>
-					</td>
-				</tr>
-			</tbody>
-			index++;
-		}
-	}
-	else
-	{
-		<tr>
-			<td>
-				<span>No Hay elementos.</span>
-			</td>
-		</tr>
-	}
-</table>
+		<tbody>
+			@{
+				var index = 1;
+			}
+			@foreach(var transaction in Model)
+			{
+					<tr>
+						<td>@index</td>
+						<td>@transaction.Account</td>
+						<td>@transaction.Amount</td>
+						<td>@transaction.Category</td>
+						<td>@transaction.TransactionDate.ToString("d")</td>
+						<td>@transaction.OperationType</td>
+						<td>@transaction.Note</td>
+						<td>
+							<input type="hidden" value="@transaction.Id" class="ids" />
+							<a class="btn btn-primary bi bi-pencil" asp-controller="Transaction" asp-action="Edit" asp-route-id="@transaction.Id"></a>
+							<a class="btn btn-danger bi bi-trash" asp-controller="Transaction" asp-action="Delete" asp-route-id="@transaction.Id"></a>
+						</td>
+					</tr>
+				index++;
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<span>No Hay elementos.</span>
+}

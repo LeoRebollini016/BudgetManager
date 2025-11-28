@@ -4,6 +4,7 @@ using BudgetManager.Constants.Queries;
 using BudgetManager.Domain.Interfaces.Repositories;
 using BudgetManager.Domain.Dtos;
 using BudgetManager.Domain.Entities;
+using BudgetManager.Domain.Dtos.AccountTypes;
 
 namespace BudgetManager.Services.AccountTypesRepositories;
 

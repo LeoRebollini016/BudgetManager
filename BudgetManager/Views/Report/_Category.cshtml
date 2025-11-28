@@ -1,0 +1,59 @@
+﻿@model ReportViewModel
+@{
+	ViewData["Title"] = "Reporte de categorías";
+}
+
+<form asp-action="Category" method="post" class="mb-3 row g-3">
+	<div class="col-md-4">
+		<label asp-for="AccountId" class="form-label" value="@Model.AccountId"></label>
+		<select asp-for="AccountId"
+				asp-items="@Model.SelectOptions"
+				class="form-select"
+				aria-label="Default select example">
+			<option selected>Todas las cuentas.</option>
+		</select>
+		<span asp-validation-for="AccountId" class="text-danger" />
+	</div>
+	<div class="col-md-4 d-flex align-items-end">
+		<button type="submit" class="btn btn-success w-100">Generar</button>
+	</div>
+</form>
+
+<div class="results mt-4">
+	@if(Model.ByCategory != null && Model.ByCategory.Any())
+	{
+		<div class="card mt-4">
+			<div class="card-body">
+
+				<h5>Resumen</h5>
+				<p><strong>Ingreso Total:</strong> @Model.TotalIncome</p>
+				<p><strong>Gasto Total:</strong> @Model.TotalExpense</p>
+				<p><strong>Balance:</strong> @Model.Balance</p>
+
+				<hr />
+
+				<h5>Detalles</h5>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Categoría</th>
+							<th>Tipo</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach(var item in Model.ByCategory)
+						{
+							<tr>
+								<td>@item.CategoryName.</td>
+								<td>@item.OperationType</td>
+								<td>@item.Total</td>
+							</tr>
+						}
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	}
+</div>

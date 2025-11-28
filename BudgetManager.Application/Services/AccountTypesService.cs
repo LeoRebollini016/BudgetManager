@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BudgetManager.Domain.Dtos;
+using BudgetManager.Domain.Dtos.AccountTypes;
 using BudgetManager.Domain.Entities;
 using BudgetManager.Domain.Interfaces.Services;
 using BudgetManager.Interfaces.Repositories;
