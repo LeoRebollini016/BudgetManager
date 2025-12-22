@@ -18,7 +18,7 @@
 				asp-items="Html.GetEnumSelectList<OperationTypeEnum>()"
 				class="form-select"
 				aria-label="Default select example">
-			<option selected>Seleccione una opción</option>
+			<option value="" selected>Seleccione una opción</option>
 		</select>
 		<span asp-validation-for="@Model.OperationTypeId" class="text-danger"></span>
 	</div>

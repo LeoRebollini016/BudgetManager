@@ -7,49 +7,46 @@ using BudgetManager.Domain.Interfaces.Services;
 
 namespace BudgetManager.Application.Services;
 
-public class CategoryService(ICategoryRepository categoryRepository, IUserService userService, IMapper mapper) : ICategoryService
+public class CategoryService(ICategoryRepository categoryRepository, IUserService userService) : ICategoryService
 {
     private readonly ICategoryRepository _categoryRepository = categoryRepository;
     private readonly IUserService _userService = userService;
-    private readonly IMapper _mapper = mapper;
 
-    public async Task<List<CategoryDto>> GetCategoriesAsync()
+    public async Task<List<CategoryDto>> GetCategoriesAsync(CancellationToken ct)
     {
         var user = _userService.GetUserId();
-        return (List<CategoryDto>)await _categoryRepository.GetCategoriesAsync(user);
+        return (List<CategoryDto>)await _categoryRepository.GetCategoriesAsync(user, ct);
     }
-    public async Task<CategoryDto?> GetCategoryByIdAsync(int id)
+    public async Task<Category?> GetCategoryByIdAsync(int id, CancellationToken ct)
     {
         var user = _userService.GetUserId();
-        var category = await _categoryRepository.GetCategoryByIdAsync(user, id);
-        return _mapper.Map<CategoryDto?>(category);
+        return await _categoryRepository.GetCategoryByIdAsync(user, id, ct);
     }
-    public async Task AddCategoryAsync(CategoryDto categoryDto)
+    public async Task AddCategoryAsync(Category category, CancellationToken ct)
     {
         var user = _userService.GetUserId();
-        categoryDto.userId = user;
-        await _categoryRepository.InsertCategoryAsync(
-                                        _mapper.Map<Category>(categoryDto));
+        category.UserId = user;
+        await _categoryRepository.InsertCategoryAsync(category, ct);
     }
-    public async Task UpdateCategoryAsync(CategoryDto categoryDto)
+    public async Task UpdateCategoryAsync(Category category, CancellationToken ct)
     {
         var user = _userService.GetUserId();
-        categoryDto.userId = user;
-        await _categoryRepository.UpdateCategoryAsync(_mapper.Map<Category>(categoryDto));
+        category.UserId = user;
+        await _categoryRepository.UpdateCategoryAsync(category, ct);
     }
-    public async Task<List<KeyValueDto>> GetCategoryNamesAsync()
+    public async Task<List<KeyValueDto>> GetCategoryNamesAsync(CancellationToken ct)
     {
         var user = _userService.GetUserId();
-        return (List<KeyValueDto>)await _categoryRepository.GetCategoryNamesAsync(user);
+        return (List<KeyValueDto>)await _categoryRepository.GetCategoryNamesAsync(user, ct);
     }
-    public async Task<CategoryDeleteDto?> GetCategoryDeleteInfoAsync(int categoryId)
+    public async Task<CategoryDeleteDto?> GetCategoryDeleteInfoAsync(int categoryId, CancellationToken ct)
     {
         var userId = _userService.GetUserId();
-        return await _categoryRepository.GetCategoryDeleteInfoByIdAsync(id: categoryId, userId);
+        return await _categoryRepository.GetCategoryDeleteInfoByIdAsync(id: categoryId, userId, ct);
     }
-    public async Task DeleteCategoryByIdAsync(int categoryId)
+    public async Task DeleteCategoryByIdAsync(int categoryId, CancellationToken ct)
     {
         var userId = _userService.GetUserId();
-        await _categoryRepository.DeleteCategoryByIdAsync(userId, categoryId);
+        await _categoryRepository.DeleteCategoryByIdAsync(userId, categoryId, ct);
     }
 }

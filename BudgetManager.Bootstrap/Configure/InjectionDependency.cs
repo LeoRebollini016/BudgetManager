@@ -8,10 +8,13 @@ using BudgetManager.Services.AccountTypesRepositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BudgetManager.Application.Profiles;
-using BudgetManager.Validations;
 using FluentValidation;
-using BudgetManager.Application.Validators;
 using BudgetManager.Infraestructure.Repositories;
+using BudgetManager.Application.Validators.Account;
+using BudgetManager.Application.Validators.AccountTypes;
+using BudgetManager.Application.Validators.Category;
+using System.Reflection;
+using BudgetManager.Domain.Interfaces;
 
 namespace BudgetManager.Bootstrap.Configure;
 
@@ -26,9 +29,11 @@ public static class InjectionDependency
         services.AddTransient<ITransactionService, TransactionService>();
         services.AddTransient<IReportService, ReportService>();
         services.AddAutoMapper(cfg => { }, typeof(ApplicationProfile).Assembly);
+        services.AddValidatorsFromAssemblyContaining<CategoryValidator>();
         services.AddValidatorsFromAssemblyContaining<AccountTypesValidator>();
         services.AddValidatorsFromAssemblyContaining<AccountValidator>();
-
+        services.AddValidatorsFromAssemblyContaining<CategoryDeleteValidator>();
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("BudgetManager.Application")));
         return services;
     }
     public static IServiceCollection AddInfraestructureDependency(this IServiceCollection services, IConfiguration configuration)

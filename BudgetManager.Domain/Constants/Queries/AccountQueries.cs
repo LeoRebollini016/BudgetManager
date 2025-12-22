@@ -36,6 +36,6 @@ public static class AccountQueries
     public static string GetAccountNamesQuery = @"
         SELECT id, name
         FROM accounts
-        WHERE id_user = @userId AND is_closed = 0;
+        WHERE is_closed = 0;
     ";
 }

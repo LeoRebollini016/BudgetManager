@@ -2,7 +2,7 @@
 using BudgetManager.Interfaces.Repositories;
 using FluentValidation;
 
-namespace BudgetManager.Validations;
+namespace BudgetManager.Application.Validators.AccountTypes;
 
 public class AccountTypesValidator: AbstractValidator<AccountTypesDto>
 {
@@ -21,6 +21,6 @@ public class AccountTypesValidator: AbstractValidator<AccountTypesDto>
     }
     private async Task<bool> BeUniqueAccountType(AccountTypesDto accountType, CancellationToken ct)
     {
-        return !await _repository.ExistAccTypesAsync(accountType.Name, accountType.UserId);
+        return !await _repository.ExistAccTypesAsync(accountType.Name, accountType.UserId, ct);
     }
 }

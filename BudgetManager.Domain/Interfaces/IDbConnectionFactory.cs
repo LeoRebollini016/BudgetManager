@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace BudgetManager.Domain.Interfaces.Repositories;
+namespace BudgetManager.Domain.Interfaces;
 
 public interface IDbConnectionFactory
 {

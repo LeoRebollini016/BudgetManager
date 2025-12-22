@@ -1,0 +1,15 @@
+﻿using BudgetManager.Domain.Interfaces.Services;
+using MediatR;
+
+namespace BudgetManager.Application.FeaturesHandlers.Transactions.Commands.DeleteTransaction;
+
+public class DeleteTransactionHandler(ITransactionService transactionService) : IRequestHandler<DeleteTransactionRequest, Unit>
+{
+    private readonly ITransactionService _transactionService = transactionService;
+
+    public async Task<Unit> Handle(DeleteTransactionRequest request, CancellationToken cancellationToken)
+    {
+        await _transactionService.DeleteTransactionByIdAsync(request.TransactionId, cancellationToken);
+        return Unit.Value;
+    }
+}

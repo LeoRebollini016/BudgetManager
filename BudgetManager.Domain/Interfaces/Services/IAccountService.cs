@@ -1,14 +1,14 @@
 ﻿using BudgetManager.Domain.Dtos;
-using BudgetManager.Domain.Dtos.Account;
+using BudgetManager.Domain.Entities;
 
 namespace BudgetManager.Domain.Interfaces.Services;
 
 public interface IAccountService
 {
-    Task CreateAsync(AccountDto accountDto);
-    Task<List<KeyValueDto>> GetAccountTypesNamesAsync();
-    Task<List<AccountDto>> GetListAccountsAsync();
-    Task DeleteAccountAsync(int accountId);
-    Task<AccountDto?> GetAccountByIdAsync(int accountId);
-    Task UpdateAccountAsync(AccountDto account);
+    Task CreateAsync(Account account, CancellationToken cancellationToken);
+    Task<List<Account>> GetAccountListAsync(CancellationToken cancellationToken);
+    Task DeleteAccountAsync(int accountId, CancellationToken cancellationToken);
+    Task<Account?> GetAccountByIdAsync(int accountId, CancellationToken cancellationToken);
+    Task UpdateAccountAsync(Account account, CancellationToken cancellationToken);
+    Task<List<KeyValueDto>?> GetAccountNamesAsync(CancellationToken cancellationToken);
 }

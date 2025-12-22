@@ -2,7 +2,6 @@
 using BudgetManager.Domain.Dtos.Report;
 using BudgetManager.Domain.Interfaces.Repositories;
 using BudgetManager.Domain.Interfaces.Services;
-using System.Security.Cryptography.X509Certificates;
 
 namespace BudgetManager.Application.Services;
 
@@ -10,9 +9,9 @@ public class ReportService(IReportRepository reportRepository) : IReportService
 {
     private readonly IReportRepository _reportRepository = reportRepository;
     
-    public async Task<MonthlyReportResultDto> GetReportMonthlyAsync(MonthlyReportFilterDto monthlyReportFilterDto)
+    public async Task<MonthlyReportResultDto> GetReportMonthlyAsync(MonthlyReportFilterDto monthlyReportFilterDto, CancellationToken ct)
     {
-        var items = (List<ReportTimeSeriesDto>)await _reportRepository.GetReportMonthlyAsync(monthlyReportFilterDto);
+        var items = (List<ReportTimeSeriesDto>)await _reportRepository.GetReportMonthlyAsync(monthlyReportFilterDto, ct);
 
         return new MonthlyReportResultDto
         {
@@ -21,9 +20,9 @@ public class ReportService(IReportRepository reportRepository) : IReportService
             TotalExpense = items.Sum(x => x.Expense)
         };
     }
-    public async Task<DateRangeReportResultDto> GetReportRangeAsync(DateRangeReportFilterDto filter)
+    public async Task<DateRangeReportResultDto> GetReportRangeAsync(DateRangeReportFilterDto filter, CancellationToken ct)
     {
-        var items = (List<ReportTimeSeriesDto>)await _reportRepository.GetReportByRangeAsync(filter);
+        var items = (List<ReportTimeSeriesDto>)await _reportRepository.GetReportByRangeAsync(filter, ct);
 
         return new DateRangeReportResultDto
         {
@@ -32,9 +31,9 @@ public class ReportService(IReportRepository reportRepository) : IReportService
             TotalExpense = items.Sum(x => x.Expense)
         };
     }
-    public async Task<CategoryReportResultDto> GetReportCategoryAsync(int? accountId)
+    public async Task<CategoryReportResultDto> GetReportCategoryAsync(int? accountId, CancellationToken ct)
     {
-        var items = (List<ReportCategoryDto>)await _reportRepository.GetReportCategoryAsync(accountId);
+        var items = (List<ReportCategoryDto>)await _reportRepository.GetReportCategoryAsync(accountId, ct);
 
         return new CategoryReportResultDto
         {

@@ -1,5 +1,6 @@
 ﻿using BudgetManager.Domain.Constants.Queries;
 using BudgetManager.Domain.Dtos.Report;
+using BudgetManager.Domain.Interfaces;
 using BudgetManager.Domain.Interfaces.Repositories;
 using Dapper;
 
@@ -9,7 +10,7 @@ public class ReportRepository(IDbConnectionFactory dbConnection) : IReportReposi
 {
     private readonly IDbConnectionFactory _dbConnection = dbConnection;
     
-    public async Task<IEnumerable<ReportTimeSeriesDto>> GetReportMonthlyAsync(MonthlyReportFilterDto filter)
+    public async Task<IEnumerable<ReportTimeSeriesDto>> GetReportMonthlyAsync(MonthlyReportFilterDto filter, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
         return await conn.QueryAsync<ReportTimeSeriesDto>(ReportQueries.GetReportByDateQuery, 
@@ -20,12 +21,12 @@ public class ReportRepository(IDbConnectionFactory dbConnection) : IReportReposi
                 filter.AccountId,
             });
     }
-    public async Task<IEnumerable<ReportTimeSeriesDto>> GetReportByRangeAsync(DateRangeReportFilterDto filter)
+    public async Task<IEnumerable<ReportTimeSeriesDto>> GetReportByRangeAsync(DateRangeReportFilterDto filter, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
         return await conn.QueryAsync<ReportTimeSeriesDto>(ReportQueries.GetReportByRangeDateQuery, filter);
     }
-    public async Task<IEnumerable<ReportCategoryDto>> GetReportCategoryAsync(int? AccountId)
+    public async Task<IEnumerable<ReportCategoryDto>> GetReportCategoryAsync(int? AccountId, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
         return await conn.QueryAsync<ReportCategoryDto>(ReportQueries.GetReportByCategoryQuery, new { AccountId });

@@ -1,4 +1,4 @@
-﻿using BudgetManager.Domain.Interfaces.Repositories;
+﻿using BudgetManager.Domain.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;

@@ -7,7 +7,7 @@
 @if(Model.Note.Any()){
 	<span class="text-info">La transacción tiene como nota: @Model.Note</span>
 }
-<form asp-action="DeleteTransaction">
+<form asp-action="DeleteConfirmed">
 	<input type="hidden" asp-for="Id" />
 	<button type="submit" class="btn btn-danger">Borrar</button>
 	<a class="btn btn-secondary" asp-action="Index">Cancelar</a>

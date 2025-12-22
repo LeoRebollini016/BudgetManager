@@ -5,10 +5,10 @@ namespace BudgetManager.Domain.Interfaces.Repositories;
 
 public interface IAccountRepository
 {
-    Task CreateAsync(Account account);
-    Task<IEnumerable<Account>> GetAccountsAsync();
-    Task DeleteAccountAsync(int id);
-    Task<Account?> GetAccountByIdAsync(int id);
-    Task UpdateAccountAsync(Account id);
-    Task<IEnumerable<KeyValueDto>> GetAccountNamesAsync(int userId);
+    Task CreateAsync(Account account, CancellationToken ct);
+    Task<IEnumerable<Account>> GetAccountsAsync(CancellationToken ct);
+    Task DeleteAccountAsync(int id, CancellationToken ct);
+    Task<Account?> GetAccountByIdAsync(int id, CancellationToken ct);
+    Task UpdateAccountAsync(Account id, CancellationToken ct);
+    Task<IEnumerable<KeyValueDto>> GetAccountNamesAsync(CancellationToken ct);
 }

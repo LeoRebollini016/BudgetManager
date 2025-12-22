@@ -11,31 +11,31 @@ public class TransactionService(ITransactionRepository transactionRepository, IU
     private readonly IUserService _userService = userService;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<List<TransactionDetailDto>> GetTransactionListAsync()
+    public async Task<List<TransactionDetailDto>> GetTransactionListAsync(CancellationToken ct)
     {
         var userId = _userService.GetUserId();
-        return (List<TransactionDetailDto>)await _transactionRepository.GetTransactionsAsync(userId);
+        return (List<TransactionDetailDto>)await _transactionRepository.GetTransactionsAsync(userId, ct);
     }
-    public async Task InsertTransactionAsync(TransactionCreateDto transactionCreateDto)
+    public async Task InsertTransactionAsync(TransactionCreateDto transactionCreateDto, CancellationToken ct)
     {
         var userId = _userService.GetUserId();
         transactionCreateDto.UserId = userId;
-        await _transactionRepository.InsertTransactionAsync(transactionCreateDto);
+        await _transactionRepository.InsertTransactionAsync(transactionCreateDto, ct);
     }
-    public async Task UpdateTransactionAsync(TransactionCreateDto transactionCreateDto)
+    public async Task UpdateTransactionAsync(TransactionCreateDto transactionCreateDto, CancellationToken ct)
     {
         var userId = _userService.GetUserId();
         transactionCreateDto.UserId = userId;
-        await _transactionRepository.UpdateTransactionAsync(transactionCreateDto);
+        await _transactionRepository.UpdateTransactionAsync(transactionCreateDto, ct);
     }
-    public async Task<TransactionDeleteDto> GetTransactionDeleteInfoByIdAsync(int transactionId)
+    public async Task<TransactionDeleteDto> GetTransactionDeleteInfoByIdAsync(int transactionId, CancellationToken ct)
     {
         var userId = _userService.GetUserId();
-        return await _transactionRepository.GetTransactionDeleteInfoByIdAsync(transactionId, userId);
+        return await _transactionRepository.GetTransactionDeleteInfoByIdAsync(transactionId, userId, ct);
     }
-    public async Task DeleteTransactionByIdAsync(int transactionId)
+    public async Task DeleteTransactionByIdAsync(int transactionId, CancellationToken ct)
     {
         var userId = _userService.GetUserId();
-        await _transactionRepository.DeleteTransactionByIdAsync(transactionId, userId);
+        await _transactionRepository.DeleteTransactionByIdAsync(transactionId, userId, ct);
     }
 }

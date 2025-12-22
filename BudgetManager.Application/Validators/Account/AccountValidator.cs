@@ -1,7 +1,7 @@
 ﻿using BudgetManager.Domain.Dtos.Account;
 using FluentValidation;
 
-namespace BudgetManager.Application.Validators;
+namespace BudgetManager.Application.Validators.Account;
 
 public class AccountValidator: AbstractValidator<AccountDto>
 {
