@@ -8,5 +8,5 @@ public class Category
     public string Name { get; set; }
     public bool IsActive { get; set; }
     public OperationTypeEnum OperationTypeId { get; set; }
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 }

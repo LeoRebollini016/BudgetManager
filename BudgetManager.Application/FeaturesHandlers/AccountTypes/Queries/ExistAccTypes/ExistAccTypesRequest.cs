@@ -2,4 +2,4 @@
 
 namespace BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.ExistAccTypes;
 
-public record ExistAccTypesRequest(string Name) : IRequest<bool>;
+public record ExistAccTypesRequest(Guid UserId, string Name) : IRequest<bool>;

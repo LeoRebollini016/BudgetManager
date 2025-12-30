@@ -12,7 +12,7 @@ public class GetCategoryByIdHandler(ICategoryService categoryService, IMapper ma
 
     public async Task<CategoryDto?> Handle(GetCategoryByIdRequest request, CancellationToken cancellationToken)
     {
-        var category = await _categoryService.GetCategoryByIdAsync(request.Id, cancellationToken);
+        var category = await _categoryService.GetCategoryByIdAsync(request.UserId, request.Id, cancellationToken);
         return _mapper.Map<CategoryDto?>(category);
     }
 }

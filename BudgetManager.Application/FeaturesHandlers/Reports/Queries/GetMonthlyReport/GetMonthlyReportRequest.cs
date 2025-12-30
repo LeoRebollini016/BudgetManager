@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Reports.Queries.GetMonthlyReport;
 
-public record GetMonthlyReportRequest(MonthlyReportFilterDto FilterDto): IRequest<MonthlyReportResultDto>;
+public record GetMonthlyReportRequest(Guid UserId, MonthlyReportFilterDto FilterDto): IRequest<MonthlyReportResultDto>;

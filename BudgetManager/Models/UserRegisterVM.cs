@@ -1,0 +1,12 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BudgetManager.Models;
+
+public class UserRegisterVM
+{
+    [Required(ErrorMessage = "El campo {0} es requerido")]
+    [EmailAddress(ErrorMessage = "Debe ser un correo electrónico válido")]
+    public string Email { get; set; }
+    [Required(ErrorMessage = "El campo {0} es requerido")]
+    public string Password { get; set; }
+}

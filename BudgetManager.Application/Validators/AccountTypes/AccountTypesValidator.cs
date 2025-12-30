@@ -12,15 +12,21 @@ public class AccountTypesValidator: AbstractValidator<AccountTypesDto>
     {
         _repository = repository;
 
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("El campo nombre es requerido.");
-
         RuleFor(x => x)
-            .MustAsync(BeUniqueAccountType)
-            .WithMessage("Ya existe un tipo de cuenta con ese nombre.");
+            .CustomAsync(BeUniqueAccountType);
     }
-    private async Task<bool> BeUniqueAccountType(AccountTypesDto accountType, CancellationToken ct)
+    private async Task BeUniqueAccountType(AccountTypesDto dto, ValidationContext<AccountTypesDto> context, CancellationToken ct)
     {
-        return !await _repository.ExistAccTypesAsync(accountType.Name, accountType.UserId, ct);
+        if (!context.RootContextData.TryGetValue("UserId", out var userIdObj))
+            throw new InvalidOperationException("UserId no fue provisto al validador.");
+
+        var userId = (Guid)userIdObj;
+        if(await _repository.ExistAccTypesAsync(userId, dto.Name, ct))
+        {
+            context.AddFailure(
+                nameof(dto.Name),
+                "Ya existe un tipo de cuenta con ese nombre."
+            );
+        }
     }
 }

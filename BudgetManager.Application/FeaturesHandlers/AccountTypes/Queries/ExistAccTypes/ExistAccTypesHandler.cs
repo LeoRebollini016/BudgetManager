@@ -8,5 +8,5 @@ public class ExistAccTypesHandler(IAccountTypesService accountTypesService) : IR
     private readonly IAccountTypesService _accountTypesService = accountTypesService;
 
     public async Task<bool> Handle(ExistAccTypesRequest request, CancellationToken cancellationToken)
-        => await _accountTypesService.ExistAccTypes(request.Name, cancellationToken);
+        => await _accountTypesService.ExistAccTypes(request.UserId, request.Name, cancellationToken);
 }

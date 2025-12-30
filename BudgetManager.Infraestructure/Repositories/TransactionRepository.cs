@@ -10,29 +10,79 @@ public class TransactionRepository(IDbConnectionFactory dbConnection) : ITransac
 {
     private readonly IDbConnectionFactory _dbConnection = dbConnection;
 
-    public async Task<IEnumerable<TransactionDetailDto>> GetTransactionsAsync(int userId, CancellationToken ct)
+    public async Task<IEnumerable<TransactionDetailDto>> GetTransactionsAsync(Guid userId, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        return await conn.QueryAsync<TransactionDetailDto>(TransactionQueries.SelectTransactionListQuery, new { userId });
+        var command = new CommandDefinition(
+            TransactionQueries.SelectTransactionListQuery,
+            new { UserId = userId },
+            cancellationToken: ct
+        );
+        return await conn.QueryAsync<TransactionDetailDto>(command);
     }
-    public async Task InsertTransactionAsync(TransactionCreateDto transaction, CancellationToken ct)
+    public async Task InsertTransactionAsync(Guid userId, TransactionCreateDto transaction, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        transaction.Id = await conn.ExecuteAsync(TransactionQueries.InsertTransactionQuery, transaction);
+        var command = new CommandDefinition(
+            TransactionQueries.InsertTransactionQuery,
+            new
+            {
+                UserId = userId,
+                transaction.TransactionDate,
+                transaction.Amount,
+                transaction.OperationTypeId,
+                transaction.Note,
+                transaction.AccountId,
+                transaction.CategoryId
+            },
+            cancellationToken: ct
+        );
+        transaction.Id = await conn.QuerySingleAsync<int>(command);
     }
-    public async Task UpdateTransactionAsync(TransactionCreateDto transaction, CancellationToken ct)
+    public async Task UpdateTransactionAsync(Guid userId, TransactionCreateDto transaction, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        await conn.ExecuteAsync(TransactionQueries.UpdateTransactionQuery, transaction);
+        var command = new CommandDefinition(
+            TransactionQueries.UpdateTransactionQuery,
+            new
+            {
+                UserId = userId,
+                transaction.Id,
+                transaction.TransactionDate,
+                transaction.Amount,
+                transaction.OperationTypeId,
+                transaction.Note,
+                transaction.AccountId,
+                transaction.CategoryId
+            },
+            cancellationToken: ct
+        );
+        var rows = await conn.ExecuteAsync(command);
+
+        if (rows == 0)
+            throw new InvalidOperationException("No se encontro la transacción o no se permitio la actualización.");
     }
-    public async Task<TransactionDeleteDto> GetTransactionDeleteInfoByIdAsync(int transactionId, int userId, CancellationToken ct)
+    public async Task<TransactionDeleteDto> GetTransactionDeleteInfoByIdAsync(Guid userId, int transactionId, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        return await conn.QueryFirstAsync<TransactionDeleteDto>(TransactionQueries.GetTransactionByIdQuery, new { Id = transactionId, userId });
+        var command = new CommandDefinition(
+            TransactionQueries.GetTransactionByIdQuery,
+            new { Id = transactionId, UserId = userId },
+            cancellationToken: ct
+        );
+        return await conn.QueryFirstAsync<TransactionDeleteDto>(command);
     }
-    public async Task DeleteTransactionByIdAsync(int transactionId, int userId, CancellationToken ct)
+    public async Task DeleteTransactionByIdAsync(Guid userId, int transactionId, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        await conn.ExecuteAsync(TransactionQueries.DeleteTransactionByIdQuery, new { Id = transactionId, userId });
+        var command = new CommandDefinition(
+            TransactionQueries.DeleteTransactionByIdQuery,
+            new { Id = transactionId, UserId = userId },
+            cancellationToken: ct
+        );
+        var rows = await conn.ExecuteAsync(command);
+
+        if (rows == 0)
+            throw new InvalidOperationException("No se encontro la transacción o no se permitio la eliminación.");
     }
 }

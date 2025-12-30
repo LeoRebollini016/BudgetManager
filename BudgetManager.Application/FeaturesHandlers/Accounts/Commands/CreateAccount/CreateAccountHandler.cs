@@ -12,6 +12,7 @@ public class CreateAccountHandler(IAccountService accountService, IMapper mapper
     public async Task<Unit> Handle(CreateAccountRequest request, CancellationToken cancellationToken)
     {
         var account = _mapper.Map<Account>(request.AccountDto);
+        account.UserId = request.UserId;
         await _accountService.CreateAsync(account, cancellationToken);
         return Unit.Value;
     }

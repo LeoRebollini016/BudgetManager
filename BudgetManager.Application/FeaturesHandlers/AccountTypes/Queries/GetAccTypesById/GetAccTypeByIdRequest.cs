@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.GetAccTypesById;
 
-public record GetAccTypeByIdRequest(int Id) : IRequest<AccountTypesDto?>;
+public record GetAccTypeByIdRequest(Guid UserId, int Id) : IRequest<AccountTypesDto?>;

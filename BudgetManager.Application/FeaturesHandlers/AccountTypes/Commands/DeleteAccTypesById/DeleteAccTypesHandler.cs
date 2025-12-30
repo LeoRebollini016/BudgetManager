@@ -8,5 +8,5 @@ public class DeleteAccTypesHandler(IAccountTypesService accountTypesService) : I
     private readonly IAccountTypesService _accountTypesService = accountTypesService;
 
     public async Task<bool> Handle(DeleteAccTypesRequest request, CancellationToken cancellationToken)
-       => await _accountTypesService.DeleteAccTypesById(request.Id, cancellationToken);
+       => await _accountTypesService.DeleteAccTypesById(request.UserId, request.Id, cancellationToken);
 }

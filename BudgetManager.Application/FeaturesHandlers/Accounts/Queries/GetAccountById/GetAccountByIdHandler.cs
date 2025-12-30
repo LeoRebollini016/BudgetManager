@@ -12,7 +12,7 @@ public class GetAccountByIdHandler(IAccountService accountService, IMapper mappe
 
     public async Task<AccountDto?> Handle(GetAccountByIdRequest request, CancellationToken cancellationToken)
     {
-        var account = await _accountService.GetAccountByIdAsync(request.AccountId, cancellationToken);
+        var account = await _accountService.GetAccountByIdAsync(request.UserId, request.AccountId, cancellationToken);
         return _mapper.Map<AccountDto?>(account);
     }
 }

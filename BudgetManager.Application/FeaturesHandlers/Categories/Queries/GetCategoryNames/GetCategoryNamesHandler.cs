@@ -9,5 +9,5 @@ public class GetCategoryNamesHandler(ICategoryService categoryService) : IReques
     private readonly ICategoryService _categoryService = categoryService;
 
     public async Task<List<KeyValueDto>> Handle(GetCategoryNamesRequest request, CancellationToken cancellationToken)
-        => await _categoryService.GetCategoryNamesAsync(cancellationToken);
+        => await _categoryService.GetCategoryNamesAsync(request.UserId, cancellationToken);
 }

@@ -7,21 +7,21 @@ using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.ExistAccTy
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.GetAccTypes;
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.GetAccTypesById;
 using BudgetManager.Domain.Dtos.AccountTypes;
-using BudgetManager.Domain.Interfaces.Services;
 using BudgetManager.Extensions;
 using BudgetManager.Models;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetManager.Controllers;
 
-public class AccountTypesController(IMediator mediator, IValidator<AccountTypesDto> validator, IUserService userService, IMapper mapper): Controller
+[Authorize]
+public class AccountTypesController(IMediator mediator, IValidator<AccountTypesDto> validator, IMapper mapper): Controller
 {
     private readonly IMediator _mediator = mediator;
     private readonly IValidator<AccountTypesDto> _validator = validator;
-    private readonly IUserService _userService = userService;
     private readonly IMapper _mapper = mapper;
 
     public IActionResult Create()
@@ -32,7 +32,7 @@ public class AccountTypesController(IMediator mediator, IValidator<AccountTypesD
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken ct)
     {
-        var userId = _userService.GetUserId();
+        var userId = User.GetUserId();
         var request = new GetAccTypesRequest(userId);
         var accountTypes = await _mediator.Send(request, ct);
         var accountTypesVM = _mapper.Map<List<AccountTypesVM>?>(accountTypes);
@@ -42,33 +42,28 @@ public class AccountTypesController(IMediator mediator, IValidator<AccountTypesD
     [HttpPost]
     public async Task<IActionResult> Create(AccountTypesVM accountTypesVM, CancellationToken ct)
     {
+        var userId = User.GetUserId();
         var accTypesDto = _mapper.Map<AccountTypesDto>(accountTypesVM);
-        ValidationResult result = await _validator.ValidateAsync(accTypesDto);
-        if (!result.IsValid)
-        {
-            result.AddToModelState(this.ModelState);
-            return View(accountTypesVM);
-        }
-        var request = new CreateAccTypesRequest(accTypesDto);
+        var request = new CreateAccTypesRequest(userId, accTypesDto);
         await _mediator.Send(request, ct);
         return RedirectToAction("Index");
     }
     [HttpGet]
     public async Task<IActionResult> GetExistAccTypesByName(string name, CancellationToken ct)
     {
-        var request = new ExistAccTypesRequest(name);
+        var userId = User.GetUserId();
+        var request = new ExistAccTypesRequest(userId, name);
         var response = await _mediator.Send(request, ct);
 
-        if (response)
-        {
-            return Json($"El nombre {name} ya existe.");
-        }
-        return Json(true);
+        return response
+            ? Json($"El nombre {name} ya existe.")
+            : Json(true);
     }
     [HttpGet]
     public async Task<ActionResult> Edit(int id, CancellationToken ct)
     {
-        var request = new GetAccTypeByIdRequest(id);
+        var userId = User.GetUserId();
+        var request = new GetAccTypeByIdRequest(userId, id);
         var response = await _mediator.Send(request, ct);
         if (response is null)
         {
@@ -80,18 +75,20 @@ public class AccountTypesController(IMediator mediator, IValidator<AccountTypesD
     [HttpPost]
     public async Task<ActionResult> Edit(AccountTypesVM accountTypesVM, CancellationToken ct)
     {
-        var requestExistAccTypes = new ExistAccTypesRequest(accountTypesVM.Name);
+        var userId = User.GetUserId();
+        var requestExistAccTypes = new ExistAccTypesRequest(userId, accountTypesVM.Name);
         var response = await _mediator.Send(requestExistAccTypes, ct);
         if (response) { return RedirectToAction("NoFound", "Home"); }
         var accTypesDto = _mapper.Map<AccountTypesDto>(accountTypesVM);
 
-        var request = new UpdateAccTypesRequest(accTypesDto);
+        var request = new UpdateAccTypesRequest(userId, accTypesDto);
         await _mediator.Send(request, ct);
         return RedirectToAction("Index");
     }
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
     {
-        var request = new GetAccTypeByIdRequest(id);
+        var userId = User.GetUserId();
+        var request = new GetAccTypeByIdRequest(userId, id);
         var existAccTypeDto = await _mediator.Send(request, ct);
         if (existAccTypeDto is null)
         {
@@ -103,14 +100,16 @@ public class AccountTypesController(IMediator mediator, IValidator<AccountTypesD
     [HttpPost]
     public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct)
     {
-        var request = new DeleteAccTypesRequest(id);
+        var userId = User.GetUserId();
+        var request = new DeleteAccTypesRequest(userId, id);
         await _mediator.Send(request, ct);
         return RedirectToAction("Index");
     }
     [HttpPost]
     public async Task<IActionResult> SortAccTypes([FromBody] int[] ids, CancellationToken ct)
     {
-        var request = new OrderAccTypesRequest(ids);
+        var userId = User.GetUserId();
+        var request = new OrderAccTypesRequest(userId, ids);
         var sortList = await _mediator.Send(request, ct);
         if (sortList)
         {

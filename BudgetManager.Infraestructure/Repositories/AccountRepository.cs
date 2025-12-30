@@ -14,31 +14,61 @@ public class AccountRepository(IDbConnectionFactory connectionFactory) : IAccoun
     public async Task CreateAsync(Account account, CancellationToken ct)
     {
         using var conn = _connectionFactory.CreateConnection();
-        account.Id = await conn.QuerySingleAsync<int>(AccountQueries.InsertAccountQuery, account);
+        var command = new CommandDefinition(
+            AccountQueries.InsertAccountQuery,
+            account,
+            cancellationToken: ct
+        );
+        account.Id = await conn.QuerySingleAsync<int>(command);
     }
-    public async Task<IEnumerable<Account>> GetAccountsAsync(CancellationToken ct)
+    public async Task<IEnumerable<Account>> GetAccountsAsync(Guid userId, CancellationToken ct)
     {
         using var conn = _connectionFactory.CreateConnection();
-        return await conn.QueryAsync<Account>(AccountQueries.GetListAccountsQuery);
+        var command = new CommandDefinition(
+           AccountQueries.GetListAccountsQuery,
+           new { UserId = userId },
+           cancellationToken: ct
+        );
+        return await conn.QueryAsync<Account>(command);
     }
-    public async Task<Account?> GetAccountByIdAsync(int id, CancellationToken ct)
+    public async Task<Account?> GetAccountByIdAsync(Guid userId, int id, CancellationToken ct)
     {
         using var conn = _connectionFactory.CreateConnection();
-        return await conn.QueryFirstOrDefaultAsync<Account?>(AccountQueries.GetAccountByIdQuery, new { id });
+        var command = new CommandDefinition(
+           AccountQueries.GetAccountByIdQuery,
+           new { Id = id, UserId = userId },
+           cancellationToken: ct
+        );
+        return await conn.QueryFirstOrDefaultAsync<Account?>(command);
     }
     public async Task UpdateAccountAsync(Account account, CancellationToken ct)
     {
         using var conn = _connectionFactory.CreateConnection();
-        await conn.ExecuteAsync(AccountQueries.UpdateAccountQuery, account );
+        var command = new CommandDefinition(
+            AccountQueries.UpdateAccountQuery,
+            account,
+            cancellationToken: ct
+        );
+        await conn.ExecuteAsync(command);
     }
-    public async Task DeleteAccountAsync(int id, CancellationToken ct)
+    public async Task DeleteAccountAsync(Guid userId, int id, CancellationToken ct)
     {
         using var conn = _connectionFactory.CreateConnection();
-        await conn.ExecuteAsync(AccountQueries.ClosedAccountQuery, new { id });
+        var command = new CommandDefinition(
+           AccountQueries.ClosedAccountQuery,
+           new { Id = id, UserId = userId },
+           cancellationToken: ct
+        );
+        await conn.ExecuteAsync(command);
     }
-    public async Task<IEnumerable<KeyValueDto>> GetAccountNamesAsync(CancellationToken ct)
+    public async Task<IEnumerable<KeyValueDto>> GetAccountNamesAsync(Guid userId, CancellationToken ct)
     {
         using var conn = _connectionFactory.CreateConnection();
-        return await conn.QueryAsync<KeyValueDto>(AccountQueries.GetAccountNamesQuery);
+        var command = new CommandDefinition(
+           AccountQueries.GetAccountNamesQuery,
+           new { UserId = userId },
+           cancellationToken: ct
+        );
+        return await conn.QueryAsync<KeyValueDto>(command);
     }
 }

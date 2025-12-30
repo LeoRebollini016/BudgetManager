@@ -6,13 +6,14 @@ using BudgetManager.Application.FeaturesHandlers.Categories.Queries.GetCategorie
 using BudgetManager.Application.FeaturesHandlers.Categories.Queries.GetCategoryById;
 using BudgetManager.Application.FeaturesHandlers.Categories.Queries.GetCategoryDeleteInfo;
 using BudgetManager.Domain.Dtos.Category;
-using BudgetManager.Domain.Interfaces.Services;
+using BudgetManager.Extensions;
 using BudgetManager.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetManager.Controllers;
-
+[Authorize]
 public class CategoryController(IMediator mediator, IMapper mapper) : Controller
 {
     private readonly IMediator _mediator = mediator;
@@ -21,7 +22,8 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken ct)
     {
-        var request = new GetCategoriesRequest();
+        var userId = User.GetUserId();
+        var request = new GetCategoriesRequest(userId);
         var listCategoriesDto= await _mediator.Send(request, ct);
         var listCategoriesVM = _mapper.Map<List<CategoryVM>>(listCategoriesDto);
         return View(listCategoriesVM);
@@ -29,7 +31,8 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
     [HttpGet]
     public async Task<IActionResult> Detalle(int id, CancellationToken ct)
     {
-        var request = new GetCategoryByIdRequest(id);
+        var userId = User.GetUserId();
+        var request = new GetCategoryByIdRequest(userId, id);
         var category = await _mediator.Send(request, ct);
         var categoryVM = _mapper.Map<CategoryVM>(category);
         return View(categoryVM);
@@ -40,19 +43,21 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] CategoryVM categoryVM, CancellationToken ct)
     {
+        var userId = User.GetUserId();
         if (!ModelState.IsValid)
         {
             return View("Index", categoryVM);
         }
         var categoryDto = _mapper.Map<CategoryDto>(categoryVM);
-        var request = new AddCategoryRequest(categoryDto);
+        var request = new AddCategoryRequest(userId, categoryDto);
         await _mediator.Send(request, ct);
         return RedirectToAction("Index");
     }
     [HttpGet]
     public async Task<IActionResult> Edit(int id, CancellationToken ct)
     {
-        var request = new GetCategoryByIdRequest(id);
+        var userId = User.GetUserId();
+        var request = new GetCategoryByIdRequest(userId, id);
         var category = await _mediator.Send(request, ct);
         var modelCategory = _mapper.Map<CategoryVM>(category);
         modelCategory.Id = id;
@@ -62,9 +67,10 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(CategoryVM categoryVM, CancellationToken ct)
     {
+        var userId = User.GetUserId();
         var categoryDto = _mapper.Map<CategoryDto>(categoryVM);
         categoryDto.Id = categoryVM.Id;
-        var request = new UpdateCategoryRequest(categoryDto);
+        var request = new UpdateCategoryRequest(userId, categoryDto);
         await _mediator.Send(request, ct);
 
         return RedirectToAction("Index");
@@ -72,7 +78,8 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
     [HttpGet]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
     {
-        var request = new GetCategoryDeleteInfoRequest(id);
+        var userId = User.GetUserId();
+        var request = new GetCategoryDeleteInfoRequest(userId, id);
         var categoryResumeDto = await _mediator.Send(request, ct);
         var modelDeleteVM = _mapper.Map<CategoryDeleteVM>(categoryResumeDto);
         return View(modelDeleteVM);
@@ -80,7 +87,8 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
     [HttpPost]
     public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct)
     {
-        var request = new DeleteCategoryRequest(id);
+        var userId = User.GetUserId();
+        var request = new DeleteCategoryRequest(userId, id);
         await _mediator.Send(request, ct);
         return RedirectToAction("Index");
     }

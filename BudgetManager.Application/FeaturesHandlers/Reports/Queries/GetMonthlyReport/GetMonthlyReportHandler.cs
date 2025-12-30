@@ -9,5 +9,5 @@ public class GetMonthlyReportHandler(IReportService reportService) : IRequestHan
     private readonly IReportService _reportService = reportService;
 
     public async Task<MonthlyReportResultDto> Handle(GetMonthlyReportRequest request, CancellationToken cancellationToken)
-        => await _reportService.GetReportMonthlyAsync(request.FilterDto, cancellationToken);
+        => await _reportService.GetReportMonthlyAsync(request.UserId, request.FilterDto, cancellationToken);
 }

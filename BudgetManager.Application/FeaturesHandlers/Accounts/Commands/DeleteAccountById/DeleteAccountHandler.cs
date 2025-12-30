@@ -10,7 +10,7 @@ public class DeleteAccountHandler(IAccountService accountService) : IRequestHand
 
     public async Task<Unit> Handle(DeleteAccountRequest request, CancellationToken cancellationToken)
     {
-        await _accountService.DeleteAccountAsync(request.AccountId, cancellationToken);
+        await _accountService.DeleteAccountAsync(request.UserId, request.AccountId, cancellationToken);
         return Unit.Value;
     }
 }

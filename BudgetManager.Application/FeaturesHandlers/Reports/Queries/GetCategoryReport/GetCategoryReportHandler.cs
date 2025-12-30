@@ -9,5 +9,5 @@ public class GetCategoryReportHandler(IReportService reportService) : IRequestHa
     private readonly IReportService _reportService = reportService;
 
     public async Task<CategoryReportResultDto> Handle(GetCategoryReportRequest request, CancellationToken cancellationToken)
-        => await _reportService.GetReportCategoryAsync(request.AccountId, cancellationToken);
+        => await _reportService.GetReportCategoryAsync(request.UserId, request.AccountId, cancellationToken);
 }

@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Accounts.Commands.Update;
 
-public record UpdateAccountRequest(AccountDto AccountDto) : IRequest<Unit>;
+public record UpdateAccountRequest(Guid UserId, AccountDto AccountDto) : IRequest<Unit>;

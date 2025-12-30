@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Transactions.Queries.GetTransactionList;
 
-public record GetTransactionListRequest : IRequest<List<TransactionDetailDto>>;
+public record GetTransactionListRequest(Guid UserId) : IRequest<List<TransactionDetailDto>>;

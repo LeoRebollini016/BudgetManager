@@ -11,7 +11,7 @@ public class InsertTransactionHandler(ITransactionService transactionService) : 
 
     public async Task<Unit> Handle(InsertTransactionRequest request, CancellationToken cancellationToken)
     {
-        await _transactionService.InsertTransactionAsync(request.TransactionDto, cancellationToken);
+        await _transactionService.InsertTransactionAsync(request.UserId, request.TransactionDto, cancellationToken);
         return Unit.Value;
     }
 }

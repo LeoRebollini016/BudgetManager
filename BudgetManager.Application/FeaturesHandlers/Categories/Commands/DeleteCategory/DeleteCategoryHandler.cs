@@ -9,7 +9,7 @@ public class DeleteCategoryHandler(ICategoryService categoryService) : IRequestH
 
     public async Task<Unit> Handle(DeleteCategoryRequest request, CancellationToken cancellationToken)
     {
-        await _categoryService.DeleteCategoryByIdAsync(request.CategoryId, cancellationToken);
+        await _categoryService.DeleteCategoryByIdAsync(request.UserId, request.CategoryId, cancellationToken);
         return Unit.Value;
     }
 }

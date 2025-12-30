@@ -2,4 +2,4 @@
 
 namespace BudgetManager.Application.FeaturesHandlers.AccountTypes.Commands.DeleteAccTypesById;
 
-public record DeleteAccTypesRequest(int Id): IRequest<bool>;
+public record DeleteAccTypesRequest(Guid UserId, int Id): IRequest<bool>;

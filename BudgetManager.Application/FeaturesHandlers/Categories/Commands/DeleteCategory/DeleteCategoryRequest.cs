@@ -2,4 +2,4 @@
 
 namespace BudgetManager.Application.FeaturesHandlers.Categories.Commands.DeleteCategory;
 
-public record DeleteCategoryRequest(int CategoryId) : IRequest<Unit>;
+public record DeleteCategoryRequest(Guid UserId, int CategoryId) : IRequest<Unit>;

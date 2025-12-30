@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Transactions.Commands.InsertTransaction;
 
-public record InsertTransactionRequest(TransactionCreateDto TransactionDto) : IRequest<Unit>;
+public record InsertTransactionRequest(Guid UserId, TransactionCreateDto TransactionDto) : IRequest<Unit>;

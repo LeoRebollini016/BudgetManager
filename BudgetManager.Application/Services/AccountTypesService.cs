@@ -7,60 +7,47 @@ using BudgetManager.Interfaces.Repositories;
 
 namespace BudgetManager.Application.Services;
 
-public class AccountTypesService(IAccountTypesRepository accTypesService, IUserService userService, IMapper mapper) : IAccountTypesService
+public class AccountTypesService(IAccountTypesRepository accTypesService, IMapper mapper) : IAccountTypesService
 {
     private readonly IAccountTypesRepository _accTypesService = accTypesService;
-    private readonly IUserService _userService = userService;
     private readonly IMapper _mapper = mapper;
 
-    public async Task Create(AccountTypesDto accTypesDto, CancellationToken ct)
+    public async Task Create(Guid userId, AccountTypesDto accTypesDto, CancellationToken ct)
     {
-        accTypesDto.UserId = _userService.GetUserId();
         var accTypes = _mapper.Map<AccountTypes>(accTypesDto);
+        accTypes.UserId = userId;
         await _accTypesService.CreateAsync(accTypes, ct);
     }
 
-    public async Task<bool> ExistAccTypes(string name, CancellationToken ct)
-    {
-        var userId = _userService.GetUserId();
-        return await _accTypesService.ExistAccTypesAsync(name, userId, ct);
-    }
+    public async Task<bool> ExistAccTypes(Guid userId, string name, CancellationToken ct)
+        => await _accTypesService.ExistAccTypesAsync(userId, name, ct);
     
-    public async Task<List<AccountTypesDto>?> GetAccountTypesAsync(int userId, CancellationToken ct)
+    public async Task<List<AccountTypesDto>?> GetAccountTypesAsync(Guid userId, CancellationToken ct)
         => _mapper.Map<List<AccountTypesDto>?>(
                 await _accTypesService.GetListAccountTypesAsync(userId, ct));
 
-    public async Task Update(AccountTypesDto accountTypesDto, CancellationToken ct)
+    public async Task Update(Guid userId, AccountTypesDto accountTypesDto, CancellationToken ct)
     {
-        var userId = _userService.GetUserId();
         var accTypes = _mapper.Map<AccountTypes>(accountTypesDto);
         accTypes.UserId = userId;
         await _accTypesService.UpdateAsync(accTypes, ct);
     }
-    public async Task<List<KeyValueDto>?> GetAccountTypesNamesAsync(CancellationToken ct)
+    public async Task<List<KeyValueDto>?> GetAccountTypesNamesAsync(Guid userId, CancellationToken ct)
+        => await _accTypesService.GetAccountTypesNamesAsync(userId, ct) as List<KeyValueDto>;
+    public async Task<AccountTypesDto?> GetAccTypesById(Guid userId, int id, CancellationToken ct)
+        => await _accTypesService.GetAccTypesByIdAsync(userId, id, ct);
+    public async Task<bool> DeleteAccTypesById(Guid userId, int id, CancellationToken ct)
     {
-        var userId = _userService.GetUserId();
-        return await _accTypesService.GetAccountTypesNamesAsync(userId, ct) as List<KeyValueDto>;
-    }
-    public async Task<AccountTypesDto?> GetAccTypesById(int id, CancellationToken ct)
-    {
-        var userId = _userService.GetUserId();
-        return await _accTypesService.GetAccTypesByIdAsync(id, userId, ct);
-    }
-    public async Task<bool> DeleteAccTypesById(int id, CancellationToken ct)
-    {
-        var userId = _userService.GetUserId();
-        var accType = await _accTypesService.GetAccTypesByIdAsync(id, userId, ct);
+        var accType = await _accTypesService.GetAccTypesByIdAsync(userId, id, ct);
         if (accType is null)
         {
             return false;
         }
-        await _accTypesService.DeleteAccTypeAsync(id, ct);
+        await _accTypesService.DeleteAccTypeAsync(userId, id, ct);
         return true;
     }
-    public async Task<bool> OrderListAccTypes(IEnumerable<int> ids, CancellationToken ct)
+    public async Task<bool> OrderListAccTypes(Guid userId, IEnumerable<int> ids, CancellationToken ct)
     {
-        var userId = _userService.GetUserId();
         var accTypes = await _accTypesService.GetListAccountTypesAsync(userId, ct);
 
         var accTypesIds = accTypes.Select(x => x.Id);
@@ -72,7 +59,7 @@ public class AccountTypesService(IAccountTypesRepository accTypesService, IUserS
             return false;
         }
         var sortedListAccTypes = ids.Select((value, index) =>
-            new AccountTypes() { Id = value, Order = index + 1 }).AsEnumerable();
+            new AccountTypes() { Id = value, Order = index + 1, UserId = userId }).AsEnumerable();
 
         await _accTypesService.OrderListAsync(sortedListAccTypes, ct);
 

@@ -9,7 +9,7 @@ public class DeleteTransactionHandler(ITransactionService transactionService) : 
 
     public async Task<Unit> Handle(DeleteTransactionRequest request, CancellationToken cancellationToken)
     {
-        await _transactionService.DeleteTransactionByIdAsync(request.TransactionId, cancellationToken);
+        await _transactionService.DeleteTransactionByIdAsync(request.UserId, request.TransactionId, cancellationToken);
         return Unit.Value;
     }
 }

@@ -4,7 +4,7 @@ namespace BudgetManager.Domain.Interfaces.Repositories;
 
 public interface IReportRepository
 {
-    Task<IEnumerable<ReportTimeSeriesDto>> GetReportByRangeAsync(DateRangeReportFilterDto filter, CancellationToken ct);
-    Task<IEnumerable<ReportTimeSeriesDto>> GetReportMonthlyAsync(MonthlyReportFilterDto filter, CancellationToken ct);
-    Task<IEnumerable<ReportCategoryDto>> GetReportCategoryAsync(int? AccountId, CancellationToken ct);
+    Task<IEnumerable<ReportTimeSeriesDto>> GetReportByRangeAsync(Guid userId, DateRangeReportFilterDto filter, CancellationToken ct);
+    Task<IEnumerable<ReportTimeSeriesDto>> GetReportMonthlyAsync(Guid userId, MonthlyReportFilterDto filter, CancellationToken ct);
+    Task<IEnumerable<ReportCategoryDto>> GetReportCategoryAsync(Guid userId, int? AccountId, CancellationToken ct);
 }

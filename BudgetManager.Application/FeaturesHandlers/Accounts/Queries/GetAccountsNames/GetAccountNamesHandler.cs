@@ -9,5 +9,5 @@ public class GetAccountNamesHandler(IAccountService accountService) : IRequestHa
     private readonly IAccountService _accountService = accountService;
 
     public async Task<List<KeyValueDto>?> Handle(GetAccountNamesRequest request, CancellationToken cancellationToken)
-        => await _accountService.GetAccountNamesAsync(cancellationToken);
+        => await _accountService.GetAccountNamesAsync(request.UserId, cancellationToken);
 }

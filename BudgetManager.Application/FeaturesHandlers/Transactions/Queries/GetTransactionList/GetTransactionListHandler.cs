@@ -9,5 +9,5 @@ public class GetTransactionListHandler(ITransactionService transactionService) :
     private readonly ITransactionService _transactionService = transactionService;
 
     public async Task<List<TransactionDetailDto>> Handle(GetTransactionListRequest request, CancellationToken cancellationToken)
-        => await _transactionService.GetTransactionListAsync(cancellationToken);
+        => await _transactionService.GetTransactionListAsync(request.UserId, cancellationToken);
 }

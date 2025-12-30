@@ -9,7 +9,7 @@ public class UpdateTransactionHandler(ITransactionService transactionService) : 
 
     public async Task<Unit> Handle(UpdateTransactionRequest request, CancellationToken cancellationToken)
     {
-        await _transactionService.UpdateTransactionAsync(request.TransactionDto, cancellationToken);
+        await _transactionService.UpdateTransactionAsync(request.UserId, request.TransactionDto, cancellationToken);
         return Unit.Value;
     }
 }

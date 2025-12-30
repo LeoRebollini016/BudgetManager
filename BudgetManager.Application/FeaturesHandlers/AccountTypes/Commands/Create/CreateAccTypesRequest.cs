@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.AccountTypes.Commands.Create;
 
-public record CreateAccTypesRequest(AccountTypesDto AccountTypesDto) : IRequest<Unit>;
+public record CreateAccTypesRequest(Guid UserId, AccountTypesDto AccountTypesDto) : IRequest<Unit>;

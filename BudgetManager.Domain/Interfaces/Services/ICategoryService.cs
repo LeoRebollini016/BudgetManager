@@ -6,11 +6,11 @@ namespace BudgetManager.Domain.Interfaces.Services;
 
 public interface ICategoryService
 {
-    Task<List<CategoryDto>> GetCategoriesAsync(CancellationToken ct);
-    Task<Category?> GetCategoryByIdAsync(int id, CancellationToken ct);
+    Task<List<CategoryDto>> GetCategoriesAsync(Guid userId, CancellationToken ct);
+    Task<Category?> GetCategoryByIdAsync(Guid userId, int id, CancellationToken ct);
     Task AddCategoryAsync(Category category, CancellationToken ct);
     Task UpdateCategoryAsync(Category category, CancellationToken ct);
-    Task<List<KeyValueDto>> GetCategoryNamesAsync(CancellationToken ct);
-    Task<CategoryDeleteDto?> GetCategoryDeleteInfoAsync(int categoryId, CancellationToken ct);
-    Task DeleteCategoryByIdAsync(int categoryId, CancellationToken ct);
+    Task<List<KeyValueDto>> GetCategoryNamesAsync(Guid userId, CancellationToken ct);
+    Task<CategoryDeleteDto?> GetCategoryDeleteInfoAsync(Guid userId, int categoryId, CancellationToken ct);
+    Task DeleteCategoryByIdAsync(Guid userId, int categoryId, CancellationToken ct);
 }

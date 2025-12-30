@@ -2,40 +2,51 @@
 
 public static class AccountTypesQueries
 {
-    public static string CreateAccTypesQuery =
-        @"INSERT INTO account_types (name, id_user, [order]) 
+    public static string CreateAccTypesQuery = @"
+        INSERT INTO account_types (name, id_user, [order]) 
         SELECT @Name, @UserId, ISNULL(MAX([order]), 0) + 1
         FROM account_types
         WHERE id_user = @UserId;
-        SELECT SCOPE_IDENTITY();";
+        SELECT SCOPE_IDENTITY();
+    ";
 
-    public static string ExistAccTypesByUserIDQuery =
-        @"SELECT 1 FROM account_types 
-        WHERE name = @name AND id_user = @userId";
+    public static string ExistAccTypesByUserIDQuery = @"
+        SELECT 1 FROM account_types 
+        WHERE name = @name AND id_user = @userId;
+    ";
 
     public static string GetListAccTypesQuery =
         @"SELECT id, name, [order]
         FROM account_types
         WHERE id_user = @userId
-        ORDER BY [order];";
+        ORDER BY [order];
+    ";
     public static string UpdateAccTypesQuery =
         @"UPDATE account_types
         SET Name = @name
-        WHERE id = @Id";
-    public static string GetAccTypesByIdQuery =
-        @"SELECT id, name, [order]
+        WHERE id = @Id
+            AND id_user = @UserId;
+    ";
+    public static string GetAccTypesByIdQuery = @"
+        SELECT id, name, [order]
         FROM account_types
-        WHERE id = @id AND id_user = @userId";
-    public static string DeleteAccTypesByIdQuery =
-        @"DELETE
+        WHERE id = @id AND id_user = @userId;
+    ";
+    public static string DeleteAccTypesByIdQuery = @"
+        DELETE
         FROM account_types
-        WHERE id = @id;";
-    public static string SortAccTypesQuery =
-        @"UPDATE account_types 
+        WHERE id = @id
+            AND id_user = @UserId;
+    ";
+    public static string SortAccTypesQuery = @"
+        UPDATE account_types 
         SET [order] = @Order 
-        WHERE Id = @Id;";
-    public static string GetAccountTypesNamesQuery =
-        @"SELECT id, name
+        WHERE Id = @Id
+            AND id_user = @UserId;
+    ";
+    public static string GetAccountTypesNamesQuery = @"
+        SELECT id, name
         FROM account_types
-        WHERE id_user = @userId";
+        WHERE id_user = @userId;
+    ";
 }

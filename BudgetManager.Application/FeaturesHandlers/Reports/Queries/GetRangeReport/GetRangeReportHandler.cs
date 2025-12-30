@@ -9,5 +9,5 @@ public class GetRangeReportHandler(IReportService reportService) : IRequestHandl
     private readonly IReportService _reportService = reportService;
 
     public async Task<DateRangeReportResultDto> Handle(GetRangeReportRequest request, CancellationToken cancellationToken)
-        => await _reportService.GetReportRangeAsync(request.FilterDto, cancellationToken);
+        => await _reportService.GetReportRangeAsync(request.UserId, request.FilterDto, cancellationToken);
 }

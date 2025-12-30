@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Categories.Commands.UpdateCategory;
 
-public record UpdateCategoryRequest(CategoryDto CategoryDto) : IRequest<Unit>;
+public record UpdateCategoryRequest(Guid UserId, CategoryDto CategoryDto) : IRequest<Unit>;

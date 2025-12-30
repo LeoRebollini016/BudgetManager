@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Categories.Queries.GetCategoryById;
 
-public record GetCategoryByIdRequest(int Id) : IRequest<CategoryDto?>;
+public record GetCategoryByIdRequest(Guid UserId, int Id) : IRequest<CategoryDto?>;

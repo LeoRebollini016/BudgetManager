@@ -12,39 +12,74 @@ public class CategoryRepository(IDbConnectionFactory dbConnection) : ICategoryRe
 {
     private readonly IDbConnectionFactory _dbConnection = dbConnection;
 
-    public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync(int userId, CancellationToken ct)
+    public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync(Guid userId, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        return await conn.QueryAsync<CategoryDto>(CategoryQueries.GetCategoriesQuery, new { userId });
+        var command = new CommandDefinition(
+            CategoryQueries.GetCategoriesQuery,
+            new { userId },
+            cancellationToken: ct
+        );
+        return await conn.QueryAsync<CategoryDto>(command);
     }
-    public async Task<Category?> GetCategoryByIdAsync(int userId, int id, CancellationToken ct)
+    public async Task<Category?> GetCategoryByIdAsync(Guid userId, int id, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        return await conn.QueryFirstOrDefaultAsync<Category>(CategoryQueries.GetCategoryByIdQuery, new { userId, id});
+        var command = new CommandDefinition(
+            CategoryQueries.GetCategoryByIdQuery,
+            new { userId, id },
+            cancellationToken: ct
+        );
+        return await conn.QueryFirstOrDefaultAsync<Category>(command);
     }
-    public async Task<CategoryDeleteDto> GetCategoryDeleteInfoByIdAsync(int id, int userId, CancellationToken ct)
+    public async Task<CategoryDeleteDto> GetCategoryDeleteInfoByIdAsync(Guid userId, int id, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        return await conn.QueryFirstAsync<CategoryDeleteDto>(CategoryQueries.GetCategoryDeleteInfoQuery, new { id, userId });
+        var command = new CommandDefinition(
+            CategoryQueries.GetCategoryDeleteInfoQuery,
+            new { userId, id },
+            cancellationToken: ct
+        );
+        return await conn.QueryFirstAsync<CategoryDeleteDto>(command);
     }
     public async Task InsertCategoryAsync(Category category, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        category.Id = await conn.ExecuteAsync(CategoryQueries.InsertCategoryQuery, category);
+        var command = new CommandDefinition(
+            CategoryQueries.InsertCategoryQuery,
+            category,
+            cancellationToken: ct
+        );
+        category.Id = await conn.ExecuteAsync(command);
     }
     public async Task UpdateCategoryAsync(Category category, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        await conn.ExecuteAsync(CategoryQueries.UpdateCategoryQuery, category);
+        var command = new CommandDefinition(
+            CategoryQueries.UpdateCategoryQuery,
+            category,
+            cancellationToken: ct
+        );
+        await conn.ExecuteAsync(command);
     }
-    public async Task<IEnumerable<KeyValueDto>> GetCategoryNamesAsync(int userId, CancellationToken ct)
+    public async Task<IEnumerable<KeyValueDto>> GetCategoryNamesAsync(Guid userId, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        return await conn.QueryAsync<KeyValueDto>(CategoryQueries.GetCategoryNamesQuery, new { userId });
+        var command = new CommandDefinition(
+            CategoryQueries.GetCategoryNamesQuery,
+            new { userId },
+            cancellationToken: ct
+        );
+        return await conn.QueryAsync<KeyValueDto>(command);
     }
-    public async Task DeleteCategoryByIdAsync(int userId, int categoryId, CancellationToken ct)
+    public async Task DeleteCategoryByIdAsync(Guid userId, int categoryId, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
-        await conn.ExecuteAsync(CategoryQueries.DisableCategoryByIdQuery, new { userId, id = categoryId });
+        var command = new CommandDefinition(
+            CategoryQueries.DisableCategoryByIdQuery,
+            new { userId, id = categoryId },
+            cancellationToken: ct
+        );
+        await conn.ExecuteAsync(command);
     }
 }

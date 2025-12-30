@@ -9,5 +9,5 @@ public class GetTransactionDeleteInfoHandler(ITransactionService transactionServ
     private readonly ITransactionService _transactionService = transactionService;
 
     public async Task<TransactionDeleteDto> Handle(GetTransactionDeleteInfoRequest request, CancellationToken cancellationToken)
-        => await _transactionService.GetTransactionDeleteInfoByIdAsync(request.TransactionId, cancellationToken);
+        => await _transactionService.GetTransactionDeleteInfoByIdAsync(request.UserId, request.TransactionId, cancellationToken);
 }

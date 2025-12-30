@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Reports.Queries.GetCategoryReport;
 
-public record GetCategoryReportRequest(int? AccountId) : IRequest<CategoryReportResultDto>;
+public record GetCategoryReportRequest(Guid UserId, int? AccountId) : IRequest<CategoryReportResultDto>;

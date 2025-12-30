@@ -8,5 +8,5 @@ public class OrderAccTypesHandler(IAccountTypesService accountTypesService) : IR
     private readonly IAccountTypesService _accountTypesService = accountTypesService;
 
     public async Task<bool> Handle(OrderAccTypesRequest request, CancellationToken cancellationToken)
-        => await _accountTypesService.OrderListAccTypes(request.Ids, cancellationToken);
+        => await _accountTypesService.OrderListAccTypes(request.UserId, request.Ids, cancellationToken);
 }

@@ -12,5 +12,5 @@ public class GetAccountsHandler(IAccountService accountService, IMapper mapper) 
 
     public async Task<List<AccountDto>> Handle(GetAccountsRequest request, CancellationToken cancellationToken)
         => _mapper.Map<List<AccountDto>>(
-                await _accountService.GetAccountListAsync(cancellationToken));
+                await _accountService.GetAccountListAsync(request.UserId, cancellationToken));
 }

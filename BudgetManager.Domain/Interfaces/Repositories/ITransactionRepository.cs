@@ -4,9 +4,9 @@ namespace BudgetManager.Domain.Interfaces.Repositories;
 
 public interface ITransactionRepository
 {
-    Task<IEnumerable<TransactionDetailDto>> GetTransactionsAsync(int userId, CancellationToken ct);
-    Task InsertTransactionAsync(TransactionCreateDto transaction, CancellationToken ct);
-    Task UpdateTransactionAsync(TransactionCreateDto transaction, CancellationToken ct);
-    Task<TransactionDeleteDto> GetTransactionDeleteInfoByIdAsync(int transactionId, int userId, CancellationToken ct);
-    Task DeleteTransactionByIdAsync(int transactionId, int userId, CancellationToken ct);
+    Task<IEnumerable<TransactionDetailDto>> GetTransactionsAsync(Guid userId, CancellationToken ct);
+    Task InsertTransactionAsync(Guid userId, TransactionCreateDto transaction, CancellationToken ct);
+    Task UpdateTransactionAsync(Guid userId, TransactionCreateDto transaction, CancellationToken ct);
+    Task<TransactionDeleteDto> GetTransactionDeleteInfoByIdAsync(Guid userId, int transactionId, CancellationToken ct);
+    Task DeleteTransactionByIdAsync(Guid userId, int transactionId, CancellationToken ct);
 }

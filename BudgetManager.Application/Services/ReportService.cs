@@ -9,9 +9,9 @@ public class ReportService(IReportRepository reportRepository) : IReportService
 {
     private readonly IReportRepository _reportRepository = reportRepository;
     
-    public async Task<MonthlyReportResultDto> GetReportMonthlyAsync(MonthlyReportFilterDto monthlyReportFilterDto, CancellationToken ct)
+    public async Task<MonthlyReportResultDto> GetReportMonthlyAsync(Guid userId, MonthlyReportFilterDto filter, CancellationToken ct)
     {
-        var items = (List<ReportTimeSeriesDto>)await _reportRepository.GetReportMonthlyAsync(monthlyReportFilterDto, ct);
+        var items = (List<ReportTimeSeriesDto>)await _reportRepository.GetReportMonthlyAsync(userId, filter, ct);
 
         return new MonthlyReportResultDto
         {
@@ -20,9 +20,9 @@ public class ReportService(IReportRepository reportRepository) : IReportService
             TotalExpense = items.Sum(x => x.Expense)
         };
     }
-    public async Task<DateRangeReportResultDto> GetReportRangeAsync(DateRangeReportFilterDto filter, CancellationToken ct)
+    public async Task<DateRangeReportResultDto> GetReportRangeAsync(Guid userId, DateRangeReportFilterDto filter, CancellationToken ct)
     {
-        var items = (List<ReportTimeSeriesDto>)await _reportRepository.GetReportByRangeAsync(filter, ct);
+        var items = (List<ReportTimeSeriesDto>)await _reportRepository.GetReportByRangeAsync(userId, filter, ct);
 
         return new DateRangeReportResultDto
         {
@@ -31,9 +31,9 @@ public class ReportService(IReportRepository reportRepository) : IReportService
             TotalExpense = items.Sum(x => x.Expense)
         };
     }
-    public async Task<CategoryReportResultDto> GetReportCategoryAsync(int? accountId, CancellationToken ct)
+    public async Task<CategoryReportResultDto> GetReportCategoryAsync(Guid userId, int? accountId, CancellationToken ct)
     {
-        var items = (List<ReportCategoryDto>)await _reportRepository.GetReportCategoryAsync(accountId, ct);
+        var items = (List<ReportCategoryDto>)await _reportRepository.GetReportCategoryAsync(userId, accountId, ct);
 
         return new CategoryReportResultDto
         {

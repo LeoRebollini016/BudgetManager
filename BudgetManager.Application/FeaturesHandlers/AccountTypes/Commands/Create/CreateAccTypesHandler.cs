@@ -9,7 +9,7 @@ public class CreateAccTypesHandler(IAccountTypesService accountTypesService) : I
 
     public async Task<Unit> Handle(CreateAccTypesRequest request, CancellationToken cancellationToken)
     {
-        await _accountTypesService.Create(request.AccountTypesDto, cancellationToken);
+        await _accountTypesService.Create(request.UserId, request.AccountTypesDto, cancellationToken);
         return Unit.Value;
     }
 }

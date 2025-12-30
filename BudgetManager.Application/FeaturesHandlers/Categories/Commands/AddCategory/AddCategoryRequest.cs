@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Categories.Commands.AddCategory;
 
-public record AddCategoryRequest(CategoryDto CategoryDto) : IRequest<Unit>;
+public record AddCategoryRequest(Guid UserId, CategoryDto CategoryDto) : IRequest<Unit>;

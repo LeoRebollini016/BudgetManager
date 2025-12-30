@@ -8,5 +8,4 @@ public class CategoryDto
     public string Name { get; set; }
     public int OperationTypeId { get; set; }
     public OperationTypeEnum OperationType { get; set; }
-    public int userId { get; set; }
 }

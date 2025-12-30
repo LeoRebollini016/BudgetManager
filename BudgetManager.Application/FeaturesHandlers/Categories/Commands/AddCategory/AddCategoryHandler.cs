@@ -13,6 +13,7 @@ public class AddCategoryHandler(ICategoryService categoryService, IMapper mapper
     public async Task<Unit> Handle(AddCategoryRequest request, CancellationToken cancellationToken)
     {
         var category = _mapper.Map<Category>(request.CategoryDto);
+        category.UserId = request.UserId;
         await _categoryService.AddCategoryAsync(category, cancellationToken);
         return Unit.Value;
     }

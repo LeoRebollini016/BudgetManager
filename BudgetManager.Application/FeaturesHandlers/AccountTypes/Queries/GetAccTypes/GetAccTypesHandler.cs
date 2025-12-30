@@ -9,5 +9,5 @@ public class GetAccTypesHandler(IAccountTypesService accountTypesService) : IReq
     private readonly IAccountTypesService _accountTypesService = accountTypesService;
 
     public async Task<List<AccountTypesDto>?> Handle(GetAccTypesRequest request, CancellationToken cancellationToken)
-        => await _accountTypesService.GetAccountTypesAsync(request.userId, cancellationToken);
+        => await _accountTypesService.GetAccountTypesAsync(request.UserId, cancellationToken);
 }

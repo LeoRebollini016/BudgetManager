@@ -7,11 +7,11 @@ namespace BudgetManager.Interfaces.Repositories;
 public interface IAccountTypesRepository
 {
     Task CreateAsync(AccountTypes accountTypes, CancellationToken ct);
-    Task<bool> ExistAccTypesAsync(string name, int userId, CancellationToken ct);
-    Task<IEnumerable<AccountTypesDto>> GetListAccountTypesAsync(int userId, CancellationToken ct);
-    Task<AccountTypesDto?> GetAccTypesByIdAsync(int id, int userId, CancellationToken ct);
+    Task<bool> ExistAccTypesAsync(Guid userId, string name, CancellationToken ct);
+    Task<IEnumerable<AccountTypesDto>> GetListAccountTypesAsync(Guid userId, CancellationToken ct);
+    Task<AccountTypesDto?> GetAccTypesByIdAsync(Guid userId, int id, CancellationToken ct);
     Task<AccountTypes> UpdateAsync(AccountTypes accountTypes, CancellationToken ct);
-    Task DeleteAccTypeAsync(int id, CancellationToken ct);
+    Task DeleteAccTypeAsync(Guid userId, int id, CancellationToken ct);
     Task OrderListAsync(IEnumerable<AccountTypes> accounts, CancellationToken ct);
-    Task<IEnumerable<KeyValueDto>> GetAccountTypesNamesAsync(int userId, CancellationToken ct);
+    Task<IEnumerable<KeyValueDto>> GetAccountTypesNamesAsync(Guid userId, CancellationToken ct);
 }

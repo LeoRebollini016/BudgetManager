@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Accounts.Queries.GetAccounts;
 
-public record GetAccountsRequest() : IRequest<List<AccountDto>>;
+public record GetAccountsRequest(Guid UserId) : IRequest<List<AccountDto>>;

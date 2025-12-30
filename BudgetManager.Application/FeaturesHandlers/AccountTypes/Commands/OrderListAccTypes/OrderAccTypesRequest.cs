@@ -2,4 +2,4 @@
 
 namespace BudgetManager.Application.FeaturesHandlers.AccountTypes.Commands.OrderListAccTypes;
 
-public record OrderAccTypesRequest(IEnumerable<int> Ids) : IRequest<bool>;
+public record OrderAccTypesRequest(Guid UserId, IEnumerable<int> Ids) : IRequest<bool>;
