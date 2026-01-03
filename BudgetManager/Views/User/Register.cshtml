@@ -1,25 +1,44 @@
 ﻿@model UserRegisterVM
 @{
 	ViewData["Title"] = "Registro";
+	Layout = "_AuthLayout";
 }
-<h1>Registrarse</h1>
+<div class="d-flex justify-content-center align-items-center vh-100">
+	<div class="card shadow-sm" style="width: 420px;">
+		<div class="card-body">
+			<h4 class="text-center mb-4">Crear cuenta</h4>
 
-<form asp-action="Register" method="post">
-	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<form asp-action="Register" method="post" novalidate>
+				<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 	
-	<div class="mb-3">
-		<label asp-for="Email" class="form-label"></label>
-		<input asp-for="Email" type="email" class="form-control" />
-		<span asp-validation-for="Email" class="text-danger"></span>
-	</div>
-	<div class="mb-3">
-		<label asp-for="Password" class="form-label"></label>
-		<input asp-for="Password" type="password" class="form-control" />
-		<span asp-validation-for="Password" class="text-danger"></span>
-	</div>
+				<div class="mb-3">
+					<label asp-for="Email" class="form-label"></label>
+					<input asp-for="Email" type="email" class="form-control" />
+					<span asp-validation-for="Email" class="text-danger"></span>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Password" class="form-label"></label>
+					<input asp-for="Password" type="password" class="form-control" />
+					<span asp-validation-for="Password" class="text-danger"></span>
+				</div>
 
-	<button class="btn btn-primary">Registrarse</button>
-</form>
+				<div class="mb-3">
+					<label asp-for="ConfirmPassword" class="form-label"></label>
+					<input asp-for="ConfirmPassword" type="password" class="form-control" />
+					<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+				</div>
+
+				<button class="btn btn-primary w-100">Registrarse</button>
+			</form>
+			<div class="text-center mt-3">
+				<p class="text-center mt-3">
+					¿Ya tienes una cuenta?
+					<a asp-action="Login">Iniciar sesión</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />

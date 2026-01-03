@@ -9,4 +9,7 @@ public class UserRegisterVM
     public string Email { get; set; }
     [Required(ErrorMessage = "El campo {0} es requerido")]
     public string Password { get; set; }
+    [Required, DataType(DataType.Password)]
+    [Compare("Password", ErrorMessage = "Las contraseñas no coinciden")]
+    public string ConfirmPassword { get; set; }
 }

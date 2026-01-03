@@ -25,7 +25,6 @@ public static class InjectionDependency
 {
     public static IServiceCollection AddApplicationDependency(this IServiceCollection services)
     {
-        services.AddTransient<IUserService, UserService>();
         services.AddTransient<IAccountTypesService, AccountTypesService>();
         services.AddTransient<IAccountService, AccountService>();
         services.AddTransient<ICategoryService, CategoryService>();

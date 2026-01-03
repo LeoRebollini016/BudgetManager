@@ -19,6 +19,11 @@ public static class DisplayNameMappings
         { "ReportViewModel.Month", "Mes" },
         { "ReportViewModel.AccountId", "Cuenta" },
         { "ReportViewModel.StartDate", "Fecha inicio" },
-        { "ReportViewModel.EndDate", "Fecha final" }
+        { "ReportViewModel.EndDate", "Fecha final" },
+        { "UserLoginVM.Email", "Correo electrónico" },
+        { "UserLoginVM.Password", "Contraseña" },
+        { "UserRegisterVM.Email", "Correo electrónico" },
+        { "UserRegisterVM.Password", "Contraseña" },
+        { "UserRegisterVM.ConfirmPassword", "Confirmar contraseña" }
     };
 }

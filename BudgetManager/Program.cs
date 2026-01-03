@@ -30,7 +30,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Transaction}/{action=Index}/{id?}")
+    pattern: "{controller=User}/{action=Login}")
     .WithStaticAssets();
 
 app.Run();
