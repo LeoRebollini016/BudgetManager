@@ -1,9 +1,8 @@
-﻿namespace BudgetManager.Models;
+﻿namespace BudgetManager.Domain.Dtos.Transaction;
 
-public class TransactionDetailsVM
+public class TransactionDetailDto
 {
     public int Id { get; set; }
-    public int UserId { get; set; }
     public DateTime TransactionDate { get; set; }
     public double Amount { get; set; }
     public int OperationTypeId { get; set; }

@@ -9,6 +9,7 @@ using BudgetManager.Application.FeaturesHandlers.Transactions.Queries.GetTransac
 using BudgetManager.Domain.Dtos.Transaction;
 using BudgetManager.Extensions;
 using BudgetManager.Models;
+using BudgetManager.Models.Transaction;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,21 +28,27 @@ public class TransactionController(IMediator mediator, IMapper mapper) : Control
         var userId = User.GetUserId();
         var request = new GetTransactionListRequest(userId);
         var transactionListDto = await _mediator.Send(request, ct);
-        var transactionListVM = _mapper.Map<List<TransactionDetailsVM>>(transactionListDto);
+        var transactionListVM = _mapper.Map<List<TransactionListVM>>(transactionListDto);
         return View(transactionListVM);
     }
     [HttpGet]
     public async Task<IActionResult> Create(CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var model = await GetTransactionVM(userId, ct);
+        var model = new TransactionFormVM { TransactionDate = DateTime.Today };
+        await LoadTransactionSelects(model, userId, ct);
         return View(model);
     }
     [HttpPost]
-    public async Task<IActionResult> Create(TransactionCreateVM transactionCreateVM, CancellationToken ct)
+    public async Task<IActionResult> Create(TransactionFormVM model, CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var transactionDto = _mapper.Map<TransactionCreateDto>(transactionCreateVM);
+        if (!ModelState.IsValid)
+        {
+            await LoadTransactionSelects(model, userId, ct);
+            return View(model);
+        }
+        var transactionDto = _mapper.Map<TransactionCreateDto>(model);
         var request = new InsertTransactionRequest(userId, transactionDto);
         await _mediator.Send(request, ct);
         return RedirectToAction("Index");
@@ -50,15 +57,27 @@ public class TransactionController(IMediator mediator, IMapper mapper) : Control
     public async Task<IActionResult> Edit(int id, CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var model = await GetTransactionVM(userId, ct);
-        model.Id = id;
+        var request = new GetTransactionByIdRequest(userId, id);
+        var transaction = await _mediator.Send(request, ct);
+
+        if (transaction is null)
+        {
+            return RedirectToAction("NotFound", "Home");
+        }
+        var model = _mapper.Map<TransactionFormVM>(transaction);
+        await LoadTransactionSelects(model, userId, ct);
         return View(model);
     }
     [HttpPost]
-    public async Task<IActionResult> Edit(TransactionCreateVM transactionVM, CancellationToken ct)
+    public async Task<IActionResult> Edit(TransactionFormVM model, CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var transactionDto = _mapper.Map<TransactionCreateDto>(transactionVM);
+        if (!ModelState.IsValid)
+        {
+            await LoadTransactionSelects(model, userId, ct);
+            return View(model);
+        }
+        var transactionDto = _mapper.Map<TransactionCreateDto>(model);
         var request = new UpdateTransactionRequest(userId, transactionDto);
         await _mediator.Send(request, ct);
         return RedirectToAction("Index");
@@ -67,9 +86,10 @@ public class TransactionController(IMediator mediator, IMapper mapper) : Control
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var request = new GetTransactionDeleteInfoRequest(userId, id);
-        var transactionDeleteInfoDto = await _mediator.Send(request, ct);
-        var transactionDeleteInfoVM = _mapper.Map<TransactionDeleteVM>(transactionDeleteInfoDto);
+        var request = new GetTransactionByIdRequest(userId, id);
+        var transactionDto = await _mediator.Send(request, ct);
+
+        var transactionDeleteInfoVM = _mapper.Map<TransactionDeleteVM>(transactionDto);
         return View(transactionDeleteInfoVM);
     }
     [HttpPost]
@@ -80,26 +100,24 @@ public class TransactionController(IMediator mediator, IMapper mapper) : Control
         await _mediator.Send(request, ct);
         return RedirectToAction("Index");
     }
-    private async Task<TransactionCreateVM> GetTransactionVM(Guid userId, CancellationToken ct)
+    private async Task LoadTransactionSelects(TransactionFormVM model, Guid userId, CancellationToken ct)
     {
         var categoryRequest = new GetCategoryNamesRequest(userId);
         var accountRequest = new GetAccountNamesRequest(userId);
 
         var categoriesOptions = await _mediator.Send(categoryRequest, ct);
         var accountsOptions = await _mediator.Send(accountRequest, ct);
-        return new TransactionCreateVM
+       
+
+        model.Category = categoriesOptions.Select(c => new SelectListItem
         {
-            Category = categoriesOptions.Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.Name,
-            }),
-            Account = accountsOptions!.Select(a => new SelectListItem
-            {
-                Value = a.Id.ToString(),
-                Text = a.Name,
-            }),
-            TransactionDate = DateTime.Now
-        };
+            Value = c.Id.ToString(),
+            Text = c.Name,
+        });
+        model.Account = accountsOptions!.Select(a => new SelectListItem
+        {
+            Value = a.Id.ToString(),
+            Text = a.Name,
+        });
     }
 }

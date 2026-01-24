@@ -71,4 +71,15 @@ public class AccountRepository(IDbConnectionFactory connectionFactory) : IAccoun
         );
         return await conn.QueryAsync<KeyValueDto>(command);
     }
+
+    public async Task<bool> ExistsByNameAsync(Guid userId, string name, CancellationToken ct)
+    {
+        using var conn = _connectionFactory.CreateConnection();
+        var command = new CommandDefinition(
+            AccountQueries.ExistsByNameQuery,
+            new { UserId = userId, Name = name },
+            cancellationToken: ct
+        );
+        return await conn.QueryFirstOrDefaultAsync<int?>(command) == 1;
+    }
 }

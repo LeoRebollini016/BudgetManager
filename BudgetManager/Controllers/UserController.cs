@@ -2,6 +2,7 @@
 using BudgetManager.Application.FeaturesHandlers.Users.Commands.LogoutUser;
 using BudgetManager.Application.FeaturesHandlers.Users.Commands.RegisterUser;
 using BudgetManager.Models;
+using BudgetManager.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,12 @@ public class UserController(IMediator mediator) : Controller
     }
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> Register(UserRegisterVM registerVM, CancellationToken ct)
+    public async Task<IActionResult> Register(UserRegisterVM model, CancellationToken ct)
     {
         if (!ModelState.IsValid)
-            return View(registerVM);
+            return View(model);
 
-        var request = new RegisterUserRequest(registerVM.Email, registerVM.Password);
+        var request = new RegisterUserRequest(model.Email, model.Password);
         var result = await _mediator.Send(request, ct);
 
         if (!result.Success)
@@ -34,7 +35,7 @@ public class UserController(IMediator mediator) : Controller
             {
                 ModelState.AddModelError(string.Empty, error);
             }
-            return View(registerVM);
+            return View(model);
         }
         return RedirectToAction("Index", "Transaction");
     }
@@ -51,18 +52,18 @@ public class UserController(IMediator mediator) : Controller
     [HttpPost]
     [AllowAnonymous]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(UserLoginVM loginVM, CancellationToken ct)
+    public async Task<IActionResult> Login(UserLoginVM model, CancellationToken ct)
     {
         if (!ModelState.IsValid)
-            return View(loginVM);
+            return View(model);
 
-        var request = new LoginUserRequest(loginVM.Email, loginVM.Password);
+        var request = new LoginUserRequest(model.Email, model.Password);
         var result = await _mediator.Send(request, ct);
 
         if (!result.Success)
         {
             ModelState.AddModelError(string.Empty, result.Error!);
-            return View(loginVM);
+            return View(model);
         }
         return RedirectToAction("Index", "Transaction");
     }

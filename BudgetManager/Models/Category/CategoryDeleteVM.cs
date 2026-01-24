@@ -1,7 +1,7 @@
 ﻿using BudgetManager.Domain.Constants.Enum;
 using System.ComponentModel.DataAnnotations;
 
-namespace BudgetManager.Models;
+namespace BudgetManager.Models.Category;
 
 public class CategoryDeleteVM
 {

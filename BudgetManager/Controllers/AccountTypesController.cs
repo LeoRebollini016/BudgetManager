@@ -8,9 +8,7 @@ using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.GetAccType
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.GetAccTypesById;
 using BudgetManager.Domain.Dtos.AccountTypes;
 using BudgetManager.Extensions;
-using BudgetManager.Models;
-using FluentValidation;
-using FluentValidation.Results;
+using BudgetManager.Models.AccountTypes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +16,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace BudgetManager.Controllers;
 
 [Authorize]
-public class AccountTypesController(IMediator mediator, IValidator<AccountTypesDto> validator, IMapper mapper): Controller
+public class AccountTypesController(IMediator mediator, IMapper mapper): Controller
 {
     private readonly IMediator _mediator = mediator;
-    private readonly IValidator<AccountTypesDto> _validator = validator;
     private readonly IMapper _mapper = mapper;
 
     public IActionResult Create()
@@ -35,15 +32,17 @@ public class AccountTypesController(IMediator mediator, IValidator<AccountTypesD
         var userId = User.GetUserId();
         var request = new GetAccTypesRequest(userId);
         var accountTypes = await _mediator.Send(request, ct);
-        var accountTypesVM = _mapper.Map<List<AccountTypesVM>?>(accountTypes);
+        var accountTypesVM = _mapper.Map<List<AccountTypesListVM>?>(accountTypes);
         return View(accountTypesVM);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(AccountTypesVM accountTypesVM, CancellationToken ct)
+    public async Task<IActionResult> Create(AccountTypesFormVM model, CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var accTypesDto = _mapper.Map<AccountTypesDto>(accountTypesVM);
+        if (!ModelState.IsValid)
+            return View(model);
+        var accTypesDto = _mapper.Map<AccountTypesDto>(model);
         var request = new CreateAccTypesRequest(userId, accTypesDto);
         await _mediator.Send(request, ct);
         return RedirectToAction("Index");
@@ -69,20 +68,23 @@ public class AccountTypesController(IMediator mediator, IValidator<AccountTypesD
         {
             return RedirectToAction("NoFound", "Home");
         }
-        var accTypesVM = _mapper.Map<AccountTypesVM>(response);
+        var accTypesVM = _mapper.Map<AccountTypesFormVM>(response);
         return View(accTypesVM);
     }
     [HttpPost]
-    public async Task<ActionResult> Edit(AccountTypesVM accountTypesVM, CancellationToken ct)
+    public async Task<ActionResult> Edit(AccountTypesFormVM model, CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var requestExistAccTypes = new ExistAccTypesRequest(userId, accountTypesVM.Name);
+        if (!ModelState.IsValid)
+            return View(model);
+        var requestExistAccTypes = new ExistAccTypesRequest(userId, model.Name);
         var response = await _mediator.Send(requestExistAccTypes, ct);
         if (response) { return RedirectToAction("NoFound", "Home"); }
-        var accTypesDto = _mapper.Map<AccountTypesDto>(accountTypesVM);
+        var accTypesDto = _mapper.Map<AccountTypesDto>(model);
 
         var request = new UpdateAccTypesRequest(userId, accTypesDto);
         await _mediator.Send(request, ct);
+
         return RedirectToAction("Index");
     }
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
@@ -94,7 +96,7 @@ public class AccountTypesController(IMediator mediator, IValidator<AccountTypesD
         {
             return RedirectToAction("NoFound", "Home");
         }
-        var existAccTypeVM = _mapper.Map<AccountTypesVM>(existAccTypeDto);
+        var existAccTypeVM = _mapper.Map<AccountTypesDeleteVM>(existAccTypeDto);
         return View(existAccTypeVM);
     }
     [HttpPost]

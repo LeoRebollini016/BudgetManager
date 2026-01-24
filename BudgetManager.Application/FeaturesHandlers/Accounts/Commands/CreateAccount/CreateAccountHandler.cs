@@ -3,7 +3,7 @@ using BudgetManager.Domain.Entities;
 using BudgetManager.Domain.Interfaces.Services;
 using MediatR;
 
-namespace BudgetManager.Application.FeaturesHandlers.Accounts.Commands.Create;
+namespace BudgetManager.Application.FeaturesHandlers.Accounts.Commands.CreateAccount;
 
 public class CreateAccountHandler(IAccountService accountService, IMapper mapper) : IRequestHandler<CreateAccountRequest, Unit>
 {

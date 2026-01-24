@@ -11,4 +11,5 @@ public interface IAccountRepository
     Task<Account?> GetAccountByIdAsync(Guid userId, int id, CancellationToken ct);
     Task UpdateAccountAsync(Account id, CancellationToken ct);
     Task<IEnumerable<KeyValueDto>> GetAccountNamesAsync(Guid userId, CancellationToken ct);
+    Task<bool> ExistsByNameAsync(Guid userId, string name, CancellationToken ct);
 }

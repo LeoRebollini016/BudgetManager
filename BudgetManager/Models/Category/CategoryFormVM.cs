@@ -1,9 +1,9 @@
 ﻿using BudgetManager.Domain.Constants.Enum;
 using System.ComponentModel.DataAnnotations;
 
-namespace BudgetManager.Models;
+namespace BudgetManager.Models.Category;
 
-public class CategoryVM
+public class CategoryFormVM
 {
     public int Id { get; set; }
     [Required(ErrorMessage = "El {0} es requerido.")]

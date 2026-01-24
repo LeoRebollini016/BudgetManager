@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace BudgetManager.Models;
+namespace BudgetManager.Models.Transaction;
 
-public class TransactionCreateVM
+public class TransactionFormVM
 {
     public int Id { get; set; }
     public int UserId { get; set; }
@@ -18,7 +18,7 @@ public class TransactionCreateVM
     [Required(ErrorMessage = "Debe seleccionar una cuenta.")]
     [Range(1, int.MaxValue, ErrorMessage = "Seleccioné una cuenta válida.")]
     public int AccountId { get; set; }
-    public IEnumerable<SelectListItem> Account { get; set; }
+    public IEnumerable<SelectListItem>? Account { get; set; }
     [Required(ErrorMessage = "Debe seleccionar un tipo de operación.")]
     [Range(1, int.MaxValue, ErrorMessage = "Seleccioné un tipo de operación válido.")]
     public int OperationTypeId { get; set; }
@@ -26,5 +26,5 @@ public class TransactionCreateVM
     [Required(ErrorMessage = "Debe seleccionar una categoría.")]
     [Range(1, int.MaxValue, ErrorMessage = "Seleccioné una categoría válida.")]
     public int CategoryId { get; set; }
-    public IEnumerable<SelectListItem> Category { get; set; }
+    public IEnumerable<SelectListItem>? Category { get; set; }
 }

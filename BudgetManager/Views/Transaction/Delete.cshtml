@@ -4,7 +4,7 @@
 }
 
 <h1>Esta seguro de que quiere borrar la transacción <span class="text-danger">@Model.Id efectuada en @Model.TransactionDate por un monto de @Model.Amount </span>?</h1>
-@if(Model.Note.Any()){
+@if(Model.Note is not null){
 	<span class="text-info">La transacción tiene como nota: @Model.Note</span>
 }
 <form asp-action="DeleteConfirmed">

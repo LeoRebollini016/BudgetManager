@@ -1,5 +1,6 @@
 ﻿@using BudgetManager.Domain.Constants.Enum
-@model TransactionCreateVM
+@using BudgetManager.Models.Transaction
+@model TransactionFormVM
 @{
 	ViewData["Title"] = "Editar transacción";
 }
@@ -21,14 +22,14 @@
 				asp-items="Html.GetEnumSelectList<OperationTypeEnum>()"
 				class="form-select"
 				aria-label="Default select example">
-			<option selected>Seleccione una opción</option>
+			<option value="">Seleccione una opción</option>
 		</select>
 		<span asp-validation-for="@Model.OperationTypeId" class="text-danger"></span>
 	</div>
 	<div class="mb-3">
 		<label asp-for="@Model.Category" class="form-label"></label>
 		<select id="selectCategoryId" asp-for="@Model.CategoryId" asp-items="Model.Category" class="form-select" aria-label="Default select example">
-			<option selected>Seleccione una opción</option>
+			<option value="">Seleccione una opción</option>
 		</select>
 		<span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
 	</div>

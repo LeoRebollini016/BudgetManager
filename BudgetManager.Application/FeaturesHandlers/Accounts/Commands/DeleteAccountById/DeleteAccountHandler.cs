@@ -2,7 +2,7 @@
 using BudgetManager.Domain.Interfaces.Services;
 using MediatR;
 
-namespace BudgetManager.Application.FeaturesHandlers.Accounts.Commands.Delete;
+namespace BudgetManager.Application.FeaturesHandlers.Accounts.Commands.DeleteAccount;
 
 public class DeleteAccountHandler(IAccountService accountService) : IRequestHandler<DeleteAccountRequest, Unit>
 {

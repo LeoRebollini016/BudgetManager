@@ -1,9 +1,11 @@
-﻿@model ReportViewModel
+﻿@using BudgetManager.Models.Report
+@model ReportViewModel
 @{
 	ViewData["Title"] = "Reporte por rango";
 }
 
 <form asp-action="Range" method="post" class="mb-3 row g-3">
+	<input type="hidden" asp-for="ReportType">
 	<div class="col-md-4">
 		<label asp-for="StartDate" class="form-label" value="@Model.StartDate"></label>
 		<input asp-for="StartDate" type="date" class="form-control" />
@@ -18,7 +20,7 @@
 				asp-items="@Model.SelectOptions"
 				class="form-select"
 				aria-label="Default select example">
-			<option selected>Todas las cuentas.</option>
+			<option value="">Todas las cuentas.</option>
 		</select>
 		<span asp-validation-for="AccountId" class="text-danger" />
 	</div>

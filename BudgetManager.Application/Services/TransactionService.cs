@@ -15,8 +15,8 @@ public class TransactionService(ITransactionRepository transactionRepository): I
         => await _transactionRepository.InsertTransactionAsync(userId, transactionCreateDto, ct);
     public async Task UpdateTransactionAsync(Guid userId, TransactionCreateDto transactionCreateDto, CancellationToken ct)
         => await _transactionRepository.UpdateTransactionAsync(userId, transactionCreateDto, ct);
-    public async Task<TransactionDeleteDto> GetTransactionDeleteInfoByIdAsync(Guid userId, int transactionId, CancellationToken ct)
-        => await _transactionRepository.GetTransactionDeleteInfoByIdAsync(userId, transactionId, ct);
+    public async Task<TransactionDto> GetTransactionByIdAsync(Guid userId, int transactionId, CancellationToken ct)
+        => await _transactionRepository.GetTransactionById(userId, transactionId, ct);
     public async Task DeleteTransactionByIdAsync(Guid userId, int transactionId, CancellationToken ct)
         => await _transactionRepository.DeleteTransactionByIdAsync(userId, transactionId, ct);
 }

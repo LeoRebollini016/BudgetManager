@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace BudgetManager.Models
+namespace BudgetManager.Models.Report
 {
     public class ReportViewModel
     {

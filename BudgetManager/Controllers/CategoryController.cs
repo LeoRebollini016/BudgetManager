@@ -7,7 +7,7 @@ using BudgetManager.Application.FeaturesHandlers.Categories.Queries.GetCategoryB
 using BudgetManager.Application.FeaturesHandlers.Categories.Queries.GetCategoryDeleteInfo;
 using BudgetManager.Domain.Dtos.Category;
 using BudgetManager.Extensions;
-using BudgetManager.Models;
+using BudgetManager.Models.Category;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,30 +25,28 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
         var userId = User.GetUserId();
         var request = new GetCategoriesRequest(userId);
         var listCategoriesDto= await _mediator.Send(request, ct);
-        var listCategoriesVM = _mapper.Map<List<CategoryVM>>(listCategoriesDto);
+        var listCategoriesVM = _mapper.Map<List<CategoryListVM>>(listCategoriesDto);
         return View(listCategoriesVM);
     }
-    [HttpGet]
-    public async Task<IActionResult> Detalle(int id, CancellationToken ct)
-    {
-        var userId = User.GetUserId();
-        var request = new GetCategoryByIdRequest(userId, id);
-        var category = await _mediator.Send(request, ct);
-        var categoryVM = _mapper.Map<CategoryVM>(category);
-        return View(categoryVM);
-    }
+    //[HttpGet]
+    //public async Task<IActionResult> Detalle(int id, CancellationToken ct)
+    //{
+    //    var userId = User.GetUserId();
+    //    var request = new GetCategoryByIdRequest(userId, id);
+    //    var category = await _mediator.Send(request, ct);
+    //    var categoryVM = _mapper.Map<CategoryFormVM>(category);
+    //    return View(categoryVM);
+    //}
     [HttpGet]
     public IActionResult Create() => View();
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromForm] CategoryVM categoryVM, CancellationToken ct)
+    public async Task<IActionResult> Create([FromForm] CategoryFormVM model, CancellationToken ct)
     {
         var userId = User.GetUserId();
         if (!ModelState.IsValid)
-        {
-            return View("Index", categoryVM);
-        }
-        var categoryDto = _mapper.Map<CategoryDto>(categoryVM);
+            return View(model);
+        var categoryDto = _mapper.Map<CategoryDto>(model);
         var request = new AddCategoryRequest(userId, categoryDto);
         await _mediator.Send(request, ct);
         return RedirectToAction("Index");
@@ -59,17 +57,19 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
         var userId = User.GetUserId();
         var request = new GetCategoryByIdRequest(userId, id);
         var category = await _mediator.Send(request, ct);
-        var modelCategory = _mapper.Map<CategoryVM>(category);
+        var modelCategory = _mapper.Map<CategoryFormVM>(category);
         modelCategory.Id = id;
         return View(modelCategory);
     } 
 
     [HttpPost]
-    public async Task<IActionResult> Edit(CategoryVM categoryVM, CancellationToken ct)
+    public async Task<IActionResult> Edit(CategoryFormVM model, CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var categoryDto = _mapper.Map<CategoryDto>(categoryVM);
-        categoryDto.Id = categoryVM.Id;
+        if (!ModelState.IsValid)
+            return View(model);
+        var categoryDto = _mapper.Map<CategoryDto>(model);
+        categoryDto.Id = model.Id;
         var request = new UpdateCategoryRequest(userId, categoryDto);
         await _mediator.Send(request, ct);
 

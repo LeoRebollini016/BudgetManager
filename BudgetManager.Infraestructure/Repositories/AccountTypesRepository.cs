@@ -46,7 +46,7 @@ public class AccountTypesRepository(IDbConnectionFactory connectionFactory) : IA
     {
         using var conn = _connectionFactory.CreateConnection();
         var command = new CommandDefinition(
-            AccountQueries.UpdateAccountQuery,
+            AccountTypesQueries.UpdateAccTypesQuery,
             accountTypes,
             cancellationToken: ct
         );

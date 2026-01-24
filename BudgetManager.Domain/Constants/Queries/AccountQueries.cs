@@ -45,4 +45,11 @@ public static class AccountQueries
         WHERE id_user = @UserId
             AND is_closed = 0;
     ";
+    public static string ExistsByNameQuery = @"
+        SELECT 1
+        FROM accounts
+        WHERE id_user = @UserId
+            AND name = @Name
+            AND is_closed = 0;
+    ";
 }

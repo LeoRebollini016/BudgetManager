@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace BudgetManager.Models;
+namespace BudgetManager.Models.Account;
 
-public class AccountCreateVM
+public class AccountFormVM
 {
     public int Id { get; set; }
     [Required(ErrorMessage = "El {0} es requerido.")]
@@ -14,7 +14,7 @@ public class AccountCreateVM
     [Required(ErrorMessage = "Debe seleccionar un tipo de cuenta.")]
     [Range(1, int.MaxValue, ErrorMessage = "Seleccione un tipo de cuenta válido.")]
     public int AccountTypeId { get; set; }
-    public IEnumerable<SelectListItem> AccountTypes { get; set; }
+    public IEnumerable<SelectListItem> AccountTypes { get; set; } = [];
     [StringLength(1000, ErrorMessage = "La descripción no debe superar los 1000 caracteres.")]
     public string? Description { get; set; }
 }

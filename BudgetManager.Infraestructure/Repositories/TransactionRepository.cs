@@ -62,7 +62,7 @@ public class TransactionRepository(IDbConnectionFactory dbConnection) : ITransac
         if (rows == 0)
             throw new InvalidOperationException("No se encontro la transacción o no se permitio la actualización.");
     }
-    public async Task<TransactionDeleteDto> GetTransactionDeleteInfoByIdAsync(Guid userId, int transactionId, CancellationToken ct)
+    public async Task<TransactionDto> GetTransactionById(Guid userId, int transactionId, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
         var command = new CommandDefinition(
@@ -70,7 +70,7 @@ public class TransactionRepository(IDbConnectionFactory dbConnection) : ITransac
             new { Id = transactionId, UserId = userId },
             cancellationToken: ct
         );
-        return await conn.QueryFirstAsync<TransactionDeleteDto>(command);
+        return await conn.QueryFirstAsync<TransactionDto>(command);
     }
     public async Task DeleteTransactionByIdAsync(Guid userId, int transactionId, CancellationToken ct)
     {

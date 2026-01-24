@@ -5,7 +5,7 @@ using BudgetManager.Application.FeaturesHandlers.Reports.Queries.GetMonthlyRepor
 using BudgetManager.Application.FeaturesHandlers.Reports.Queries.GetRangeReport;
 using BudgetManager.Domain.Dtos.Report;
 using BudgetManager.Extensions;
-using BudgetManager.Models;
+using BudgetManager.Models.Report;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,49 +31,63 @@ public class ReportController(IMediator mediator, IMapper mapper) : Controller
         return View(vm);
     }
     [HttpPost]
-    public async Task<IActionResult> Monthly(ReportViewModel vm, CancellationToken ct)
+    public async Task<IActionResult> Monthly(ReportViewModel model, CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var filter = _mapper.Map<MonthlyReportFilterDto>(vm);
+        if (!ModelState.IsValid)
+        {
+            await LoadAccountsAsync(model, userId, ct);
+            return View(model);
+        }
+        var filter = _mapper.Map<MonthlyReportFilterDto>(model);
         var request = new GetMonthlyReportRequest(userId, filter);
         var result = await _mediator.Send(request, ct);
-        vm = _mapper.Map<ReportViewModel>(result);
-        await LoadAccountsAsync(vm, userId, ct);
-        vm.ReportType = "monthly";
-        return View("Index", vm);
+        model = _mapper.Map<ReportViewModel>(result);
+        await LoadAccountsAsync(model, userId, ct);
+        model.ReportType = "monthly";
+        return View("Index", model);
     }
     [HttpPost]
-    public async Task<IActionResult> Range(ReportViewModel vm, CancellationToken ct)
+    public async Task<IActionResult> Range(ReportViewModel model, CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var filter = _mapper.Map<DateRangeReportFilterDto>(vm);
+        if (!ModelState.IsValid)
+        {
+            await LoadAccountsAsync(model, userId, ct);
+            return View(model);
+        }
+        var filter = _mapper.Map<DateRangeReportFilterDto>(model);
         var request = new GetRangeReportRequest(userId, filter);
         var result = await _mediator.Send(request, ct);
-        vm = _mapper.Map<ReportViewModel>(result);
-        vm.ReportType = "range";
-        await LoadAccountsAsync(vm, userId, ct);
-        return View("Index", vm);
+        model = _mapper.Map<ReportViewModel>(result);
+        model.ReportType = "range";
+        await LoadAccountsAsync(model, userId, ct);
+        return View("Index", model);
     }
     [HttpPost]
-    public async Task<IActionResult> Category(ReportViewModel vm, CancellationToken ct)
+    public async Task<IActionResult> Category(ReportViewModel model, CancellationToken ct)
     {
         var userId = User.GetUserId();
-        var request = new GetCategoryReportRequest(userId, vm.AccountId);
+        if (!ModelState.IsValid)
+        {
+            await LoadAccountsAsync(model, userId, ct);
+            return View(model);
+        }
+        var request = new GetCategoryReportRequest(userId, model.AccountId);
         var results = await _mediator.Send(request, ct);
-        vm = _mapper.Map<ReportViewModel>(results);
-        vm.ReportType = "category";
-        await LoadAccountsAsync(vm, userId, ct);
-        return View("Index", vm);
+        model = _mapper.Map<ReportViewModel>(results);
+        model.ReportType = "category";
+        await LoadAccountsAsync(model, userId, ct);
+        return View("Index", model);
     }
-    private async Task<ReportViewModel> LoadAccountsAsync(ReportViewModel vm, Guid userId, CancellationToken ct)
+    private async Task LoadAccountsAsync(ReportViewModel model, Guid userId, CancellationToken ct)
     {
         var request = new GetAccountNamesRequest(userId);
         var accounts = await _mediator.Send(request, ct);
-        vm.SelectOptions = accounts?.Select(x => new SelectListItem
+        model.SelectOptions = accounts?.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Name
             }) ?? [];
-        return vm;
     }
 }

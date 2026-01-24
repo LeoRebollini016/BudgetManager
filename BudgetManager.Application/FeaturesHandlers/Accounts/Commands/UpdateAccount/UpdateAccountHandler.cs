@@ -3,7 +3,7 @@ using BudgetManager.Domain.Entities;
 using BudgetManager.Domain.Interfaces.Services;
 using MediatR;
 
-namespace BudgetManager.Application.FeaturesHandlers.Accounts.Commands.Update;
+namespace BudgetManager.Application.FeaturesHandlers.Accounts.Commands.UpdateAccount;
 
 public class UpdateAccountHandler(IAccountService accountService, IMapper mapper) : IRequestHandler<UpdateAccountRequest, Unit>
 {

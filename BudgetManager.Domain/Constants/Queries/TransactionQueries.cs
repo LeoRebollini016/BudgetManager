@@ -57,7 +57,7 @@ public static class TransactionQueries
         WITH ValidTransaction AS (
             SELECT
                 t.id
-            FROM transaction t
+            FROM transactions t
             JOIN accounts a
                 ON a.id = @AccountId
                 AND a.id_user = @UserId
@@ -82,13 +82,18 @@ public static class TransactionQueries
             IN (SELECT id FROM ValidTransaction);
     ";
     public static string GetTransactionByIdQuery = @"
-        SELECT id,
-            transaction_date as TransactionDate,
-            amount,
-            note
-        FROM transactions
-        WHERE id = @Id 
-            AND id_user = @userId;
+        SELECT
+            t.id,
+            t.transaction_date      AS TransactionDate,
+            t.amount                AS Amount,
+            t.note                  AS Note,
+            t.id_account            AS AccountId,
+            t.id_category           AS CategoryId,
+            t.id_operations_types   AS OperationTypeId
+        FROM transactions t
+        WHERE
+            t.id = @Id
+            AND t.id_user = @UserId;
     ";
     public static string DeleteTransactionByIdQuery = @"
         DELETE

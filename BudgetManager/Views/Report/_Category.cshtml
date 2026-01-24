@@ -1,16 +1,18 @@
-﻿@model ReportViewModel
+﻿@using BudgetManager.Models.Report
+@model ReportViewModel
 @{
 	ViewData["Title"] = "Reporte de categorías";
 }
 
 <form asp-action="Category" method="post" class="mb-3 row g-3">
+	<input type="hidden" asp-for="ReportType">
 	<div class="col-md-4">
 		<label asp-for="AccountId" class="form-label" value="@Model.AccountId"></label>
 		<select asp-for="AccountId"
 				asp-items="@Model.SelectOptions"
 				class="form-select"
 				aria-label="Default select example">
-			<option selected>Todas las cuentas.</option>
+			<option value="">Todas las cuentas.</option>
 		</select>
 		<span asp-validation-for="AccountId" class="text-danger" />
 	</div>
