@@ -104,7 +104,7 @@ Si prefieres probar con datos de ejemplo, puedes registrarte desde la UI o agreg
 - **Dependency Inversion** - Dependencias hacia abstracciones
 
 ### Calidad de Código
-- **Inyección de dependencias** en todo el stack [7](#0-6) 
+- **Inyección de dependencias** en todo el stack
 - **Centralización de consultas SQL** en clases `*Queries`
 - **Manejo de conexiones** con `using` statements
 - **Validaciones robustas** con FluentValidation
@@ -112,13 +112,13 @@ Si prefieres probar con datos de ejemplo, puedes registrarte desde la UI o agreg
 ### Experiencia de Usuario
 - Interfaz responsive con Bootstrap
 - Validaciones cliente y servidor
-- Navegación intuitiva [8](#0-7) 
+- Navegación intuitiva 
 - Mensajes de error descriptivos
 
 ## 📊 Funcionalidades Principales
 
 - **Gestión de Cuentas** - Creación y administración de cuentas financieras
-- **Categorización** - Organización de ingresos y gastos [9](#0-8) 
+- **Categorización** - Organización de ingresos y gastos
 - **Registro de Transacciones** - Control detallado de movimientos
 - **Reportes** - Análisis financiero y visualización de datos
 
