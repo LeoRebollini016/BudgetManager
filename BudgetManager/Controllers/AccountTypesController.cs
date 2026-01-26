@@ -3,7 +3,6 @@ using BudgetManager.Application.FeaturesHandlers.AccountTypes.Commands.Create;
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Commands.DeleteAccTypesById;
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Commands.OrderListAccTypes;
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Commands.Update;
-using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.ExistAccTypes;
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.GetAccTypes;
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.GetAccTypesById;
 using BudgetManager.Domain.Dtos.AccountTypes;
@@ -44,19 +43,17 @@ public class AccountTypesController(IMediator mediator, IMapper mapper): Control
             return View(model);
         var accTypesDto = _mapper.Map<AccountTypesDto>(model);
         var request = new CreateAccTypesRequest(userId, accTypesDto);
-        await _mediator.Send(request, ct);
-        return RedirectToAction("Index");
-    }
-    [HttpGet]
-    public async Task<IActionResult> GetExistAccTypesByName(string name, CancellationToken ct)
-    {
-        var userId = User.GetUserId();
-        var request = new ExistAccTypesRequest(userId, name);
-        var response = await _mediator.Send(request, ct);
+        var result = await _mediator.Send(request, ct);
+        if (!result.Success)
+        {
+            if(result.TargetField is null) 
+                return RedirectToAction("Error", "Home", new { errorMessage = result.Error });
 
-        return response
-            ? Json($"El nombre {name} ya existe.")
-            : Json(true);
+            ModelState.AddModelError(result.TargetField, result.Error!);
+            return View(model);
+        }
+        TempData["SuccessMessage"] = "Tipo de cuenta creado con éxito.";
+        return RedirectToAction("Index");
     }
     [HttpGet]
     public async Task<ActionResult> Edit(int id, CancellationToken ct)
@@ -66,7 +63,7 @@ public class AccountTypesController(IMediator mediator, IMapper mapper): Control
         var response = await _mediator.Send(request, ct);
         if (response is null)
         {
-            return RedirectToAction("NoFound", "Home");
+            return RedirectToAction("NotFound", "Home");
         }
         var accTypesVM = _mapper.Map<AccountTypesFormVM>(response);
         return View(accTypesVM);
@@ -77,14 +74,20 @@ public class AccountTypesController(IMediator mediator, IMapper mapper): Control
         var userId = User.GetUserId();
         if (!ModelState.IsValid)
             return View(model);
-        var requestExistAccTypes = new ExistAccTypesRequest(userId, model.Name);
-        var response = await _mediator.Send(requestExistAccTypes, ct);
-        if (response) { return RedirectToAction("NoFound", "Home"); }
+
         var accTypesDto = _mapper.Map<AccountTypesDto>(model);
 
         var request = new UpdateAccTypesRequest(userId, accTypesDto);
-        await _mediator.Send(request, ct);
-
+        var result = await _mediator.Send(request, ct);
+        if (!result.Success)
+        {
+            if(result.TargetField is null)
+                return RedirectToAction("Error", "Home", new { errorMessage = result.Error });
+            
+            ModelState.AddModelError(result.TargetField, result.Error!);
+            return View(model);
+        }
+        TempData["SuccessMessage"] = "Tipo de cuenta actualizado con éxito.";
         return RedirectToAction("Index");
     }
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
@@ -94,7 +97,7 @@ public class AccountTypesController(IMediator mediator, IMapper mapper): Control
         var existAccTypeDto = await _mediator.Send(request, ct);
         if (existAccTypeDto is null)
         {
-            return RedirectToAction("NoFound", "Home");
+            return RedirectToAction("NotFound", "Home");
         }
         var existAccTypeVM = _mapper.Map<AccountTypesDeleteVM>(existAccTypeDto);
         return View(existAccTypeVM);
@@ -104,7 +107,16 @@ public class AccountTypesController(IMediator mediator, IMapper mapper): Control
     {
         var userId = User.GetUserId();
         var request = new DeleteAccTypesRequest(userId, id);
-        await _mediator.Send(request, ct);
+
+        var result = await _mediator.Send(request, ct);
+        if(!result.Success)
+        {
+            if(result.TargetField is null)
+                return RedirectToAction("Error", "Home", new { errorMessage = result.Error });
+            TempData["ErrorMessage"] = result.Error;
+            return RedirectToAction("Index");
+        }
+        TempData["SuccessMessage"] = "Tipo de cuenta eliminado con éxito.";
         return RedirectToAction("Index");
     }
     [HttpPost]

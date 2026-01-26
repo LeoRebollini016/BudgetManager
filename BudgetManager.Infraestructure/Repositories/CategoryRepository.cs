@@ -82,4 +82,25 @@ public class CategoryRepository(IDbConnectionFactory dbConnection) : ICategoryRe
         );
         await conn.ExecuteAsync(command);
     }
+    public async Task<bool> ExistsCategoryByNameAsync(Guid userId, string name, CancellationToken ct, int? categoryId = null)
+    {
+        using var conn = _dbConnection.CreateConnection();
+        var command = new CommandDefinition(
+            CategoryQueries.ExistsCategoryByNameQuery,
+            new { userId, name, categoryId },
+            cancellationToken: ct
+        );
+        return await conn.ExecuteScalarAsync<int>(command) == 1;
+    }
+
+    public async Task<bool> HasTransactionsAsync(Guid userId, int categoryId, CancellationToken ct)
+    {
+        using var conn = _dbConnection.CreateConnection();
+        var command = new CommandDefinition(
+            CategoryQueries.HasTransactionsQuery,
+            new { userId, categoryId },
+            cancellationToken: ct
+        );
+        return await conn.ExecuteScalarAsync<int>(command) == 1;
+    }
 }

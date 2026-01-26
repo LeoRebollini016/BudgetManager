@@ -5,12 +5,10 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Accounts.Queries.GetAccounts;
 
-public class GetAccountsHandler(IAccountService accountService, IMapper mapper) : IRequestHandler<GetAccountsRequest, List<AccountDto>>
+public class GetAccountsHandler(IAccountService accountService) : IRequestHandler<GetAccountsRequest, List<AccountDto>>
 {
     private readonly IAccountService _accountService = accountService;
-    private readonly IMapper _mapper = mapper;
 
     public async Task<List<AccountDto>> Handle(GetAccountsRequest request, CancellationToken cancellationToken)
-        => _mapper.Map<List<AccountDto>>(
-                await _accountService.GetAccountListAsync(request.UserId, cancellationToken));
+        => await _accountService.GetAccountListAsync(request.UserId, cancellationToken);
 }

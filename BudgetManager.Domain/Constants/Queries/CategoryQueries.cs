@@ -1,4 +1,6 @@
-﻿namespace BudgetManager.Domain.Constants.Queries;
+﻿using BudgetManager.Domain.Entities;
+
+namespace BudgetManager.Domain.Constants.Queries;
 
 public static class CategoryQueries
 {
@@ -35,5 +37,19 @@ public static class CategoryQueries
         UPDATE categories
         SET is_active = 0        
         WHERE id_user = @userId AND id = @id;
+    ";
+    public static string ExistsCategoryByNameQuery = @"
+        SELECT TOP 1 1
+        FROM categories
+        WHERE id_user = @userId 
+            AND name = @name 
+            AND is_active = 1
+            AND(@CategoryId IS NULL OR id<> @CategoryId);
+    ";
+    public static string HasTransactionsQuery = @"
+        SELECT TOP 1 1
+        FROM transactions
+        WHERE id_user = @userId 
+            AND id_category = @categoryId;
     ";
 }

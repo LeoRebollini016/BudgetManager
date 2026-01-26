@@ -14,4 +14,5 @@ public interface IAccountTypesRepository
     Task DeleteAccTypeAsync(Guid userId, int id, CancellationToken ct);
     Task OrderListAsync(IEnumerable<AccountTypes> accounts, CancellationToken ct);
     Task<IEnumerable<KeyValueDto>> GetAccountTypesNamesAsync(Guid userId, CancellationToken ct);
+    Task<bool> HasRelatedAccountsAsync(Guid userId, int id, CancellationToken ct);
 }

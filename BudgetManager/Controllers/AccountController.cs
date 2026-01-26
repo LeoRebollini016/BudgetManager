@@ -50,8 +50,18 @@ public class AccountController(IMediator mediator, IMapper mapper) : Controller
 
         var accountDto = _mapper.Map<AccountDto>(model);
         var request = new CreateAccountRequest(userId, accountDto);
-        await _mediator.Send(request);
 
+        var result = await _mediator.Send(request);
+        if(!result.Success)
+        {
+            if (result.TargetField is null)
+                return RedirectToAction("Error", "Home", new { errorMessage = result.Error });
+
+            ModelState.AddModelError("Name", result.Error ?? "ha ocurrido un error en la creación de la cuenta.");
+            model.AccountTypes = (await GetAccountsTypes(userId, ct)).AccountTypes;
+            return View(model);
+        }
+        TempData["SuccessMessage"] = "Cuenta creada exitosamente.";
         return RedirectToAction("Index");
     }
 
@@ -86,8 +96,18 @@ public class AccountController(IMediator mediator, IMapper mapper) : Controller
         var accountDto = _mapper.Map<AccountDto>(model);
         accountDto.Id = model.Id;
         var request = new UpdateAccountRequest(userId, accountDto);
-        await _mediator.Send(request, ct);
+        var result = await _mediator.Send(request, ct);
+        
+        if (!result.Success)
+        {
+            if (result.TargetField is null)
+                return RedirectToAction("Error", "Home", new { errorMessage = result.Error });
 
+            ModelState.AddModelError(result.TargetField!, result.Error ?? "ha ocurrido un error en la actualización de la cuenta.");
+            model.AccountTypes = (await GetAccountsTypes(userId, ct)).AccountTypes;
+            return View(model);
+        }
+        TempData["SuccessMessage"] = "Cuenta actualizada exitosamente.";
         return RedirectToAction("Index");
     }
 
@@ -99,7 +119,7 @@ public class AccountController(IMediator mediator, IMapper mapper) : Controller
         var request = new GetAccountByIdRequest(userId, id);
         var account = await _mediator.Send(request, ct);
 
-        if (account == null)
+        if (account is null)
         {
             return RedirectToAction("NotFound", "Home");
         }
@@ -113,7 +133,15 @@ public class AccountController(IMediator mediator, IMapper mapper) : Controller
     {
         var userId = User.GetUserId();
         var request = new DeleteAccountRequest(userId, id);
-        await _mediator.Send(request, ct);
+        var result = await _mediator.Send(request, ct);
+        if (!result.Success)
+        {
+            if (result.TargetField is null)
+                return RedirectToAction("Error", "Home", new { errorMessage = result.Error });
+            TempData["ErrorMessage"] = result.Error;
+            return RedirectToAction("Index");
+        }
+        TempData["SuccessMessage"] = "Cuenta eliminada exitosamente.";
         return RedirectToAction("Index");
     }
 

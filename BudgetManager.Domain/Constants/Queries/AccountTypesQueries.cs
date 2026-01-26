@@ -49,4 +49,10 @@ public static class AccountTypesQueries
         FROM account_types
         WHERE id_user = @userId;
     ";
+    public static string HasRelatedAccountsQuery = @"
+        SELECT TOP 1 1
+        FROM accounts
+        WHERE id_account_types = @id
+            AND id_user = @userId;
+    ";
 }

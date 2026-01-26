@@ -8,5 +8,6 @@ public class AccountListVM
     public string Name { get; set; }
     public double Balance { get; set; } = 0.0;
     public int AccountTypeId { get; set; }
+    public string AccountType { get; set; }
     public string? Description { get; set; }
 }

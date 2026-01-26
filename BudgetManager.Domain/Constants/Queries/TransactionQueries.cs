@@ -51,7 +51,17 @@ public static class TransactionQueries
             @CategoryId
         FROM ValidTransaction;
 
-        SELECT CAST(SCOPE_IDENTITY() as int);
+        DECLARE @NewId int = SCOPE_IDENTITY();
+        
+        IF @NewId IS NOT NULL
+        BEGIN
+            UPDATE accounts
+            SET balance = balance + (CASE WHEN @OperationTypeId = 1 THEN @Amount ELSE -@Amount END)
+            WHERE id = @AccountId
+                AND id_user = @UserId;
+        END
+        
+        SELECT @NewId;
     ";
     public static string UpdateTransactionQuery = @"
         WITH ValidTransaction AS (
@@ -101,5 +111,11 @@ public static class TransactionQueries
         WHERE 
             id = @Id 
             AND id_user = @userId;
+    ";
+    public const string UpdateAccountBalanceQuery = @"
+        UPDATE accounts
+        SET balance = balance + (CASE WHEN @OperationTypeId = 1 THEN @Amount ELSE -@Amount END) * @Multiplier
+        WHERE id = @AccountId
+            AND id_user = @UserId;
     ";
 }

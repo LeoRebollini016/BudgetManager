@@ -7,9 +7,9 @@
 <h1>Categorias</h1>
 <h5>La categoría indica en que gastamos y de donde provienen nuestros ingresos.</h5>
 
-<div class="mb-3">
-	<a asp-action="Create" class="btn btn-primary">Crear categoría</a>
-</div>
+<partial name="_Notification" />
+
+<a asp-action="Create" class="btn btn-primary mb-3">Crear categoría</a>
 
 @if (Model.Any())
 {

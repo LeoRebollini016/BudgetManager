@@ -1,15 +1,13 @@
-﻿using BudgetManager.Domain.Interfaces.Services;
+﻿using BudgetManager.Domain.Common;
+using BudgetManager.Domain.Interfaces.Services;
 using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Transactions.Commands.UpdateTransaction;
 
-public class UpdateTransactionHandler(ITransactionService transactionService) : IRequestHandler<UpdateTransactionRequest, Unit>
+public class UpdateTransactionHandler(ITransactionService transactionService) : IRequestHandler<UpdateTransactionRequest, Result>
 {
     private readonly ITransactionService _transactionService = transactionService;
 
-    public async Task<Unit> Handle(UpdateTransactionRequest request, CancellationToken cancellationToken)
-    {
-        await _transactionService.UpdateTransactionAsync(request.UserId, request.TransactionDto, cancellationToken);
-        return Unit.Value;
-    }
+    public async Task<Result> Handle(UpdateTransactionRequest request, CancellationToken cancellationToken)
+        => await _transactionService.UpdateTransactionAsync(request.UserId, request.TransactionDto, cancellationToken);
 }

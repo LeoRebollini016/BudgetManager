@@ -1,15 +1,13 @@
-﻿using BudgetManager.Domain.Interfaces.Services;
+﻿using BudgetManager.Domain.Common;
+using BudgetManager.Domain.Interfaces.Services;
 using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.AccountTypes.Commands.Create;
 
-public class CreateAccTypesHandler(IAccountTypesService accountTypesService) : IRequestHandler<CreateAccTypesRequest, Unit>
+public class CreateAccTypesHandler(IAccountTypesService accountTypesService) : IRequestHandler<CreateAccTypesRequest, Result>
 {
     private readonly IAccountTypesService _accountTypesService = accountTypesService;
 
-    public async Task<Unit> Handle(CreateAccTypesRequest request, CancellationToken cancellationToken)
-    {
-        await _accountTypesService.Create(request.UserId, request.AccountTypesDto, cancellationToken);
-        return Unit.Value;
-    }
+    public async Task<Result> Handle(CreateAccTypesRequest request, CancellationToken cancellationToken)
+        => await _accountTypesService.Create(request.UserId, request.AccountTypesDto, cancellationToken);
 }

@@ -6,5 +6,6 @@ public class AccountDto
     public string Name { get; set; }
     public double Balance { get; set; }
     public int AccountTypeId { get; set; }
+    public string AccountType { get; set; }
     public string? Description { get; set; }
 }

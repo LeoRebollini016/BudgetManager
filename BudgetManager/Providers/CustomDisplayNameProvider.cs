@@ -16,8 +16,3 @@ public class CustomDisplayNameProvider : IDisplayMetadataProvider
 
     }
 }
-
-        //if (context.Key.Name == nameof(AccountTypesVM.Name))
-        //    context.DisplayMetadata.DisplayName = () => "Nombre del tipo de cuenta";
-        //if (context.Key.Name == nameof(AccountVM.Name))
-        //    context.DisplayMetadata.DisplayName = () => "Nombre de la cuenta";

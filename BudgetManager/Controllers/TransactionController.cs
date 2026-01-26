@@ -50,7 +50,16 @@ public class TransactionController(IMediator mediator, IMapper mapper) : Control
         }
         var transactionDto = _mapper.Map<TransactionCreateDto>(model);
         var request = new InsertTransactionRequest(userId, transactionDto);
-        await _mediator.Send(request, ct);
+        var result = await _mediator.Send(request, ct);
+        if (!result.Success)
+        {
+            if(result.TargetField is null)
+                return RedirectToAction("Error", "Home", new { message = result.Error });
+
+            ModelState.AddModelError(result.TargetField, result.Error ?? "Ha ocurrido un error inesperado.");
+            return View(model);
+        }
+        TempData["SuccessMessage"] = "Transacción creada exitosamente.";
         return RedirectToAction("Index");
     }
     [HttpGet]
@@ -79,7 +88,16 @@ public class TransactionController(IMediator mediator, IMapper mapper) : Control
         }
         var transactionDto = _mapper.Map<TransactionCreateDto>(model);
         var request = new UpdateTransactionRequest(userId, transactionDto);
-        await _mediator.Send(request, ct);
+        var result = await _mediator.Send(request, ct);
+        if (!result.Success)
+        {
+            if(result.TargetField is null)
+                return RedirectToAction("Error", "Home", new { message = result.Error });
+
+            ModelState.AddModelError(result.TargetField, result.Error ?? "Ha ocurrido un error inesperado.");
+            return View(model);
+        }
+        TempData["SuccessMessage"] = "Transacción actualizada exitosamente.";
         return RedirectToAction("Index");
     }
     [HttpGet]
@@ -97,7 +115,16 @@ public class TransactionController(IMediator mediator, IMapper mapper) : Control
     {
         var userId = User.GetUserId();
         var request = new DeleteTransactionRequest(userId, id);
-        await _mediator.Send(request, ct);
+        var result = await _mediator.Send(request, ct);
+        if (!result.Success)
+        {
+            if(result.TargetField is null)
+                return RedirectToAction("Error", "Home", new { message = result.Error });
+
+            TempData["ErrorMessage"] = result.Error ?? "Ha ocurrido un error inesperado.";
+            return RedirectToAction("Index");
+        }
+        TempData["SuccessMessage"] = "Transacción eliminada exitosamente.";
         return RedirectToAction("Index");
     }
     private async Task LoadTransactionSelects(TransactionFormVM model, Guid userId, CancellationToken ct)

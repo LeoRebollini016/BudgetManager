@@ -13,4 +13,6 @@ public interface ICategoryRepository
     Task<IEnumerable<KeyValueDto>> GetCategoryNamesAsync(Guid userId, CancellationToken ct);
     Task<CategoryDeleteDto?> GetCategoryDeleteInfoByIdAsync(Guid userId, int id, CancellationToken ct);
     Task DeleteCategoryByIdAsync(Guid userId, int categoryId, CancellationToken ct);
+    Task<bool> ExistsCategoryByNameAsync(Guid userId, string name, CancellationToken ct, int? categoryId = null);
+    Task<bool> HasTransactionsAsync(Guid userId, int categoryId, CancellationToken ct);
 }

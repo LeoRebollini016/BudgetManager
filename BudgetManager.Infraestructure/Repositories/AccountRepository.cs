@@ -1,5 +1,6 @@
 ﻿using BudgetManager.Domain.Constants.Queries;
 using BudgetManager.Domain.Dtos;
+using BudgetManager.Domain.Dtos.Account;
 using BudgetManager.Domain.Entities;
 using BudgetManager.Domain.Interfaces;
 using BudgetManager.Domain.Interfaces.Repositories;
@@ -21,7 +22,7 @@ public class AccountRepository(IDbConnectionFactory connectionFactory) : IAccoun
         );
         account.Id = await conn.QuerySingleAsync<int>(command);
     }
-    public async Task<IEnumerable<Account>> GetAccountsAsync(Guid userId, CancellationToken ct)
+    public async Task<IEnumerable<AccountDto>> GetAccountsAsync(Guid userId, CancellationToken ct)
     {
         using var conn = _connectionFactory.CreateConnection();
         var command = new CommandDefinition(
@@ -29,7 +30,7 @@ public class AccountRepository(IDbConnectionFactory connectionFactory) : IAccoun
            new { UserId = userId },
            cancellationToken: ct
         );
-        return await conn.QueryAsync<Account>(command);
+        return await conn.QueryAsync<AccountDto>(command);
     }
     public async Task<Account?> GetAccountByIdAsync(Guid userId, int id, CancellationToken ct)
     {
@@ -72,12 +73,16 @@ public class AccountRepository(IDbConnectionFactory connectionFactory) : IAccoun
         return await conn.QueryAsync<KeyValueDto>(command);
     }
 
-    public async Task<bool> ExistsByNameAsync(Guid userId, string name, CancellationToken ct)
+    public async Task<bool> ExistsByNameAsync(Guid userId, string name, CancellationToken ct, int? accountId = null)
     {
         using var conn = _connectionFactory.CreateConnection();
         var command = new CommandDefinition(
             AccountQueries.ExistsByNameQuery,
-            new { UserId = userId, Name = name },
+            new {
+                UserId = userId,
+                Name = name,
+                AccountId = accountId
+            },
             cancellationToken: ct
         );
         return await conn.QueryFirstOrDefaultAsync<int?>(command) == 1;

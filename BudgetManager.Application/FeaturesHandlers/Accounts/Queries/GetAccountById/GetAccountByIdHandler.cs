@@ -11,8 +11,6 @@ public class GetAccountByIdHandler(IAccountService accountService, IMapper mappe
     private readonly IMapper _mapper = mapper;
 
     public async Task<AccountDto?> Handle(GetAccountByIdRequest request, CancellationToken cancellationToken)
-    {
-        var account = await _accountService.GetAccountByIdAsync(request.UserId, request.AccountId, cancellationToken);
-        return _mapper.Map<AccountDto?>(account);
-    }
+        => _mapper.Map<AccountDto?>(
+            await _accountService.GetAccountByIdAsync(request.UserId, request.AccountId, cancellationToken));
 }

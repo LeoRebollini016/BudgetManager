@@ -28,15 +28,6 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
         var listCategoriesVM = _mapper.Map<List<CategoryListVM>>(listCategoriesDto);
         return View(listCategoriesVM);
     }
-    //[HttpGet]
-    //public async Task<IActionResult> Detalle(int id, CancellationToken ct)
-    //{
-    //    var userId = User.GetUserId();
-    //    var request = new GetCategoryByIdRequest(userId, id);
-    //    var category = await _mediator.Send(request, ct);
-    //    var categoryVM = _mapper.Map<CategoryFormVM>(category);
-    //    return View(categoryVM);
-    //}
     [HttpGet]
     public IActionResult Create() => View();
 
@@ -48,7 +39,17 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
             return View(model);
         var categoryDto = _mapper.Map<CategoryDto>(model);
         var request = new AddCategoryRequest(userId, categoryDto);
-        await _mediator.Send(request, ct);
+        var result = await _mediator.Send(request, ct);
+        if (!result.Success)
+        {
+            if(result.TargetField is null) 
+            {
+                return RedirectToAction("Error", "Home", new { errorMessage = result.Error });
+            }
+            ModelState.AddModelError(result.TargetField, result.Error ?? "Ha ocurrido un error.");
+            return View(model);
+        }
+        TempData["SuccessMessage"] = "Categoría creada exitosamente.";
         return RedirectToAction("Index");
     }
     [HttpGet]
@@ -60,7 +61,7 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
         var modelCategory = _mapper.Map<CategoryFormVM>(category);
         modelCategory.Id = id;
         return View(modelCategory);
-    } 
+    }
 
     [HttpPost]
     public async Task<IActionResult> Edit(CategoryFormVM model, CancellationToken ct)
@@ -71,8 +72,17 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
         var categoryDto = _mapper.Map<CategoryDto>(model);
         categoryDto.Id = model.Id;
         var request = new UpdateCategoryRequest(userId, categoryDto);
-        await _mediator.Send(request, ct);
-
+        var result = await _mediator.Send(request, ct);
+        if (!result.Success)
+        {
+            if (result.TargetField is null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            ModelState.AddModelError(result.TargetField, result.Error ?? "Ha ocurrido un error.");
+            return View(model);
+        }
+        TempData["SuccessMessage"] = "Categoría actualizada exitosamente.";
         return RedirectToAction("Index");
     }
     [HttpGet]
@@ -89,7 +99,17 @@ public class CategoryController(IMediator mediator, IMapper mapper) : Controller
     {
         var userId = User.GetUserId();
         var request = new DeleteCategoryRequest(userId, id);
-        await _mediator.Send(request, ct);
+        var result = await _mediator.Send(request, ct);
+        if (!result.Success)
+        {
+            if (result.TargetField is null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            TempData["ErrorMessage"] = result.Error ?? "Ha ocurrido un error.";
+            return RedirectToAction("Index");
+        }
+        TempData["SuccessMessage"] = "Categoría eliminada exitosamente.";
         return RedirectToAction("Index");
     }
 }

@@ -93,4 +93,15 @@ public class AccountTypesRepository(IDbConnectionFactory connectionFactory) : IA
         );
         return await conn.QueryAsync<KeyValueDto>(command);
     }
+
+    public async Task<bool> HasRelatedAccountsAsync(Guid userId, int id, CancellationToken ct)
+    {
+        using var conn = _connectionFactory.CreateConnection();
+        var command = new CommandDefinition(
+            AccountTypesQueries.HasRelatedAccountsQuery,
+            new { id, userId },
+            cancellationToken: ct
+        );
+        return await conn.QueryFirstOrDefaultAsync<int>(command) == 1;
+    }
 }
