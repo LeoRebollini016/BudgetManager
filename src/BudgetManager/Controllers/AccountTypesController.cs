@@ -6,13 +6,13 @@ using BudgetManager.Application.FeaturesHandlers.AccountTypes.Commands.Update;
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.GetAccTypes;
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.GetAccTypesById;
 using BudgetManager.Domain.Dtos.AccountTypes;
-using BudgetManager.Extensions;
-using BudgetManager.Models.AccountTypes;
+using BudgetManager.Web.Extensions;
+using BudgetManager.Web.Models.AccountTypes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BudgetManager.Controllers;
+namespace BudgetManager.Web.Controllers;
 
 [Authorize]
 public class AccountTypesController(IMediator mediator, IMapper mapper): Controller

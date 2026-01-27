@@ -1,4 +1,4 @@
-﻿namespace BudgetManager.Models;
+﻿namespace BudgetManager.Web.Models;
 
 public class ErrorVM
 {

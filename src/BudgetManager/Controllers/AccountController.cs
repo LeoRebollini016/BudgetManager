@@ -6,14 +6,14 @@ using BudgetManager.Application.FeaturesHandlers.Accounts.Queries.GetAccountById
 using BudgetManager.Application.FeaturesHandlers.Accounts.Queries.GetAccounts;
 using BudgetManager.Application.FeaturesHandlers.AccountTypes.Queries.GetAccTypesNames;
 using BudgetManager.Domain.Dtos.Account;
-using BudgetManager.Extensions;
-using BudgetManager.Models.Account;
+using BudgetManager.Web.Extensions;
+using BudgetManager.Web.Models.Account;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace BudgetManager.Controllers;
+namespace BudgetManager.Web.Controllers;
 
 [Authorize]
 public class AccountController(IMediator mediator, IMapper mapper) : Controller

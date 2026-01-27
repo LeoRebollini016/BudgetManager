@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BudgetManager.Models.AccountTypes;
+namespace BudgetManager.Web.Models.AccountTypes;
 
 public class AccountTypesListVM
 {

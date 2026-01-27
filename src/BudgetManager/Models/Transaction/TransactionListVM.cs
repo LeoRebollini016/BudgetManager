@@ -1,4 +1,4 @@
-﻿namespace BudgetManager.Models.Transaction;
+﻿namespace BudgetManager.Web.Models.Transaction;
 
 public class TransactionListVM
 {

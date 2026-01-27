@@ -1,6 +1,6 @@
 ﻿using BudgetManager.Domain.Constants.Enum;
 
-namespace BudgetManager.Models.Category;
+namespace BudgetManager.Web.Models.Category;
 
 public class CategoryListVM
 {

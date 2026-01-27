@@ -1,7 +1,7 @@
-﻿using BudgetManager.Models;
+﻿using BudgetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 
-namespace BudgetManager.Helpers;
+namespace BudgetManager.Web.Helpers;
 
 public class CustomDisplayNameProvider : IDisplayMetadataProvider
 {

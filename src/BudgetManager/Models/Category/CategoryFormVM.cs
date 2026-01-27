@@ -1,7 +1,7 @@
 ﻿using BudgetManager.Domain.Constants.Enum;
 using System.ComponentModel.DataAnnotations;
 
-namespace BudgetManager.Models.Category;
+namespace BudgetManager.Web.Models.Category;
 
 public class CategoryFormVM
 {

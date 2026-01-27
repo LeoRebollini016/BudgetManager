@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace BudgetManager.Models.Account;
+namespace BudgetManager.Web.Models.Account;
 
 public class AccountFormVM
 {

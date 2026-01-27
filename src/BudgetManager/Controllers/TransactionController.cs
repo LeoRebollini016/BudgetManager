@@ -7,15 +7,15 @@ using BudgetManager.Application.FeaturesHandlers.Transactions.Commands.UpdateTra
 using BudgetManager.Application.FeaturesHandlers.Transactions.Queries.GetTransactionDeleteInfo;
 using BudgetManager.Application.FeaturesHandlers.Transactions.Queries.GetTransactionList;
 using BudgetManager.Domain.Dtos.Transaction;
-using BudgetManager.Extensions;
-using BudgetManager.Models;
-using BudgetManager.Models.Transaction;
+using BudgetManager.Web.Extensions;
+using BudgetManager.Web.Models;
+using BudgetManager.Web.Models.Transaction;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace BudgetManager.Controllers;
+namespace BudgetManager.Web.Controllers;
 
 [Authorize]
 public class TransactionController(IMediator mediator, IMapper mapper) : Controller

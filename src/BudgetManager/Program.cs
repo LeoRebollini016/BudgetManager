@@ -1,6 +1,6 @@
-using BudgetManager;
+using BudgetManager.Web;
 using BudgetManager.Bootstrap.Middlewares;
-using BudgetManager.Helpers;
+using BudgetManager.Web.Helpers;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews(opt =>

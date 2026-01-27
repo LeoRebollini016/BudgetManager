@@ -1,7 +1,7 @@
 ﻿using BudgetManager.Bootstrap.Configure;
-using BudgetManager.Profiles;
+using BudgetManager.Web.Profiles;
 
-namespace BudgetManager;
+namespace BudgetManager.Web;
 
 public static class ProgramExtensions
 {

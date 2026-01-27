@@ -6,13 +6,13 @@ using BudgetManager.Application.FeaturesHandlers.Categories.Queries.GetCategorie
 using BudgetManager.Application.FeaturesHandlers.Categories.Queries.GetCategoryById;
 using BudgetManager.Application.FeaturesHandlers.Categories.Queries.GetCategoryDeleteInfo;
 using BudgetManager.Domain.Dtos.Category;
-using BudgetManager.Extensions;
-using BudgetManager.Models.Category;
+using BudgetManager.Web.Extensions;
+using BudgetManager.Web.Models.Category;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BudgetManager.Controllers;
+namespace BudgetManager.Web.Controllers;
 [Authorize]
 public class CategoryController(IMediator mediator, IMapper mapper) : Controller
 {

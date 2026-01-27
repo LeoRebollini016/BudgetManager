@@ -4,14 +4,14 @@ using BudgetManager.Application.FeaturesHandlers.Reports.Queries.GetCategoryRepo
 using BudgetManager.Application.FeaturesHandlers.Reports.Queries.GetMonthlyReport;
 using BudgetManager.Application.FeaturesHandlers.Reports.Queries.GetRangeReport;
 using BudgetManager.Domain.Dtos.Report;
-using BudgetManager.Extensions;
-using BudgetManager.Models.Report;
+using BudgetManager.Web.Extensions;
+using BudgetManager.Web.Models.Report;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace BudgetManager.Controllers;
+namespace BudgetManager.Web.Controllers;
 
 [Authorize]
 public class ReportController(IMediator mediator, IMapper mapper) : Controller

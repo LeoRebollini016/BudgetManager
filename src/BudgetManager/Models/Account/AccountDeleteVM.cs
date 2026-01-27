@@ -1,4 +1,4 @@
-﻿namespace BudgetManager.Models.Account;
+﻿namespace BudgetManager.Web.Models.Account;
 
 public class AccountDeleteVM
 {

@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace BudgetManager.Extensions;
+namespace BudgetManager.Web.Extensions;
 
 public static class ClaimsExtensions
 {

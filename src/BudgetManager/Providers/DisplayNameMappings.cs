@@ -1,4 +1,4 @@
-﻿namespace BudgetManager.Providers;
+﻿namespace BudgetManager.Web.Providers;
 
 public static class DisplayNameMappings
 {

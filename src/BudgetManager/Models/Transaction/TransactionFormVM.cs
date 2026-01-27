@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace BudgetManager.Models.Transaction;
+namespace BudgetManager.Web.Models.Transaction;
 
 public class TransactionFormVM
 {

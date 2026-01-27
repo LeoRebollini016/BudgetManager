@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BudgetManager.Models.User;
+namespace BudgetManager.Web.Models.User;
 
 public class UserLoginVM
 {

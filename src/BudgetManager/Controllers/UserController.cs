@@ -1,13 +1,13 @@
 ﻿using BudgetManager.Application.FeaturesHandlers.Users.Commands.LoginUser;
 using BudgetManager.Application.FeaturesHandlers.Users.Commands.LogoutUser;
 using BudgetManager.Application.FeaturesHandlers.Users.Commands.RegisterUser;
-using BudgetManager.Models;
-using BudgetManager.Models.User;
+using BudgetManager.Web.Models;
+using BudgetManager.Web.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BudgetManager.Controllers;
+namespace BudgetManager.Web.Controllers;
 
 public class UserController(IMediator mediator) : Controller
 {

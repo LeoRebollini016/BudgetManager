@@ -1,8 +1,8 @@
 using System.Diagnostics;
-using BudgetManager.Models;
+using BudgetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BudgetManager.Controllers;
+namespace BudgetManager.Web.Controllers;
 
 public class HomeController : Controller
 {

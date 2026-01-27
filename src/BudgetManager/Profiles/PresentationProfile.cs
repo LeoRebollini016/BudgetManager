@@ -4,14 +4,14 @@ using BudgetManager.Domain.Dtos.AccountTypes;
 using BudgetManager.Domain.Dtos.Category;
 using BudgetManager.Domain.Dtos.Report;
 using BudgetManager.Domain.Dtos.Transaction;
-using BudgetManager.Models;
-using BudgetManager.Models.Account;
-using BudgetManager.Models.AccountTypes;
-using BudgetManager.Models.Category;
-using BudgetManager.Models.Report;
-using BudgetManager.Models.Transaction;
+using BudgetManager.Web.Models;
+using BudgetManager.Web.Models.Account;
+using BudgetManager.Web.Models.AccountTypes;
+using BudgetManager.Web.Models.Category;
+using BudgetManager.Web.Models.Report;
+using BudgetManager.Web.Models.Transaction;
 
-namespace BudgetManager.Profiles;
+namespace BudgetManager.Web.Profiles;
 
 public class PresentationProfile: Profile
 {
