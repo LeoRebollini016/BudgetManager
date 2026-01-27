@@ -20,8 +20,14 @@ public class ReportService(IReportRepository reportRepository) : IReportService
             TotalExpense = items.Sum(x => x.Expense)
         };
     }
-    public async Task<DateRangeReportResultDto> GetReportRangeAsync(Guid userId, DateRangeReportFilterDto filter, CancellationToken ct)
+    public async Task<DateRangeReportResultDto?> GetReportRangeAsync(Guid userId, DateRangeReportFilterDto filter, CancellationToken ct)
     {
+        if (filter.StartDate > filter.EndDate)
+            return null;
+
+        if ((filter.EndDate - filter.StartDate)?.TotalDays > 366)
+            return null;
+
         var items = (List<ReportTimeSeriesDto>)await _reportRepository.GetReportByRangeAsync(userId, filter, ct);
 
         return new DateRangeReportResultDto

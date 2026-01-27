@@ -9,6 +9,7 @@
 	<div class="col-md-4">
 		<label asp-for="StartDate" class="form-label" value="@Model.StartDate"></label>
 		<input asp-for="StartDate" type="date" class="form-control" />
+		<p class="text-info-emphasis">Rango máximo de 1 año.</p>
 	</div>
 	<div class="col-md-4">
 		<label asp-for="EndDate" class="form-label" value="@Model.EndDate"></label>
@@ -24,6 +25,7 @@
 		</select>
 		<span asp-validation-for="AccountId" class="text-danger" />
 	</div>
+
 	<div class="col-md-4 d-flex align-items-end">
 		<button type="submit" class="btn btn-success w-100">Generar</button>
 	</div>

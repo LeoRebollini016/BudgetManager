@@ -1,5 +1,13 @@
 ﻿@{
-	ViewData["Title"] = "No encontrado.";
+	ViewData["Title"] = "Recurso no encontrado.";
 }
-<h1 class="mb-2">La pagina buscada no se ha encontrado.</h1>
-<a asp-controller="Transaction" asp-action="Index" class="btn btn-danger">Click aquí para ir al inicio</a>
+<div class="d-flex align-items-center justify-content-center vh-100">
+	<div class="text-center">
+		<h1 class="display-1 fw-bold text-warning">404</h1>
+		<p class="fs-3">La página que buscas no se ha encontrado.</p>
+		<p class="lead">
+			Lo sentimos, pero la página que buscas no existe, ha sido eliminada o su nombre ha cambiado.
+		</p>
+		<a asp-controller="Transaction" asp-action="Index" class="btn btn-primary">Click aquí para ir al inicio</a>
+	</div>
+</div>

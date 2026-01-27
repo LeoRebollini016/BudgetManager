@@ -59,6 +59,8 @@ public class ReportController(IMediator mediator, IMapper mapper) : Controller
         var filter = _mapper.Map<DateRangeReportFilterDto>(model);
         var request = new GetRangeReportRequest(userId, filter);
         var result = await _mediator.Send(request, ct);
+        if(result is null)
+            return View("Index", model);
         model = _mapper.Map<ReportViewModel>(result);
         model.ReportType = "range";
         await LoadAccountsAsync(model, userId, ct);

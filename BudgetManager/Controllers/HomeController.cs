@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using BudgetManager.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetManager.Controllers;
@@ -27,8 +28,8 @@ public class HomeController : Controller
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    public IActionResult Error(ErrorVM? error)
     {
-        return View();
+        return View(error);
     }
 }
