@@ -61,35 +61,26 @@ public class TransactionRepository(IDbConnectionFactory dbConnection) : ITransac
             throw;
         }
     }
-    public async Task<bool> UpdateTransactionAsync(Guid userId, TransactionCreateDto transaction, CancellationToken ct)
+    public async Task<bool> UpdateTransactionAsync(Guid userId, TransactionCreateDto transaction, decimal oldAmount, int oldOperationTypeId, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
         conn.Open();
         using var sqlTx = conn.BeginTransaction();
         try
         {
-            var oldTx = await conn.QuerySingleOrDefaultAsync<TransactionDto>(new CommandDefinition(
-                TransactionQueries.GetTransactionByIdQuery,
-                new { transaction.Id, UserId = userId },
-                transaction: sqlTx,
-                cancellationToken: ct
-            ));
-
-            if (oldTx == null) return false;
             await conn.ExecuteAsync(new CommandDefinition(
                 TransactionQueries.UpdateAccountBalanceQuery,
                 new
                 {
                     UserId = userId,
-                    oldTx.AccountId,
-                    oldTx.Amount,
-                    oldTx.OperationTypeId,
+                    transaction.AccountId,
+                    oldAmount,
+                    oldOperationTypeId,
                     Multiplier = -1
                 },
                 transaction: sqlTx,
                 cancellationToken: ct
             ));
-
 
             var command = new CommandDefinition(
                 TransactionQueries.UpdateTransactionQuery,
@@ -136,7 +127,7 @@ public class TransactionRepository(IDbConnectionFactory dbConnection) : ITransac
             throw;
         }
     }
-    public async Task<TransactionDto> GetTransactionById(Guid userId, int transactionId, CancellationToken ct)
+    public async Task<TransactionDto?> GetTransactionById(Guid userId, int transactionId, CancellationToken ct)
     {
         using var conn = _dbConnection.CreateConnection();
         var command = new CommandDefinition(
@@ -144,7 +135,7 @@ public class TransactionRepository(IDbConnectionFactory dbConnection) : ITransac
             new { Id = transactionId, UserId = userId },
             cancellationToken: ct
         );
-        return await conn.QueryFirstAsync<TransactionDto>(command);
+        return await conn.QueryFirstOrDefaultAsync<TransactionDto?>(command);
     }
     public async Task<bool> DeleteTransactionByIdAsync(Guid userId, int transactionId, CancellationToken ct)
     {

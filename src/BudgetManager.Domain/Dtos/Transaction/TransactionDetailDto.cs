@@ -4,7 +4,7 @@ public class TransactionDetailDto
 {
     public int Id { get; set; }
     public DateTime TransactionDate { get; set; }
-    public double Amount { get; set; }
+    public decimal Amount { get; set; }
     public int OperationTypeId { get; set; }
     public string OperationType { get; set; }
     public string? Note { get; set; }

@@ -9,8 +9,8 @@ public class AccountFormVM
     [Required(ErrorMessage = "El {0} es requerido.")]
     public string Name { get; set; } 
     [Required(ErrorMessage = "El {0} es requerido.")]
-    [Range(0.01, double.MaxValue, ErrorMessage = "El monto debe ser mayor a 0.")]
-    public double Balance { get; set; } = 0.0;
+    [Range(typeof(decimal), "0,01", "79228162514264337593543950335", ErrorMessage = "El monto debe ser mayor a 0.")]
+    public decimal Balance { get; set; } = 0.0m;
     [Required(ErrorMessage = "Debe seleccionar un tipo de cuenta.")]
     [Range(1, int.MaxValue, ErrorMessage = "Seleccione un tipo de cuenta válido.")]
     public int AccountTypeId { get; set; }

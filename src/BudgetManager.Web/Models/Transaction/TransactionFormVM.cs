@@ -11,8 +11,8 @@ public class TransactionFormVM
     [Required(ErrorMessage = "La fecha es obligatoria.")]
     public DateTime TransactionDate { get; set; }
     [Required(ErrorMessage = "Debe ingresar un monto.")]
-    [Range(0.01, double.MaxValue, ErrorMessage = "El monto debe ser mayor a 0.")]
-    public double Amount { get; set; }
+    [Range(typeof(decimal), "0,01", "79228162514264337593543950335", ErrorMessage = "El monto debe ser mayor a 0.")]
+    public decimal? Amount { get; set; }
     [StringLength(200, ErrorMessage = "la nota no puede superar los 200 caracteres.")]
     public string? Note { get; set; }
     [Required(ErrorMessage = "Debe seleccionar una cuenta.")]

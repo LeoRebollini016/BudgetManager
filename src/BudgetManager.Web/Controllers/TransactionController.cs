@@ -67,13 +67,13 @@ public class TransactionController(IMediator mediator, IMapper mapper) : Control
     {
         var userId = User.GetUserId();
         var request = new GetTransactionByIdRequest(userId, id);
-        var transaction = await _mediator.Send(request, ct);
+        var transactionDto = await _mediator.Send(request, ct);
 
-        if (transaction is null)
+        if (transactionDto is null)
         {
             return RedirectToAction("NotFound", "Home");
         }
-        var model = _mapper.Map<TransactionFormVM>(transaction);
+        var model = _mapper.Map<TransactionFormVM>(transactionDto);
         await LoadTransactionSelects(model, userId, ct);
         return View(model);
     }
@@ -106,7 +106,10 @@ public class TransactionController(IMediator mediator, IMapper mapper) : Control
         var userId = User.GetUserId();
         var request = new GetTransactionByIdRequest(userId, id);
         var transactionDto = await _mediator.Send(request, ct);
-
+        if(transactionDto is null)
+        {
+            RedirectToAction("NotFound", "Home");
+        }
         var transactionDeleteInfoVM = _mapper.Map<TransactionDeleteVM>(transactionDto);
         return View(transactionDeleteInfoVM);
     }

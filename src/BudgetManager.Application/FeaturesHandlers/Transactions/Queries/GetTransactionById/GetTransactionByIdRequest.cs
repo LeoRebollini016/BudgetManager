@@ -3,4 +3,4 @@ using MediatR;
 
 namespace BudgetManager.Application.FeaturesHandlers.Transactions.Queries.GetTransactionDeleteInfo;
 
-public record GetTransactionByIdRequest(Guid UserId, int TransactionId) : IRequest<TransactionDto>;
+public record GetTransactionByIdRequest(Guid UserId, int TransactionId) : IRequest<TransactionDto?>;

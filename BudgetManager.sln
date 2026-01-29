@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetManager.Web", "src\BudgetManager\BudgetManager.Web.csproj", "{45997A6E-94DC-BCCD-68C3-3CB26388E7A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetManager.Web", "src\BudgetManager.Web\BudgetManager.Web.csproj", "{45997A6E-94DC-BCCD-68C3-3CB26388E7A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetManager.Application", "src\BudgetManager.Application\BudgetManager.Application.csproj", "{0C749DD4-F0AF-84CD-2204-564A983AC46E}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetManager.Infraestructure", "src\BudgetManager.Infraestructure\BudgetManager.Infraestructure.csproj", "{A8B41BD2-9BF8-3925-BCFD-3FAFA417EAC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{808807D0-247B-4338-9C5D-605F472D7689}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetManager.Tests", "tests\BudgetManager.Tests\BudgetManager.Tests.csproj", "{B0EF48CD-DA38-40DC-9F94-2630B4D68E47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{A8B41BD2-9BF8-3925-BCFD-3FAFA417EAC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8B41BD2-9BF8-3925-BCFD-3FAFA417EAC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8B41BD2-9BF8-3925-BCFD-3FAFA417EAC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0EF48CD-DA38-40DC-9F94-2630B4D68E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0EF48CD-DA38-40DC-9F94-2630B4D68E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0EF48CD-DA38-40DC-9F94-2630B4D68E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0EF48CD-DA38-40DC-9F94-2630B4D68E47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{62E45317-0FE3-7FFE-F532-D8055CADB580} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{001BDA05-E438-3DC7-92A8-664EE187F326} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A8B41BD2-9BF8-3925-BCFD-3FAFA417EAC8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B0EF48CD-DA38-40DC-9F94-2630B4D68E47} = {808807D0-247B-4338-9C5D-605F472D7689}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C7B7E9F-2BB1-453A-9EB9-D0320B350E0E}
