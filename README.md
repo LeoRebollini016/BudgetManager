@@ -121,8 +121,8 @@ Si prefieres probar con datos de ejemplo, puedes registrarte desde la UI o agreg
 | *Manejo de estados, excepciones y reglas de negocio en la capa de servicio.* | *Queries nativas para reportes financieros con alto rendimiento.* |
 
 ### ✅ Calidad y Testing
-<img width="auto" height="auto" alt="TestUnitarios" src="https://github.com/user-attachments/assets/68568ffe-9236-44e6-8d4e-0d6194ee1563" />
-*Cobertura completa de la lógica de transacciones y reportes mediante xUnit y Moq.*
+| <img width="auto" height="auto" alt="TestUnitarios" src="https://github.com/user-attachments/assets/68568ffe-9236-44e6-8d4e-0d6194ee1563" /> |
+| *Cobertura completa de la lógica de transacciones y reportes mediante xUnit y Moq.* |
 
 ### Experiencia de Usuario
 - Interfaz responsive con Bootstrap
