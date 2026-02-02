@@ -111,7 +111,20 @@ Si prefieres probar con datos de ejemplo, puedes registrarte desde la UI o agreg
 - **Centralización de consultas SQL** en clases `*Queries`
 - **Manejo de conexiones** con `using` statements
 - **Validaciones robustas**
+- **Patrón Result:** Implementado en la capa de servicios para la gestión de flujos de control y validaciones de negocio, evitando el uso de excepciones para lógica esperada y mejorando la claridad en la respuesta hacia la UI.
 
+### 🚀 Implementación Técnica Destacada
+
+| Validación de Negocio (Patrón Result) | Consultas SQL Optimizadas (Dapper) |
+| :--- | :--- |
+|  <img width="50%" height="auto" alt="TransactionService" src="https://github.com/user-attachments/assets/01f741e8-77c7-4d44-9196-db43ef666bbc" />
+| <img width="50%" height="auto" alt="ReportQueries" src="https://github.com/user-attachments/assets/eade9ae6-97b0-4a00-80d9-432fed2529c8" />
+
+| *Manejo de estados, excepciones y reglas de negocio en la capa de servicio.* | *Queries nativas para reportes financieros con alto rendimiento.* |
+
+### ✅ Calidad y Testing
+![Tests Unitarios](URL_DE_TU_IMAGEN_TESTS)
+*Cobertura completa de la lógica de transacciones y reportes mediante xUnit y Moq.*
 <img width="524" height="564" alt="TestUnitarios" src="https://github.com/user-attachments/assets/68568ffe-9236-44e6-8d4e-0d6194ee1563" />
 
 ### Experiencia de Usuario
