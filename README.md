@@ -112,7 +112,7 @@ Si prefieres probar con datos de ejemplo, puedes registrarte desde la UI o agreg
 - **Manejo de conexiones** con `using` statements
 - **Validaciones robustas**
 
-
+<img width="524" height="564" alt="TestUnitarios" src="https://github.com/user-attachments/assets/68568ffe-9236-44e6-8d4e-0d6194ee1563" />
 
 ### Experiencia de Usuario
 - Interfaz responsive con Bootstrap
