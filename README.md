@@ -117,7 +117,7 @@ Si prefieres probar con datos de ejemplo, puedes registrarte desde la UI o agreg
 
 | Validación de Negocio (Patrón Result) | Consultas SQL Optimizadas (Dapper) |
 | :--- | :--- |
-| <img width="50%" height="auto" alt="TransactionService" src="https://github.com/user-attachments/assets/01f741e8-77c7-4d44-9196-db43ef666bbc" /> | <img width="50%" height="auto" alt="ReportQueries" src="https://github.com/user-attachments/assets/eade9ae6-97b0-4a00-80d9-432fed2529c8" />
+| <img width="auto" height="auto" alt="TransactionService" src="https://github.com/user-attachments/assets/01f741e8-77c7-4d44-9196-db43ef666bbc" /> | <img width="auto" height="auto" alt="ReportQueries" src="https://github.com/user-attachments/assets/eade9ae6-97b0-4a00-80d9-432fed2529c8" />
 | 
 | *Manejo de estados, excepciones y reglas de negocio en la capa de servicio.* | *Queries nativas para reportes financieros con alto rendimiento.* |
 
