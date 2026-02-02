@@ -21,7 +21,7 @@ Aplicación para gestionar finanzas personales desarrollada con .NET 9 y Razor P
 - SQL Server / PostgreSQL (configurable) / SQLite (configurable)
 
 ## Estructura del repositorio (resumen)
-- `BudgetManager` — proyecto web (UI/runtime)
+- `BudgetManager.Web` — proyecto web (UI/runtime)
 - `BudgetManager.Application` — lógica de aplicación, handlers (MediatR)
 - `BudgetManager.Domain` — entidades y DTOs
 - `BudgetManager.Infraestructure` — DbContexts, Identity, implementaciones de persistencia
