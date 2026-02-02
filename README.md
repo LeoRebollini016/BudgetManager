@@ -117,12 +117,12 @@ Si prefieres probar con datos de ejemplo, puedes registrarte desde la UI o agreg
 
 | Validación de Negocio (Patrón Result) | Consultas SQL Optimizadas (Dapper) |
 | :--- | :--- |
-| <img width="auto" height="auto" alt="TransactionService" src="https://github.com/user-attachments/assets/01f741e8-77c7-4d44-9196-db43ef666bbc" /> | <img width="auto" height="auto" alt="ReportQueries" src="https://github.com/user-attachments/assets/eade9ae6-97b0-4a00-80d9-432fed2529c8" />
+| <img width="auto" height="auto" display="block" alt="TransactionService" src="https://github.com/user-attachments/assets/01f741e8-77c7-4d44-9196-db43ef666bbc" /> | <img width="auto" height="auto" alt="ReportQueries" src="https://github.com/user-attachments/assets/eade9ae6-97b0-4a00-80d9-432fed2529c8" />
 | *Manejo de estados, excepciones y reglas de negocio en la capa de servicio.* | *Queries nativas para reportes financieros con alto rendimiento.* |
 
 ### ✅ Calidad y Testing
-| <img width="auto" height="auto" alt="TestUnitarios" src="https://github.com/user-attachments/assets/68568ffe-9236-44e6-8d4e-0d6194ee1563" />
-| *Cobertura completa de la lógica de transacciones y reportes mediante xUnit y Moq.* |
+<img width="auto" height="auto" style="display: block;" alt="TestUnitarios" src="https://github.com/user-attachments/assets/68568ffe-9236-44e6-8d4e-0d6194ee1563" />
+*Cobertura completa de la lógica de transacciones y reportes mediante xUnit y Moq.*
 
 ### Experiencia de Usuario
 - Interfaz responsive con Bootstrap
