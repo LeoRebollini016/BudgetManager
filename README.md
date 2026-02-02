@@ -11,14 +11,14 @@ Aplicación para gestionar finanzas personales desarrollada con .NET 9 y Razor P
 - Gestión de cuentas y tipos de cuenta (crear, listar, editar, eliminar).
 - Registro y listado de transacciones (ingresos/gastos) por cuenta.
 - Validaciones en el frontend (tag helpers) y backend (DataAnnotations).
-- Arquitectura organizada en capas: `Domain`, `Application`, `Infraestructure`, `UI` (`BudgetManager`).
+- Arquitectura organizada en capas: `Domain`, `Application`, `Infraestructure`, `Web`.
 
 ## Tecnologías
 - .NET 9 (Razor Pages / ASP.NET Core)
 - C# 13
 - Entity Framework Core / Dapper (ORM)
 - ASP.NET Core Identity (con `ApplicationUser : IdentityUser<Guid>`)
-- SQL Server / PostgreSQL / SQLite (configurable)
+- SQL Server / PostgreSQL (configurable) / SQLite (configurable)
 
 ## Estructura del repositorio (resumen)
 - `BudgetManager` — proyecto web (UI/runtime)
