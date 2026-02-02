@@ -48,5 +48,4 @@ public class ReportService(IReportRepository reportRepository) : IReportService
             TotalExpense = items.Where(x => x.OperationType == OperationTypeEnum.Gastos).Sum(x => x.Total)
         };
     }
-
 }

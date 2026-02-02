@@ -187,7 +187,7 @@ public class TransactionServiceTests
     [Theory]
     [InlineData(100, 150, 40, false)]
     [InlineData(100, 150, 60, true)]
-    public async Task UpdateTransaction_ShouldValidateBalance_GivenVariousAmounts(
+    public async Task UpdateTransaction_ValidateBalance_GivenVariousAmounts(
         decimal oldAmount, decimal newAmount, decimal currentBalance, bool expectedSuccess)
     {
         // Arrenge

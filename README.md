@@ -103,11 +103,16 @@ Si prefieres probar con datos de ejemplo, puedes registrarte desde la UI o agreg
 - **Interface Segregation** - Interfaces específicas y cohesivas
 - **Dependency Inversion** - Dependencias hacia abstracciones
 
-### Calidad de Código
-- **Inyección de dependencias** en todo el stack
+### ✅ Calidad de Código y Testing
+- **Consultas Optimizadas:** Uso de **Dapper** para reportes complejos, con consultas SQL centralizadas en clases estáticas para mejorar el rendimiento y la legibilidad.
+- **Unit Testing:** Cobertura de la capa de aplicación utilizando `xUnit`, `Moq` y `FluentAssertions`.
+- **Pruebas Parametrizadas:** Uso intensivo de `[Theory]` e `[InlineData]` para validar múltiples escenarios de negocio (límites de saldo, rangos de fechas, cálculos de reportes) con código eficiente.
+- **Arquitectura de Pruebas:** Implementación de `TestBuilders` (Object Mother pattern) para la creación de datos de prueba consistentes y mantenibles.
 - **Centralización de consultas SQL** en clases `*Queries`
 - **Manejo de conexiones** con `using` statements
-- **Validaciones robustas** con FluentValidation
+- **Validaciones robustas**
+
+
 
 ### Experiencia de Usuario
 - Interfaz responsive con Bootstrap
