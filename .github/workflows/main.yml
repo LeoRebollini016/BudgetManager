@@ -33,7 +33,7 @@ jobs:
 
       - name: Docker Build
         run: | 
-            docker build -t $REGISTRY/$IMAGE_NAME:${{ github.sha }} \ 
+            docker build -t $REGISTRY/$IMAGE_NAME:${{ github.sha }} \
                          -t $REGISTRY/$IMAGE_NAME:latest .
         
       - name: Login to ACR
