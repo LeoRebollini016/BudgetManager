@@ -21,10 +21,10 @@ if (!app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionMiddleware>();
     app.UseHttpsRedirection();
 
+app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-app.UseStaticFiles();
 app.MapStaticAssets();
 
 app.MapControllerRoute(
