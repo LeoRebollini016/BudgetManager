@@ -33,9 +33,22 @@
 			<div class="card-body">
 
 				<h5>Resumen</h5>
-				<p><strong>Ingreso Total:</strong> @Model.TotalIncome</p>
-				<p><strong>Gasto Total:</strong> @Model.TotalExpense</p>
-				<p><strong>Balance:</strong> @Model.Balance</p>
+				<p>
+					<strong>Ingreso Total:</strong>
+					<span class="text-success">@Model.TotalIncome.ToString("N2")</span>
+				</p>
+
+				<p>
+					<strong>Gasto Total:</strong>
+					<span class="text-danger">@Model.TotalExpense.ToString("N2")</span>
+				</p>
+
+				<p>
+					<strong>Balance:</strong>
+					<span class="@(Model.Balance >= 0 ? "text-success" : "text-danger")">
+						@Model.Balance.ToString("N2")
+					</span>
+				</p>
 
 				<hr />
 
@@ -53,8 +66,8 @@
 						{
 							<tr>
 								<td>@item.Date.ToShortDateString()</td>
-								<td>@item.Income</td>
-								<td>@item.Expense</td>
+								<td class="text-success">@item.Income</td>
+								<td class="text-danger">@item.Expense</td>
 							</tr>
 						}
 					</tbody>
