@@ -11,17 +11,17 @@ Aplicación para gestionar finanzas personales desarrollada con .NET 9 y Razor P
 - Gestión de cuentas y tipos de cuenta (crear, listar, editar, eliminar).
 - Registro y listado de transacciones (ingresos/gastos) por cuenta.
 - Validaciones en el frontend (tag helpers) y backend (DataAnnotations).
-- Arquitectura organizada en capas: `Domain`, `Application`, `Infraestructure`, `UI` (`BudgetManager`).
+- Arquitectura organizada en capas: `Domain`, `Application`, `Infraestructure`, `Web`.
 
 ## Tecnologías
 - .NET 9 (Razor Pages / ASP.NET Core)
 - C# 13
 - Entity Framework Core / Dapper (ORM)
 - ASP.NET Core Identity (con `ApplicationUser : IdentityUser<Guid>`)
-- SQL Server / PostgreSQL / SQLite (configurable)
+- SQL Server / PostgreSQL (configurable) / SQLite (configurable)
 
 ## Estructura del repositorio (resumen)
-- `BudgetManager` — proyecto web (UI/runtime)
+- `BudgetManager.Web` — proyecto web (UI/runtime)
 - `BudgetManager.Application` — lógica de aplicación, handlers (MediatR)
 - `BudgetManager.Domain` — entidades y DTOs
 - `BudgetManager.Infraestructure` — DbContexts, Identity, implementaciones de persistencia
@@ -111,7 +111,19 @@ Si prefieres probar con datos de ejemplo, puedes registrarte desde la UI o agreg
 - **Centralización de consultas SQL** en clases `*Queries`
 - **Manejo de conexiones** con `using` statements
 - **Validaciones robustas**
+- **Patrón Result:** Implementado en la capa de servicios para la gestión de flujos de control y validaciones de negocio, evitando el uso de excepciones para lógica esperada y mejorando la claridad en la respuesta hacia la UI.
 
+### 🚀 Implementación Técnica Destacada
+
+| Validación de Negocio (Patrón Result) | Consultas SQL Optimizadas (Dapper) |
+| :--- | :--- |
+| <img width="auto" height="auto" display="block" alt="TransactionService" src="https://github.com/user-attachments/assets/01f741e8-77c7-4d44-9196-db43ef666bbc" /> | <img width="auto" height="auto" alt="ReportQueries" src="https://github.com/user-attachments/assets/eade9ae6-97b0-4a00-80d9-432fed2529c8" />
+| *Manejo de estados, excepciones y reglas de negocio en la capa de servicio.* | *Queries nativas para reportes financieros con alto rendimiento.* |
+
+### ✅ Calidad y Testing
+| <img width="auto" height="auto" alt="TestUnitarios" src="https://github.com/user-attachments/assets/68568ffe-9236-44e6-8d4e-0d6194ee1563" /> |
+| :-- |
+| *Cobertura completa de la lógica de transacciones y reportes mediante xUnit y Moq.* |
 
 
 ### Experiencia de Usuario
