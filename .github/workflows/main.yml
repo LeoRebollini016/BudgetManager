@@ -32,7 +32,7 @@ jobs:
         run: dotnet test tests/BudgetManager.Tests/BudgetManager.Tests.csproj --configuration Release --no-build --verbosity normal
 
       - name: Docker Build
-        run: docker build -t $REGISTRY/$IMAGE_NAME:${{ github.sha }}
+        run: docker build -t $REGISTRY/$IMAGE_NAME:${{ github.sha }} .
         
       - name: Login to ACR
         run: echo "${{ secrets.ACR_PASSWORD }}" | docker login $REGISTRY -u ${{ secrets.ACR_USERNAME}} --password-stdin
